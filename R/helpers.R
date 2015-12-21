@@ -1,0 +1,71 @@
+
+
+
+
+timeStamp <- function(){
+  timeStamp <- as.character(Sys.time())
+  timeStamp <- chartr("-", "_", timeStamp)
+  timeStamp <- chartr(" ", "_", timeStamp)
+  timeStamp <- chartr(":", "_", timeStamp)
+  timeStamp
+}
+
+
+
+
+is.wholenumber <- function(x, tol = .Machine$double.eps^0.5) abs(x - round(x)) < tol
+
+
+
+
+file.path2 <- function(...){
+  dots <- list(...)
+  if(.Platform$OS.type == "unix"){
+    sep <- "/"
+  } else {
+    sep <- "\\"
+  }
+  paste0(dots, collapse = sep)
+}
+
+
+
+is.formula <- function(x) class(x) == "formula"
+
+
+
+
+
+is.mac <- function() grepl("darwin", R.version$platform)
+is.win <- function() .Platform$OS.type == 'windows'
+is.linux <- function() (.Platform$OS.type == "unix") && (is.mac() == FALSE)
+is.unix <- function() .Platform$OS.type == "unix"
+
+
+
+
+
+
+
+
+capitalize <- function(s){
+  if(length(s) > 1) return(vapply(s, capitalize, character(1)))
+  str_c(toupper(str_sub(s, 1, 1)), str_sub(s, 2))
+}
+
+
+
+
+
+
+
+`%notin%` <- function(elem, set){
+  if(length(elem) > 1) return(vapply(elem, `%notin%`, logical(1), set = set))
+  !(elem %in% set)
+}
+
+
+
+
+
+
