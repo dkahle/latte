@@ -1,14 +1,20 @@
 #' Vector to array conversion
 #'
-#' Convert a vector into an array given a set of dimensions; it therefore simply wraps \code{aperm} and \code{array}.
+#' Convert a vector into an array given a set of dimensions; it
+#' therefore simply wraps \code{aperm} and \code{array}.
 #'
-#' This function converts an array (or a multi-way contingency table) into a vector, using a consistent ordering of the cells.  The ordering of the cells is lexicographical and cannot be specified by the user.
+#' This function converts an array (or a multi-way contingency
+#' table) into a vector, using a consistent ordering of the cells.
+#' The ordering of the cells is lexicographical and cannot be
+#' specified by the user.
 #'
-#' @param vec a vector
-#' @param dim the desired array dimensions, oftentimes a vector of the number of levels of each variable in order
-#' @return an array
-#' @export vec2tab
-#' @seealso \code{\link{tab2vec}}, \code{\link{aperm}}, \code{\link{array}}
+#' @param vec A vector
+#' @param dim The desired array dimensions, oftentimes a vector of
+#'   the number of levels of each variable in order
+#' @return An array
+#' @export
+#' @seealso \code{\link{tab2vec}}, \code{\link{aperm}},
+#'   \code{\link{array}}
 #' @examples
 #'
 #' data(Titanic)

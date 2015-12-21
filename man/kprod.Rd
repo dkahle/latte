@@ -4,19 +4,23 @@
 \alias{kprod}
 \title{Iterated Kronecker product}
 \usage{
-kprod(...)
+kprod(..., FUN = `*`)
 }
 \arguments{
-\item{...}{a listing of matrices}
+\item{...}{A listing of matrices}
+
+\item{FUN}{A function to pass to \code{\link{kronecker}}}
 }
 \value{
-... a matrix that is the kronecker product of those matrices (from left to right)
+A matrix that is the kronecker product of the specified
+  matrices (from left to right).
 }
 \description{
 Compute the Kronecker product of several matrices.
 }
 \details{
-If kronecker is  the function that computes A x B, kprod computes A x B x C and so on; it's a wrapper of Reduce and kronecker.
+If kronecker is  the function that computes A x B, kprod computes
+A x B x C and so on; it's a wrapper of Reduce and kronecker.
 }
 \examples{
 

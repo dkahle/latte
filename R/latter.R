@@ -6,7 +6,9 @@
 #' facilitating its use in the R ecosystem.
 #'
 #' @docType package
-#' @import stringr ggplot2 memoise
+#' @import stringr mpoly ggplot2 memoise
+#' @importFrom stats runif
+#' @importFrom utils download.file
 #' @name latter
 #' @aliases latter package-latter
 NULL

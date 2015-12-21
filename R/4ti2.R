@@ -4,8 +4,7 @@
 #' bases for a configuration matrix A.  See the references for
 #' details.
 #'
-#' @param A a configuration matrix; for example the output of
-#'   \code{\link{hmat}}
+#' @param A a matrix
 #' @param format how the basis (moves) should be returned.  if
 #'   "mat", the moves are returned as the columns of a matrix.
 #' @param dim the dimension to be passed to \code{\link{vec2tab}} if
@@ -36,8 +35,8 @@
 #'
 #' # basic input and output for the 2x2 independence example
 #' (A <- rbind(
-#'   kprod(diag(3), t(ones(3))),
-#'   kprod(t(ones(3)), diag(3))
+#'   kprod(diag(3), ones_r(3)),
+#'   kprod(ones_r(3), diag(3))
 #' ))
 #' markov(A)
 #' markov(A, "vec")
@@ -51,8 +50,8 @@
 #' # a slighly larger example, 2x3 independence)
 #' # (source: LAS ex 1.2.1, p.12)
 #' (A <- rbind(
-#'   kprod(diag(2), t(ones(3))),
-#'   kprod(t(ones(2)), diag(3))
+#'   kprod(diag(2), ones_r(3)),
+#'   kprod(ones_r(2), diag(3))
 #' ))
 #'
 #' markov(A, "tab", c(3, 3))
@@ -66,9 +65,9 @@
 #'
 #' # comparing the bases for the 3x3x3 no-three-way interaction model
 #' A <- rbind(
-#'   kprod(diag(3), diag(3), t(ones(3))),
-#'   kprod(diag(3), t(ones(3)), diag(3)),
-#'   kprod(t(ones(3)), diag(3), diag(3))
+#'   kprod(  diag(3),   diag(3), ones_r(3)),
+#'   kprod(  diag(3), ones_r(3),   diag(3)),
+#'   kprod(ones_r(3),   diag(3),   diag(3))
 #' )
 #' str(zbasis(A))   #    8 elements = ncol(A) - qr(A)$rank
 #' str(markov(A))   #   81 elements
@@ -80,9 +79,9 @@
 #' # you can memoise the result; this will cache the result for
 #' # future use.  (note that it doesn't persist across sessions.)
 #' A <- rbind(
-#'   kprod(diag(4), t(ones(4)), t(ones(4))),
-#'   kprod(t(ones(4)), diag(4), t(ones(4))),
-#'   kprod(t(ones(4)), t(ones(4)), diag(4))
+#'   kprod(  diag(4), ones_r(4), ones_r(4)),
+#'   kprod(ones_r(4),   diag(4), ones_r(4)),
+#'   kprod(ones_r(4), ones_r(4),   diag(4))
 #' )
 #' system.time(markov(A))
 #' system.time(markov(A))
@@ -90,9 +89,9 @@
 #' system.time(mem_markov(A))
 #'
 #' A <- rbind(
-#'   kprod(diag(3), t(ones(3)), t(ones(2))),
-#'   kprod(t(ones(3)), diag(3), t(ones(2))),
-#'   kprod(t(ones(3)), t(ones(3)), diag(2))
+#'   kprod(  diag(3), ones_r(3), ones_r(2)),
+#'   kprod(ones_r(3),   diag(3), ones_r(2)),
+#'   kprod(ones_r(3), ones_r(3),   diag(2))
 #' )
 #' system.time(graver(A))
 #' system.time(mem_graver(A))
@@ -107,18 +106,23 @@
 #'
 #'
 #' # LAS example 1.2.12, p.17  (no 3-way interaction)
-#' varlvls <- c(2,2,2)
-#' facets <- list(c(1,2), c(1,3), c(2,3))
-#' ( A <- hmat(varlvls, facets) )
+#' (A <- rbind(
+#'   kprod(  diag(2),   diag(2), ones_r(2)),
+#'   kprod(  diag(2), ones_r(2),   diag(2)),
+#'   kprod(ones_r(2),   diag(2),   diag(2))
+#' ))
 #' markov(A)
-#' tableau(markov(A), dim = varlvls)
+#' tableau(markov(A), dim = c(2,2,2))
 #'
 #'
 #'
 #' # LAS example 1.2.12, p.16  (no 3-way interaction)
-#' varlvls <- c(2,2,2,2)
-#' facets <- list(c(1,2), c(1,4), c(2,3))
-#' ( A <- hmat(varlvls, facets) )
+#' A <- rbind(
+#'   kprod(  diag(2),   diag(2),  ones_r(2), ones_r(2)),
+#'   kprod(  diag(2), ones_r(2),  ones_r(2),   diag(2)),
+#'   kprod(ones_r(2),   diag(2),    diag(2), ones_r(2))
+#' )
+#' plot_matrix(A)
 #' zbasis(A)
 #' markov(A)
 #' groebner(A)
@@ -134,7 +138,10 @@
 #'
 #' # using the markov bases database, must be connected to internet
 #' # A <- markov(dbName = "ind3-3")
-#' B <- markov(hmat(c(3,3), list(1,2)))
+#' B <- markov(rbind(
+#'   kprod(diag(3), ones_r(3)),
+#'   kprod(ones_r(3), diag(3))
+#' ))
 #' # all(A == B)
 #'
 #'
@@ -203,7 +210,7 @@ basis <- function(exec){
   ){
 
     ## check for 4ti2
-    program_not_found_stop("4ti2")
+    program_not_found_stop("4ti2_path")
 
 
     ## check args
@@ -235,7 +242,7 @@ basis <- function(exec){
       if(is.mac() || is.unix()){
 
         system2(
-          file.path2(getOption("4ti2"), exec),
+          file.path2(getOption("4ti2_path"), exec),
           paste(opts, file.path2(dir2, "PROJECT")),
           stdout = paste0(exec, "Out"), stderr = FALSE
         )
@@ -250,7 +257,7 @@ basis <- function(exec){
           "cmd.exe",
           paste(
             "/c env.exe",
-            file.path(getOption("4ti2"), exec),
+            file.path(getOption("4ti2_path"), exec),
             opts, matFile
           ), stdout = paste0(exec, "Out"), stderr = FALSE
         )

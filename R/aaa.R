@@ -4,8 +4,8 @@
   ########################################
   if(is.mac()){
 
-    mac_search_and_set("count", "latte", "latte")
-    mac_search_and_set("markov", "latte", "4ti2")
+    mac_search_and_set("count", "latte", "latte_path")
+    mac_search_and_set("markov", "latte", "4ti2_path")
 
   }
 
@@ -79,37 +79,31 @@
 
 
 # each program (suite of executables) is identified by four names
-# optionName : the program name (e.g. latte)
+# optionName : the program name (e.g. latte_path)
 # longName   : the program pretty printed (e.g. LattE)
 # execName   : the defining executable of that package (e.g. count);
 #              this is what algstat looks for when looking for the program
-# setFun     : the helper function to set that path (e.g. setLatteFun)
+# setFun     : the helper function to set that path (e.g. set_latte_path)
 
 
 longName <- function(optionName){
   switch(optionName,
-    m2 = "Macaulay2",
-    bertini = "Bertini",
-    "4ti2" = "4ti2",
-    latte = "LattE"
+    "4ti2_path" = "4ti2",
+    latte_path = "LattE"
   )
 }
 
 execName <- function(optionName){
   switch(optionName,
-    m2 = "m2",
-    bertini = "bertini",
-    "4ti2" = "markov",
-    latte = "count"
+    "4ti2_path" = "markov",
+    latte_path = "count"
   )
 }
 
 setFun <- function(optionName){
   switch(optionName,
-    m2 = "setM2Path()",
-    bertini = "setBertiniPath()",
-    "4ti2" = "set4ti2Path()",
-    latte = "setLattePath()"
+    "4ti2_path" = "set_4ti2_path()",
+    latte_path = "set_latte_path()"
   )
 }
 

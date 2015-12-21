@@ -1,8 +1,8 @@
 #' Plot a matrix
 #'
-#' plot_matrix is a R variant of Matlab's spy function.
+#' plot_matrix is a R variant of Matlab's \code{spy} function.
 #'
-#' @param A a matrix
+#' @param A A matrix
 #' @return a ggplot object
 #' @author David Kahle \email{david.kahle@@gmail.com}
 #' @export

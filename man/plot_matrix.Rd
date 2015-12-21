@@ -7,13 +7,13 @@
 plot_matrix(A)
 }
 \arguments{
-\item{A}{a matrix}
+\item{A}{A matrix}
 }
 \value{
 a ggplot object
 }
 \description{
-plot_matrix is a R variant of Matlab's spy function.
+plot_matrix is a R variant of Matlab's \code{spy} function.
 }
 \examples{
 
