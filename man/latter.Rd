@@ -5,7 +5,7 @@
 \alias{latter}
 \alias{latter-package}
 \alias{package-latter}
-\title{LattE in R}
+\title{LattE and 4ti2 in R}
 \description{
 Back-end connections to LattE
 (\url{https://www.math.ucdavis.edu/~latte/}) and 4ti2

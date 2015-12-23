@@ -61,14 +61,17 @@
 #'   "x >= 0", "y >= 0", "z >= 0"
 #' ), "cones", quiet = FALSE)
 #'
-#' df <- expand.grid(x = 0:10, y = 0:10, z = 0:10)
-#' df <- subset(df,
-#'   (3*x + 2*y + 1*z <= 10) &
-#'   (2*x + 5*y + 3*z <= 15)
-#' )
 #'
-#' df$objective <- with(df, -2*x + -3*y + -4*z)
-#' df[which.min(df$objective),]
+#' # here we check the results above manually
+#' # recall that x %>% f(y) = f(x, y)
+#' library(dplyr)
+#' expand.grid(x = 0:10, y = 0:10, z = 0:10) %>%
+#'   filter(
+#'     3*x + 2*y + 1*z <= 10,
+#'     2*x + 5*y + 3*z <= 15
+#'   ) %>%
+#'   mutate(objective = -2*x + -3*y + -4*z) %>%
+#'   arrange(objective) %>% head(10)
 #'
 #'
 #'

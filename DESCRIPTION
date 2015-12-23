@@ -1,6 +1,6 @@
 Package: latter
 Type: Package
-Title: LattE in R
+Title: LattE and 4ti2 in R
 Version: 0.1.0
 Authors@R: c(person("David", "Kahle", email = "david.kahle@gmail.com", role = c("aut", "cph", "cre")),
   person("Luis", "Garcia",email = "lgarcia@shsu.edu", role = c("aut", "cph")),
@@ -13,10 +13,12 @@ License: GPL-2
 LazyData: TRUE
 Imports:
     Rcpp (>= 0.12.2),
+    magrittr,
     stringr,
     mpoly,
     ggplot2,
-    memoise
+    memoise,
+    dplyr
 LinkingTo: Rcpp
 Suggests:
     knitr,

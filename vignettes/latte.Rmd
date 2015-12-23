@@ -1,5 +1,5 @@
 ---
-title: "LattE in R"
+title: "LattE and 4ti2 in R"
 author: "David Kahle, Ruriko Yoshida, and Luis Garcia"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
@@ -9,50 +9,205 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
+### Getting started with __latter__
 
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
+__latter__ is an R package that provides back-end connections to [LattE](https://www.math.ucdavis.edu/~latte/) and [4ti2](http://www.4ti2.de/) executables and front-end tools facilitating their use in the R ecosystem.  For indirect applications of these programs to problems in algebraic statistics see the [__algstat__ package](https://github.com/dkahle/algstat).
 
-## Vignette Info
+__latter__ is still under active development, so currently all of its functionality is present __algstat__, where it was first developed.  This will change.  Eventually  __latter__ will contain all the connections and basic front-end functionality of LattE and 4ti2 executables, which are general-purpose in nature, and __algstat__ will depend on these connections and functions to perform algebraic statistical tasks.
 
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
+Note: __latter__ assumes you have LattE and 4ti2 installed and __latter__ has registered it (i.e. has found its path).  If you don't have them, take one of the following two paths to get them.  In either case, note that 4ti2 comes with LattE now, so you'll just need to get LattE.
 
-## Styles
+1. If you're used to compiling and installing programs from the command line, just build them from [LattE's source files](https://www.math.ucdavis.edu/~latte/software.php). 
+2. If you're not used to doing this, check out [LattE's binaries](https://www.math.ucdavis.edu/~latte/software/packages/binary/).
 
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
+When you load __latter__ (with `library(latter)`) it will try to determine where LattE and 4ti2 executables are on your computer.  Where it looks depends on your machine.  If you have a Mac, it will look in `/Applications/` and your home directory.  If you have a PC and you've installed LattE and 4ti2 with [Cygwin](https://www.cygwin.com), it will use `whereis` to find the executables.  If you're not using one of these, you'll have to point to it yourself with `set_latte_path()` and `set_4ti2_path()`.  If you're in an active session, and you don't give these functions an argument, it'll open a window through which you can navigate to one of the corresponding packages executables (e.g. `count` for latte and `markov` for 4ti2).  If not, you'll need to find the path to these executables yourself and then give them as a character string to one of those functions.  For example, `set_latte_path("/Applications/latte/dest/bin/")`.  
 
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r}
+library(latter)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+Note: R doesn't know your user profile's path, so it is possible for LattE and 4ti2 functions to work from the command line but not work with __latter__ in R.  This will happen if you have LattE and 4ti2 installed in unanticipated directories but have put them on your path.  In this case, just use the `set_*_path()` functions to manually set the paths.
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
 
-## More Examples
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+
+
+
+
+
+
+
+
+
+
+
+
+
+### LattE/4ti2 file formatting
+
+All the connections from R to LattE/4ti2 work by writing temporary files in LattE's format, running the executable which creates more files, and then reading those files back into standard R data structures as needed.  The `format_latte()`, `write.latte()`, and `read.latte()` functions do the formatting and saving for __latter__.
+
+The basic geometric object of interest in LattE/4ti2 is a [polytope](http://en.wikipedia.org/wiki/Polytope), here defined by a vector inequality $Ax \leq b$, where $A \in \mathbb{Z}^{m\times n}$, $x \in \mathbb{Z}^{n}$ and $b \in \mathbb{Z}^{m}$.  LattE's primary interest is in counting the number of integer points in such a polytope, but it does much more.  
+
+LattE uses a special file format to describe the system $Ax \leq b$, which essentially just represents the inequality as a matrix $[b \ (-A)] \in \mathbb{Z}^{m \times (n+1)}$ and puts the dimensions as the first line of the file.  This is the so-called hyperplane representation of the polytope, for more details check out [the LattE manual](https://www.math.ucdavis.edu/~latte/software/packages/latte_current/manual_v1.7.2.pdf).
+
+Here's an example on the formatting.
+```{r}
+(mat <- matrix(1:9, nrow = 3))
+format_latte(mat)
+```
+This may look kind of strange.  The problem is that it prints the line breaks as characters instead of actual line breaks, a problem that is fixed when `write.latte()` uses `format_latte()` to write the code to a file.  So here's what it looks like normally:
+```{r}
+cat(format_latte(mat))
 ```
 
-Also a quote using `>`:
+If in addition to inequalities in some of the rows of $Ax \leq b$ you wanted to specify equalities, you could do this by specifying two different rows in $A$, but that'd be a little redundant.  To make things easier LattE formatting allows for setting equality rows (`linearity`) and non-negative rows.  The way __latter__ deals with this is as attributes to the matrix.  Here's an example:
+```{r}
+attr(mat, "linearity") <- c(1, 3)
+attr(mat, "nonnegative") <- 2
+mat
+cat(format_latte(mat))
+```
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+
+`write.latte()` and `read.latte()` work just as you'd expect.  Their names are the only names in __latter__ separated with a `.` because they are modeled after the more common read/write functions `read.csv()`/`write.csv()` (or `table`, or other elements); __latter__'s main naming convention is to break words with underscores `_`.
+```{r}
+(filename <- tempfile())
+write.latte(mat, filename) # the output here is invisible, it's the same as format_latte()
+read.latte(filename)
+```
+
+You can even use `write.latte()` to get the $A$/$b$ structure back:
+```{r}
+read.latte(filename, format = "Ab")
+```
+
+Most of the time you will never use `format_latte()`, `read.latte()`, and `write.latte()`, because higher level functions will use them behind the scenes for you.  Nevertheless, if you need to use them, there exposed for your use.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Lattice point counting
+
+Most LattE/4ti2 programs are available as functions in __latter__ and (to the extent possible) they have the same names.  For example, LattE's `count` function is implemented in __latter__'s `count()` to determine the number of integer points in a [polytope](http://en.wikipedia.org/wiki/Polytope).  In this example we count the number of integer points satisfying the constraints $x \geq 0$, $y \geq 0$, and $x + y \leq 10$.  In matrix notation, this is
+$$\left[\begin{matrix}
+-1 &  0 \\
+ 0 & -1 \\
+ 1 &  1 
+\end{matrix}\right]\left[\begin{matrix}x \\ y \end{matrix}\right] \leq
+\left[\begin{matrix}
+0 \\
+0 \\
+10
+\end{matrix}\right]$$
+
+To use LattE's count to count the number of integer points in the polytope (here polygon), we simply define the $A$ and $b$ and create the matrix:
+```{r}
+A <- matrix(c(-1, 0, 0, -1, 1, 1), byrow = TRUE, nrow = 3)
+b <- c(0, 0, 10)
+(mat <- cbind(b, -A))
+```
+We then format it with `format_latte()`... 
+```{r}
+code <- format_latte(mat)
+cat(code)
+```
+...and pass it to __latter__'s `count()` function:
+```{r}
+count(code)
+```
+
+It's easy to confirm the solution with a simple visualization:  
+```{r countExample, fig.align='center', echo=FALSE, dpi=200, fig.height=2.5, fig.width=2.5}
+library(ggplot2); theme_set(theme_bw(7)); library(magrittr)
+polytope <- data.frame(x = c(0, 10, 0), y = c(0, 0, 10))
+
+points   <- expand.grid(x = 0:10, y = 0:10) %>% dplyr::filter(x + y <= 10) %>%
+  dplyr::mutate(., number = 1:nrow(.))
+
+ggplot(aes(x = x, y = y), data = polytope) +
+  geom_polygon(fill = "red", alpha = .2, size = 1) + 
+  geom_text(aes(label = number), nudge_y = .3, size = 1.5, data = points) +
+  geom_point(data = points, size = .75) + 
+  scale_x_continuous(breaks = 0:10, minor_breaks = NULL) +
+  scale_y_continuous(breaks = 0:10, minor_breaks = NULL) +
+  coord_equal()
+```
+
+Thus, the `count()` function executes the LattE program `count` on code formatted with `format_latte()` and reads the output back into R.  The result is an integer in R, unless the integer is "too large" (10 or more digits), in which case it is returned as a character string.  (In this case, you may want to look into R's __gmp__ package and the function `as.bigz()`.)
+
+This process can be a bit tedious, so we provide three other ways to do the same thing with far less typing.  The first uses a back-end connection to [__mpoly__](http://github.com/dkahle/mpoly) to facilitate more user-friendly specifications.  For example, instead of having to create the $A$ and $b$ yourself, combine them, and format them, you can use the following much more simple syntax:
+
+```{r}
+count(c("x + y <= 10", "x >= 0", "y >= 0"))
+```
+
+The two other specifications are a list of vertices...
+```{r}
+vertices <- list(c(0,0), c(10,0), c(0,10))
+count(vertices)
+```
+... or a list containing the $A$ and $b$ matrices:
+```{r}
+count(list(A = A, b = b))
+```
+
+
+
+
+
+### Ehrhart polynomials
+
+`count()` can also be used to compute the Ehrhart polynomial of an integral polytope.  Ehrhart polynomials capture information about the relationship between a polytope's volume and the number of integer points it contains.  __latter__ uses __mpoly__ to represent the polynomials symbolically:
+
+```{r}
+count(c("x + y <= 10", "x >= 0", "y >= 0"), opts = "--ehrhart-polynomial")
+```
+
+
+
+
+
+
+### Integer programming
+
+In addition to table counting, it can also do integer programming with LattE's `latte-maximize` and `latte-minimize` programs.  To do this, it (again) uses tools from [__mpoly__](http://github.com/dkahle/mpoly) to do behind-the-scenes rearrangements.  For example, if we defined the function $f(x, y) = -2x + 3y$ over the integer points in the triangular region defined in the above example, and wanted to maximize or minimize it, we can use `latte_max()` and `latte_min()`:
+
+```{r ip}
+latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
+latte_min("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
+```
+
+Again we can check that the solution is correct with a simple diagram:
+
+```{r fig.align='center', echo=FALSE, dpi=150, fig.height=4, fig.width=4}
+points %<>% dplyr::mutate(f = -2*x + 3*y)
+ggplot(aes(x = x, y = y), data = polytope) +
+  geom_polygon(fill = "red", alpha = .2) + 
+  geom_point(aes(size = f), data = points) + 
+  coord_equal() +
+  scale_size("f(x,y)", range = c(.2, 4))
+```
+
+
+
+
+
+
+### Other applications
+
+

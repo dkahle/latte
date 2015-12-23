@@ -30,7 +30,7 @@ file.path2 <- function(...){
 
 
 
-is.formula <- function(x) class(x) == "formula"
+is.formula <- function(x) inherits(x, "formula")
 
 
 

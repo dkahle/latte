@@ -1,18 +1,27 @@
-#' Read/write a latte file to/from disk
+#' Format/read/write a matrix in latte's style
 #'
-#' \code{write.latte} writes a latte-formatted file to file, and
+#' \code{format_latte} formats a matrix in latte's style.
+#' \code{write.latte} writes a latte-formatted file to file.
 #' \code{read.latte} reads a latte-formatted file from disk.
 #'
-#' @param mat a matrix
-#' @param file the name of the file; if missing, print code
+#' @param mat A matrix
+#' @param file A filename
 #' @param format "mat" or "Ab"
-#' @return an invisible form of the saved output.
+#' @return (\code{format_latte}) A character string of the matrix in
+#'   latte format. (\code{write.latte}) An invisible character
+#'   string of the formatted output.  (\code{read.latte}) An integer
+#'   matrix.
 #' @seealso \code{\link{write.latte}}
 #' @name latteFiles
 #' @examples
+#'
 #' \dontrun{
 #'
 #' (mat <- matrix(sample(9), 3, 3))
+#'
+#' format_latte(mat)
+#' cat(format_latte(mat))
+#'
 #' write.latte(mat, "foo.hrep")
 #' file.show("foo.hrep")
 #' read.latte("foo.hrep")
@@ -21,6 +30,8 @@
 #' attr(mat, "linearity") <- c(1, 3)
 #' attr(mat, "nonnegative") <- 2
 #' mat
+#' format_latte(mat)
+#' cat(format_latte(mat))
 #' write.latte(mat, "foo.hrep")
 #' file.show("foo.hrep")
 #' read.latte("foo.hrep")
@@ -36,11 +47,9 @@
 
 
 
-
-
 #' @rdname latteFiles
 #' @export
-write.latte <- function(mat, file){
+format_latte <- function(mat, file){
 
   ## construct file in latte format
   ## e.g. "3 3\n5 6 8\n7 3 4\n2 9 1"
@@ -82,6 +91,42 @@ write.latte <- function(mat, file){
     )
     out <- paste(out, nnegLineToAdd, sep = "\n")
   }
+
+
+  ## return
+  out
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#' @rdname latteFiles
+#' @export
+write.latte <- function(mat, file){
+
+  ## arg check
+  if(missing(file)) stop("file (a filename) must be provided.")
+
+
+  ## format
+  out <- format_latte(mat)
 
 
   ## save it to disk and return
@@ -140,7 +185,7 @@ read.latte <- function(file, format = c("mat", "Ab")){
 
 
   ## put into matrix
-  mat <- matrix(unlist(matRows), nrow = dim[1], byrow = TRUE)
+  mat <- t(simplify2array(matRows))
 
 
   ## check for linearity or nonnegative lines

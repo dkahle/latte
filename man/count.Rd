@@ -81,18 +81,6 @@ count(spec, opts = "--ehrhart-taylor=4")
 count(spec, opts = "--multivariate-generating-function")
 
 
-# the number of tables with the same marginals
-data(politics)
-count(c(
-  "x11 + x12 == 10",
-  "x21 + x22 == 10",
-  "x11 + x21 == 9",
-  "x12 + x22 == 11",
-  "x11 >= 0", "x21 >= 0", "x12 >= 0", "x22 >= 0"
-))
-countTables(politics)
-
-
 # by vertices
 spec <- list(c(1,1), c(10,1), c(1,10), c(10,10))
 count(spec)
@@ -100,11 +88,11 @@ count(spec, opts = "--vrep")
 
 code <- "
 5 3
-1 -1 0
-1 0 -1
+1 -1  0
+1  0 -1
 1 -1 -1
-0 1 0
-0 0 1
+0  1  0
+0  0  1
 "
 count(code)
 

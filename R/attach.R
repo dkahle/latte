@@ -45,9 +45,15 @@
 
   ##### check that the programs were found
   ########################################
-  startup_check_for_program("latte")
-  startup_check_for_program("4ti2")
+  startup_check_for_program("latte_path")
+  startup_check_for_program("4ti2_path")
 
+
+
+
+  ##### return
+  ########################################
+  invisible(TRUE)
 }
 
 
