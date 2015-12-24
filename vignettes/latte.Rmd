@@ -193,8 +193,9 @@ latte_min("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
 ```
 
 Again we can check that the solution is correct with a simple diagram:
-
-```{r fig.align='center', echo=FALSE, dpi=150, fig.height=4, fig.width=4}
+<!-- ```{r fig.align='center', echo=FALSE, dpi=150, fig.height=4, fig.width=4}  ``` -->
+```{r fig.align='center', echo=FALSE, dpi=200, fig.height=2.5, fig.width=3}
+theme_set(theme_bw(6))
 points %<>% dplyr::mutate(f = -2*x + 3*y)
 ggplot(aes(x = x, y = y), data = polytope) +
   geom_polygon(fill = "red", alpha = .2) + 
