@@ -1,25 +1,23 @@
-#' Make a vector of ones
+#' Make an array of ones
 #'
-#' \code{ones} makes a column vector of ones, \code{ones_r} makes a
-#' row vector of one.
+#' Make an array of ones
 #'
-#' @param n How many ones
-#' @return A Column/row vector of ones as an integer matrix
-#' @export ones
-#' @name ones
+#' @param ... A sequence of dimensions separated by commas
+#' @return An integer array of ones
+#' @export
 #' @examples
 #'
 #' ones(5)
-#' ones_r(5)
+#' ones(5,1)
+#' ones(1,5)
+#' ones(2, 3)
+#' ones(2, 3, 2)
 #'
 #' str(ones(5))
 #'
-
-#' @rdname ones
-#' @export
-ones <- function(n) matrix(rep(1L, n))
-
-
-#' @rdname ones
-#' @export
-ones_r <- function(n) matrix(rep(1L, n), nrow = 1)
+ones <- function(...){
+  dims <- as.integer(as.list(match.call(expand.dots = TRUE))[-1])
+  a <- rep(1L, prod(dims))
+  dim(a) <- dims
+  a
+}

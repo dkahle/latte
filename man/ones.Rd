@@ -2,27 +2,26 @@
 % Please edit documentation in R/ones.R
 \name{ones}
 \alias{ones}
-\alias{ones_r}
-\title{Make a vector of ones}
+\title{Make an array of ones}
 \usage{
-ones(n)
-
-ones_r(n)
+ones(...)
 }
 \arguments{
-\item{n}{How many ones}
+\item{...}{A sequence of dimensions separated by commas}
 }
 \value{
-A Column/row vector of ones as an integer matrix
+An integer array of ones
 }
 \description{
-\code{ones} makes a column vector of ones, \code{ones_r} makes a
-row vector of one.
+Make an array of ones
 }
 \examples{
 
 ones(5)
-ones_r(5)
+ones(5,1)
+ones(1,5)
+ones(2, 3)
+ones(2, 3, 2)
 
 str(ones(5))
 
