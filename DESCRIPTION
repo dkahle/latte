@@ -12,14 +12,12 @@ Description: Back-end connections to LattE (\url{https://www.math.ucdavis.edu/
 License: GPL-2
 LazyData: TRUE
 Imports:
-    Rcpp (>= 0.12.2),
     magrittr,
     stringr,
     mpoly,
     ggplot2,
     memoise,
     dplyr
-LinkingTo: Rcpp
 Suggests:
     knitr,
     rmarkdown

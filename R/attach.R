@@ -68,9 +68,9 @@
 
 
 
-.onUnload <- function (libpath) {
-  library.dynam.unload("latter", libpath)
-}
+# .onUnload <- function (libpath) {
+#   library.dynam.unload("latter", libpath)
+# }
 
 
 
