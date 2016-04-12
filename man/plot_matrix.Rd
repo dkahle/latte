@@ -18,10 +18,7 @@ plot_matrix is a R variant of Matlab's \code{spy} function.
 \examples{
 
 # the no-three-way interaction configuration
-A <- hmat(c(3,3,3), subsets(1:3, 2))
-Reduce(kronecker, list())
-kronecker(diag(3), )
-kronecker()
+A <- kprod(ones(1,3), diag(3), ones(3))
 plot_matrix(A)
 plot_matrix(markov(A))
 
