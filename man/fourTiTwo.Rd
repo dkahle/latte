@@ -36,23 +36,17 @@ hilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
 graver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
 
-mem_zsolve(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
+mem_zsolve(...)
 
-memZbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
+memZbasis(...)
 
-mem_markov(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
+mem_markov(...)
 
-mem_groebner(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
+mem_groebner(...)
 
-mem_hilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
+mem_hilbert(...)
 
-mem_graver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
+mem_graver(...)
 }
 \arguments{
 \item{exec}{(temporary, don't use)}
