@@ -35,8 +35,8 @@
 #'
 #' # basic input and output for the 2x2 independence example
 #' (A <- rbind(
-#'   kprod(diag(3), ones_r(3)),
-#'   kprod(ones_r(3), diag(3))
+#'   kprod(diag(3), ones(1,3)),
+#'   kprod(ones(1,3), diag(3))
 #' ))
 #' markov(A)
 #' markov(A, "vec")
@@ -50,8 +50,8 @@
 #' # a slighly larger example, 2x3 independence)
 #' # (source: LAS ex 1.2.1, p.12)
 #' (A <- rbind(
-#'   kprod(diag(2), ones_r(3)),
-#'   kprod(ones_r(2), diag(3))
+#'   kprod(diag(2), ones(1,3)),
+#'   kprod(ones(1,2), diag(3))
 #' ))
 #'
 #' markov(A, "tab", c(3, 3))
@@ -65,9 +65,9 @@
 #'
 #' # comparing the bases for the 3x3x3 no-three-way interaction model
 #' A <- rbind(
-#'   kprod(  diag(3),   diag(3), ones_r(3)),
-#'   kprod(  diag(3), ones_r(3),   diag(3)),
-#'   kprod(ones_r(3),   diag(3),   diag(3))
+#'   kprod(  diag(3),   diag(3), ones(1,3)),
+#'   kprod(  diag(3), ones(1,3),   diag(3)),
+#'   kprod(ones(1,3),   diag(3),   diag(3))
 #' )
 #' str(zbasis(A))   #    8 elements = ncol(A) - qr(A)$rank
 #' str(markov(A))   #   81 elements
@@ -76,26 +76,30 @@
 #'
 #'
 #'
-#' # you can memoise the result; this will cache the result for
-#' # future use.  (note that it doesn't persist across sessions.)
+#' # the 4ti2 functions are automatically cached for future use.
+#' # (note that it doesn't persist across sessions.)
 #' A <- rbind(
-#'   kprod(  diag(4), ones_r(4), ones_r(4)),
-#'   kprod(ones_r(4),   diag(4), ones_r(4)),
-#'   kprod(ones_r(4), ones_r(4),   diag(4))
+#'   kprod(  diag(4), ones(1,4), ones(1,4)),
+#'   kprod(ones(1,4),   diag(4), ones(1,4)),
+#'   kprod(ones(1,4), ones(1,4),   diag(4))
 #' )
 #' system.time(markov(A))
 #' system.time(markov(A))
-#' system.time(mem_markov(A))
-#' system.time(mem_markov(A))
+#'
+#' # the un-cashed versions begin with an "f"
+#' # (think: "forgetful" markov)
+#' system.time(fmarkov(A))
+#' system.time(fmarkov(A))
 #'
 #' A <- rbind(
-#'   kprod(  diag(3), ones_r(3), ones_r(2)),
-#'   kprod(ones_r(3),   diag(3), ones_r(2)),
-#'   kprod(ones_r(3), ones_r(3),   diag(2))
+#'   kprod(  diag(3), ones(1,3), ones(1,2)),
+#'   kprod(ones(1,3),   diag(3), ones(1,2)),
+#'   kprod(ones(1,3), ones(1,3),   diag(2))
 #' )
 #' system.time(graver(A))
-#' system.time(mem_graver(A))
-#' system.time(mem_graver(A))
+#' system.time(graver(A))
+#' system.time(fgraver(A))
+#' system.time(fgraver(A))
 #'
 #'
 #'
@@ -107,9 +111,9 @@
 #'
 #' # LAS example 1.2.12, p.17  (no 3-way interaction)
 #' (A <- rbind(
-#'   kprod(  diag(2),   diag(2), ones_r(2)),
-#'   kprod(  diag(2), ones_r(2),   diag(2)),
-#'   kprod(ones_r(2),   diag(2),   diag(2))
+#'   kprod(  diag(2),   diag(2), ones(1,2)),
+#'   kprod(  diag(2), ones(1,2),   diag(2)),
+#'   kprod(ones(1,2),   diag(2),   diag(2))
 #' ))
 #' markov(A)
 #' tableau(markov(A), dim = c(2,2,2))
@@ -118,9 +122,9 @@
 #'
 #' # LAS example 1.2.12, p.16  (no 3-way interaction)
 #' A <- rbind(
-#'   kprod(  diag(2),   diag(2),  ones_r(2), ones_r(2)),
-#'   kprod(  diag(2), ones_r(2),  ones_r(2),   diag(2)),
-#'   kprod(ones_r(2),   diag(2),    diag(2), ones_r(2))
+#'   kprod(  diag(2),   diag(2),  ones(1,2), ones(1,2)),
+#'   kprod(  diag(2), ones(1,2),  ones(1,2),   diag(2)),
+#'   kprod(ones(1,2),   diag(2),    diag(2), ones(1,2))
 #' )
 #' plot_matrix(A)
 #' zbasis(A)
@@ -139,8 +143,8 @@
 #' # using the markov bases database, must be connected to internet
 #' # A <- markov(dbName = "ind3-3")
 #' B <- markov(rbind(
-#'   kprod(diag(3), ones_r(3)),
-#'   kprod(ones_r(3), diag(3))
+#'   kprod(diag(3), ones(1,3)),
+#'   kprod(ones(1,3), diag(3))
 #' ))
 #' # all(A == B)
 #'
@@ -154,7 +158,7 @@
 #'
 #'
 #'
-#'
+#' # possible issues
 #' markov(diag(1, 10))
 #' zbasis(diag(1, 10), "vec")
 #' groebner(diag(1, 10), "vec", all = TRUE)
@@ -172,7 +176,7 @@
 
 
 
-basis <- function(exec){
+basis <- function(exec, memoise = TRUE){
 
   ## stuff in basis
   extension <- switch(exec,
@@ -203,8 +207,12 @@ basis <- function(exec){
   )
 
 
+  ## memoise or not
+  mem_or_not <- if(memoise) memoise::memoise else function(x) x
+
+
   ## create the function to return
-  function(A, format = c("mat", "vec", "tab"), dim = NULL,
+  mem_or_not(function(A, format = c("mat", "vec", "tab"), dim = NULL,
     all = FALSE, dir = tempdir(), opts = defaultOpts, quiet = TRUE,
     dbName = NULL
   ){
@@ -314,7 +322,7 @@ basis <- function(exec){
       if(format == "vec") return(lbasis)
       if(format == "tab") return(lapply(lbasis, vec2tab, dim = dim))
     }
-  }
+  })
 }
 
 
@@ -323,27 +331,27 @@ basis <- function(exec){
 
 #' @export
 #' @rdname fourTiTwo
-zsolve <- basis("zsolve")
+zsolve <- basis("zsolve", memoise = TRUE)
 
 #' @export
 #' @rdname fourTiTwo
-zbasis <- basis("zbasis")
+zbasis <- basis("zbasis", memoise = TRUE)
 
 #' @export
 #' @rdname fourTiTwo
-markov <- basis("markov")
+markov <- basis("markov", memoise = TRUE)
 
 #' @export
 #' @rdname fourTiTwo
-groebner <- basis("groebner")
+groebner <- basis("groebner", memoise = TRUE)
 
 #' @export
 #' @rdname fourTiTwo
-hilbert <- basis("hilbert")
+hilbert <- basis("hilbert", memoise = TRUE)
 
 #' @export
 #' @rdname fourTiTwo
-graver <- basis("graver")
+graver <- basis("graver", memoise = TRUE)
 
 
 
@@ -352,27 +360,27 @@ graver <- basis("graver")
 
 #' @export
 #' @rdname fourTiTwo
-mem_zsolve <- memoise::memoise(zsolve)
+fzsolve <- basis("zsolve", memoise = FALSE)
 
 #' @export
 #' @rdname fourTiTwo
-memZbasis <- memoise::memoise(zbasis)
+fzbasis <- basis("zbasis", memoise = FALSE)
 
 #' @export
 #' @rdname fourTiTwo
-mem_markov <- memoise::memoise(markov)
+fmarkov <- basis("markov", memoise = FALSE)
 
 #' @export
 #' @rdname fourTiTwo
-mem_groebner <- memoise::memoise(groebner)
+fgroebner <- basis("groebner", memoise = FALSE)
 
 #' @export
 #' @rdname fourTiTwo
-mem_hilbert <- memoise::memoise(hilbert)
+fhilbert <- basis("hilbert", memoise = FALSE)
 
 #' @export
 #' @rdname fourTiTwo
-mem_graver <- memoise::memoise(graver)
+fgraver <- basis("graver", memoise = FALSE)
 
 
 

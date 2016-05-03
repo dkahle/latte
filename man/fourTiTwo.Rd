@@ -2,54 +2,56 @@
 % Please edit documentation in R/4ti2.R
 \name{basis}
 \alias{basis}
+\alias{fgraver}
+\alias{fgroebner}
+\alias{fhilbert}
+\alias{fmarkov}
+\alias{fzbasis}
+\alias{fzsolve}
 \alias{graver}
 \alias{groebner}
 \alias{hilbert}
 \alias{markov}
-\alias{memZbasis}
-\alias{mem_graver}
-\alias{mem_groebner}
-\alias{mem_hilbert}
-\alias{mem_markov}
-\alias{mem_zsolve}
 \alias{zbasis}
 \alias{zsolve}
 \title{Compute a basis with 4ti2}
 \usage{
-basis(exec)
+basis(exec, memoise = TRUE)
 
-zsolve(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
+zsolve(...)
+
+zbasis(...)
+
+markov(...)
+
+groebner(...)
+
+hilbert(...)
+
+graver(...)
+
+fzsolve(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
 
-zbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
+fzbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
 
-markov(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
+fmarkov(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
 
-groebner(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
+fgroebner(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
 
-hilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
+fhilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
 
-graver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
+fgraver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), opts = defaultOpts, quiet = TRUE, dbName = NULL)
-
-mem_zsolve(...)
-
-memZbasis(...)
-
-mem_markov(...)
-
-mem_groebner(...)
-
-mem_hilbert(...)
-
-mem_graver(...)
 }
 \arguments{
 \item{exec}{(temporary, don't use)}
+
+\item{...}{...}
 
 \item{A}{a matrix}
 
@@ -72,8 +74,6 @@ groebner; "" for graver)}
 
 \item{dbName}{the name of the model in the markov bases database,
 http://markov-bases.de, see examples}
-
-\item{...}{...}
 }
 \value{
 a matrix containing the Markov basis as its columns (for
@@ -93,8 +93,8 @@ details.
 
 # basic input and output for the 2x2 independence example
 (A <- rbind(
-  kprod(diag(3), ones_r(3)),
-  kprod(ones_r(3), diag(3))
+  kprod(diag(3), ones(1,3)),
+  kprod(ones(1,3), diag(3))
 ))
 markov(A)
 markov(A, "vec")
@@ -108,8 +108,8 @@ tableau(markov(A), dim = c(3, 3)) # tableau notation
 # a slighly larger example, 2x3 independence)
 # (source: LAS ex 1.2.1, p.12)
 (A <- rbind(
-  kprod(diag(2), ones_r(3)),
-  kprod(ones_r(2), diag(3))
+  kprod(diag(2), ones(1,3)),
+  kprod(ones(1,2), diag(3))
 ))
 
 markov(A, "tab", c(3, 3))
@@ -123,9 +123,9 @@ markov(A, "tab", c(3, 3), TRUE)
 
 # comparing the bases for the 3x3x3 no-three-way interaction model
 A <- rbind(
-  kprod(  diag(3),   diag(3), ones_r(3)),
-  kprod(  diag(3), ones_r(3),   diag(3)),
-  kprod(ones_r(3),   diag(3),   diag(3))
+  kprod(  diag(3),   diag(3), ones(1,3)),
+  kprod(  diag(3), ones(1,3),   diag(3)),
+  kprod(ones(1,3),   diag(3),   diag(3))
 )
 str(zbasis(A))   #    8 elements = ncol(A) - qr(A)$rank
 str(markov(A))   #   81 elements
@@ -134,26 +134,30 @@ str(graver(A))   #  795 elements
 
 
 
-# you can memoise the result; this will cache the result for
-# future use.  (note that it doesn't persist across sessions.)
+# the 4ti2 functions are automatically cached for future use.
+# (note that it doesn't persist across sessions.)
 A <- rbind(
-  kprod(  diag(4), ones_r(4), ones_r(4)),
-  kprod(ones_r(4),   diag(4), ones_r(4)),
-  kprod(ones_r(4), ones_r(4),   diag(4))
+  kprod(  diag(4), ones(1,4), ones(1,4)),
+  kprod(ones(1,4),   diag(4), ones(1,4)),
+  kprod(ones(1,4), ones(1,4),   diag(4))
 )
 system.time(markov(A))
 system.time(markov(A))
-system.time(mem_markov(A))
-system.time(mem_markov(A))
+
+# the un-cashed versions begin with an "f"
+# (think: "forgetful" markov)
+system.time(fmarkov(A))
+system.time(fmarkov(A))
 
 A <- rbind(
-  kprod(  diag(3), ones_r(3), ones_r(2)),
-  kprod(ones_r(3),   diag(3), ones_r(2)),
-  kprod(ones_r(3), ones_r(3),   diag(2))
+  kprod(  diag(3), ones(1,3), ones(1,2)),
+  kprod(ones(1,3),   diag(3), ones(1,2)),
+  kprod(ones(1,3), ones(1,3),   diag(2))
 )
 system.time(graver(A))
-system.time(mem_graver(A))
-system.time(mem_graver(A))
+system.time(graver(A))
+system.time(fgraver(A))
+system.time(fgraver(A))
 
 
 
@@ -165,9 +169,9 @@ system.time(mem_graver(A))
 
 # LAS example 1.2.12, p.17  (no 3-way interaction)
 (A <- rbind(
-  kprod(  diag(2),   diag(2), ones_r(2)),
-  kprod(  diag(2), ones_r(2),   diag(2)),
-  kprod(ones_r(2),   diag(2),   diag(2))
+  kprod(  diag(2),   diag(2), ones(1,2)),
+  kprod(  diag(2), ones(1,2),   diag(2)),
+  kprod(ones(1,2),   diag(2),   diag(2))
 ))
 markov(A)
 tableau(markov(A), dim = c(2,2,2))
@@ -176,9 +180,9 @@ tableau(markov(A), dim = c(2,2,2))
 
 # LAS example 1.2.12, p.16  (no 3-way interaction)
 A <- rbind(
-  kprod(  diag(2),   diag(2),  ones_r(2), ones_r(2)),
-  kprod(  diag(2), ones_r(2),  ones_r(2),   diag(2)),
-  kprod(ones_r(2),   diag(2),    diag(2), ones_r(2))
+  kprod(  diag(2),   diag(2),  ones(1,2), ones(1,2)),
+  kprod(  diag(2), ones(1,2),  ones(1,2),   diag(2)),
+  kprod(ones(1,2),   diag(2),    diag(2), ones(1,2))
 )
 plot_matrix(A)
 zbasis(A)
@@ -197,8 +201,8 @@ graver(A)
 # using the markov bases database, must be connected to internet
 # A <- markov(dbName = "ind3-3")
 B <- markov(rbind(
-  kprod(diag(3), ones_r(3)),
-  kprod(ones_r(3), diag(3))
+  kprod(diag(3), ones(1,3)),
+  kprod(ones(1,3), diag(3))
 ))
 # all(A == B)
 
@@ -212,7 +216,7 @@ B <- markov(rbind(
 
 
 
-
+# possible issues
 markov(diag(1, 10))
 zbasis(diag(1, 10), "vec")
 groebner(diag(1, 10), "vec", all = TRUE)
