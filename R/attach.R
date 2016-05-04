@@ -4,8 +4,8 @@
   ########################################
   if(is.mac()){
 
-    mac_search_and_set("count", "latte", "latte_path")
-    mac_search_and_set("markov", "latte", "4ti2_path")
+    unix_search_and_set("count", "latte", "latte_path")
+    unix_search_and_set("markov", "latte", "4ti2_path")
 
   }
 
@@ -38,6 +38,8 @@
   ########################################
   if(is.linux()){
 
+    unix_search_and_set("count", "latte", "latte_path")
+    unix_search_and_set("markov", "latte", "4ti2_path")
 
   }
 
@@ -216,7 +218,7 @@ win_search_and_set <- function(optionName){
 
 # this seems too slow to load every time, so the below wraps it
 # it reduces the search space where this function is then used
-mac_find <- function(exec, where){
+unix_find <- function(exec, where){
 
   # query the system and clean attributes
   query <- sprintf("find %s -name %s", where, exec)
@@ -234,10 +236,19 @@ mac_find <- function(exec, where){
 }
 
 
-mac_search_and_set <- function(exec, baseName, optionName){
+unix_search_and_set <- function(exec, baseName, optionName){
 
   # grab path and parse
-  PATH <- system("source ~/.bash_profile; echo $PATH", intern = TRUE)
+  profile_to_look_for <-
+    if(file.exists("~/.bash_profile")){
+      ".bash_profile"
+    } else if(file.exists("~/.bashrc")){
+      ".bashrc"
+    } else if(file.exists("~/.profile")){
+      ".profile"
+    }
+
+  PATH <- system(sprintf("source ~/%s; echo $PATH", profile_to_look_for), intern = TRUE)
   dirs_to_check <- c(stringr::str_split(PATH, ":")[[1]], "~/", "/Applications")
 
   # check for main dir name
@@ -246,7 +257,7 @@ mac_search_and_set <- function(exec, baseName, optionName){
 
   # seek and find
   for(path in dirs_to_check){
-    found_path <- mac_find(exec, path)
+    found_path <- unix_find(exec, path)
     if(!is.na(found_path)) break
   }
 
