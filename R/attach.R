@@ -23,7 +23,7 @@
     if(!whereis_is_accessible()){ # check for whereis, return if not found
       psm(
         "The whereis function was not found, so algstat can't find the required exe's.\n",
-        "  Try setting the paths with setLattePath(), and set4ti2Path()."
+        "  Try setting the paths with set_latte_path() and set_4ti2_path()."
       )
       return()
     }
@@ -196,7 +196,7 @@ whereis_is_accessible <- function() unname(Sys.which("whereis")) != ""
 
 win_find <- function(s){
   wexe <- unname(Sys.which("whereis"))
-  x <- system(paste(wexe, s), TRUE)
+  x <- system(paste(wexe, s), intern = TRUE)
   str_sub(x, nchar(s)+2)
 }
 
@@ -221,8 +221,10 @@ win_search_and_set <- function(optionName){
 
 
 
-# this seems too slow to load every time, so the below wraps it
-# it reduces the search space where this function is then used
+# unix_find looks for a specific executable in a specific directory
+# (or its children)
+# however, we don't just use this on / because it'd take forever
+# so unix_search_and_set uses unix_find to search specific directories
 unix_find <- function(exec, where){
 
   # query the system and clean attributes
@@ -239,6 +241,10 @@ unix_find <- function(exec, where){
   # return
   path
 }
+
+
+
+
 
 
 unix_search_and_set <- function(exec, baseName, optionName){
