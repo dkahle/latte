@@ -1,8 +1,8 @@
 ---
-title: "LattE and 4ti2 in R"
+title: "__latter__: LattE and 4ti2 in R"
 author: "David Kahle, Ruriko Yoshida, and Luis Garcia"
 date: "`r Sys.Date()`"
-output: rmarkdown::html_vignette
+output: rmarkdown::pdf_document
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,9 +11,7 @@ vignette: >
 
 ### Getting started with __latter__
 
-__latter__ is an R package that provides back-end connections to [LattE](https://www.math.ucdavis.edu/~latte/) and [4ti2](http://www.4ti2.de/) executables and front-end tools facilitating their use in the R ecosystem.  For indirect applications of these programs to problems in algebraic statistics see the [__algstat__ package](https://github.com/dkahle/algstat).
-
-__latter__ is still under active development, so currently all of its functionality is present __algstat__, where it was first developed.  This will change.  Eventually  __latter__ will contain all the connections and basic front-end functionality of LattE and 4ti2 executables, which are general-purpose in nature, and __algstat__ will depend on these connections and functions to perform algebraic statistical tasks.
+__latter__ is an R package that provides back-end connections to [LattE](https://www.math.ucdavis.edu/~latte/) and [4ti2](http://www.4ti2.de/) executables and front-end tools facilitating their use in the R ecosystem. Many of the functions in __latter__ are improved versions of previous implementations found in the __algstat__ package [__algstat__ package](https://github.com/dkahle/algstat).  In the future, __algstat__ will depend on these connections and functions to perform algebraic statistical tasks.
 
 Note: __latter__ assumes you have LattE and 4ti2 installed and __latter__ has registered it (i.e. has found its path).  If you don't have them, take one of the following two paths to get them.  In either case, note that 4ti2 comes with LattE now, so you'll just need to get LattE.
 
@@ -132,8 +130,8 @@ count(code)
 ```
 
 It's easy to confirm the solution with a simple visualization:  
-```{r countExample, fig.align='center', echo=FALSE, dpi=200, fig.height=2.5, fig.width=2.5}
-library(ggplot2); theme_set(theme_bw(7)); library(magrittr)
+```{r countExample, fig.align='center', fig.height=3.5, fig.width=3.5}
+library(ggplot2); theme_set(theme_classic()); library(magrittr)
 polytope <- data.frame(x = c(0, 10, 0), y = c(0, 0, 10))
 
 points   <- expand.grid(x = 0:10, y = 0:10) %>% dplyr::filter(x + y <= 10) %>%
@@ -141,7 +139,7 @@ points   <- expand.grid(x = 0:10, y = 0:10) %>% dplyr::filter(x + y <= 10) %>%
 
 ggplot(aes(x = x, y = y), data = polytope) +
   geom_polygon(fill = "red", alpha = .2, size = 1) + 
-  geom_text(aes(label = number), nudge_y = .3, size = 1.5, data = points) +
+  geom_text(aes(label = number), nudge_y = .3, size = 2.5, data = points) +
   geom_point(data = points, size = .75) + 
   scale_x_continuous(breaks = 0:10, minor_breaks = NULL) +
   scale_y_continuous(breaks = 0:10, minor_breaks = NULL) +

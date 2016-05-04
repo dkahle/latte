@@ -34,7 +34,7 @@ cat(code)
 ## ------------------------------------------------------------------------
 count(code)
 
-## ----countExample, fig.align='center', echo=FALSE, dpi=200, fig.height=2.5, fig.width=2.5----
+## ----countExample, fig.align='center', echo=FALSE, fig.ext='pdf', fig.height=2.5, fig.width=2.5----
 library(ggplot2); theme_set(theme_bw(7)); library(magrittr)
 polytope <- data.frame(x = c(0, 10, 0), y = c(0, 0, 10))
 
