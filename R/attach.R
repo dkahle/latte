@@ -236,22 +236,26 @@ mac_find <- function(exec, where){
 
 mac_search_and_set <- function(exec, baseName, optionName){
 
-  # look in applications and home
-  apps <- list.files("/Applications")
-  home <- list.files("~")
+  # grab path and parse
+  PATH <- system("source ~/.bash_profile; echo $PATH", intern = TRUE)
+  dirs_to_check <- c(stringr::str_split(PATH, ":")[[1]], "~/", "/Applications")
 
   # check for main dir name
-  ndxApps  <- which(stringr::str_detect(tolower(apps), baseName))
-  ndxHome  <- which(stringr::str_detect(tolower(home), baseName))
+  ndx_with_baseName_dir  <- which(stringr::str_detect(tolower(dirs_to_check), baseName))
+  baseName_path <- dirs_to_check[ndx_with_baseName_dir]
 
-  if(length(ndxApps) == 0 && length(ndxHome) == 0){
-    return(NULL)
-  } else if(length(ndxApps) != 0){
-    path <- mac_find(exec, paste0("/Applications/", apps[ndxApps]))
-  } else if(length(ndxHome) != 0){
-    path <- mac_find(exec, paste0("~/", apps[ndxApps]))
+  # seek and find
+  for(path in dirs_to_check){
+    found_path <- mac_find(exec, path)
+    if(!is.na(found_path)) break
   }
 
-  setOption(optionName, dirname(path))
+  # break in a failure
+  if(is.na(found_path)) return()
 
+  # set option and exit
+  setOption(optionName, dirname(found_path))
+
+  # invisibly return path
+  invisible(dirname(found_path))
 }
