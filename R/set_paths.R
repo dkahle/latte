@@ -1,8 +1,31 @@
-#' Set paths to external functions
+#' Set paths to LattE and 4ti2 executables
 #'
 #' These functions set the path to external programs either by (1)
 #' passing them a character string or (2) using
 #' \code{\link{file.choose}}.
+#'
+#' When latter is loaded it attempts to find LattE and 4ti2
+#' executables (represented by count and markov, respectively).  How
+#' it looks depends on your operating system.
+#'
+#' If you're using a Mac or Linux machine, it looks based on your
+#' system's path.  Unfortunately, R changes the system path in such
+#' a way that the path that R sees is not the same as the path that
+#' you'd see if you were working in the terminal. (You can open the
+#' Terminal app on a Mac by going to
+#' /Applications/Utilities/Terminal.)  Consequently, latter tries to
+#' guess the file in which your path is set.  To do so, it first
+#' checks if your home directory (type echo ~/ in the terminal to
+#' figure out which directory this is if you don't know) for the
+#' file named .bash_profile.  If this file is present, it runs it
+#' and then checks your system's path variable (echo $PATH).  If
+#' it's not present, it does the same for .bashrc and then .profile.
+#' In any case, once it has its best guess at your path, it looks
+#' for "latte".
+#'
+#' On Windows, latter just uses Sys.which() on "whereis" to
+#' determine where the executables count and markov are (for LattE
+#' and 4ti2, respectively).
 #'
 #' @param path A character string, the path to a 4ti2 function (e.g.
 #'   markov) for setting 4ti2's path or a LattE function (e.g.

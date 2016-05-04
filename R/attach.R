@@ -4,8 +4,8 @@
   ########################################
   if(is.mac()){
 
-    mac_search_and_set("count", "latte", "latte_path")
-    mac_search_and_set("markov", "latte", "4ti2_path")
+    unix_search_and_set("count", "latte", "latte_path")
+    unix_search_and_set("markov", "latte", "4ti2_path")
 
   }
 
@@ -23,7 +23,7 @@
     if(!whereis_is_accessible()){ # check for whereis, return if not found
       psm(
         "The whereis function was not found, so algstat can't find the required exe's.\n",
-        "  Try setting the paths with setLattePath(), and set4ti2Path()."
+        "  Try setting the paths with set_latte_path() and set_4ti2_path()."
       )
       return()
     }
@@ -38,6 +38,8 @@
   ########################################
   if(is.linux()){
 
+    unix_search_and_set("count", "latte", "latte_path")
+    unix_search_and_set("markov", "latte", "4ti2_path")
 
   }
 
@@ -132,6 +134,11 @@ startup_check_for_program <- function(optionName){
   longName <- longName(optionName)
   setFun <- setFun(optionName)
 
+  if(!is.null(getOption(optionName))){
+    psms("%s found in %s", longName, getOption(optionName))
+    return(invisible(FALSE))
+  }
+
   if(is.null(getOption(optionName))){
     psms("%s not found. Set the location with %s", longName, setFun)
     return(invisible(FALSE))
@@ -189,7 +196,7 @@ whereis_is_accessible <- function() unname(Sys.which("whereis")) != ""
 
 win_find <- function(s){
   wexe <- unname(Sys.which("whereis"))
-  x <- system(paste(wexe, s), TRUE)
+  x <- system(paste(wexe, s), intern = TRUE)
   str_sub(x, nchar(s)+2)
 }
 
@@ -214,9 +221,11 @@ win_search_and_set <- function(optionName){
 
 
 
-# this seems too slow to load every time, so the below wraps it
-# it reduces the search space where this function is then used
-mac_find <- function(exec, where){
+# unix_find looks for a specific executable in a specific directory
+# (or its children)
+# however, we don't just use this on / because it'd take forever
+# so unix_search_and_set uses unix_find to search specific directories
+unix_find <- function(exec, where){
 
   # query the system and clean attributes
   query <- sprintf("find %s -name %s", where, exec)
@@ -234,24 +243,43 @@ mac_find <- function(exec, where){
 }
 
 
-mac_search_and_set <- function(exec, baseName, optionName){
 
-  # look in applications and home
-  apps <- list.files("/Applications")
-  home <- list.files("~")
+
+
+
+unix_search_and_set <- function(exec, baseName, optionName){
+
+  # grab path and parse
+  profile_to_look_for <-
+    if(file.exists("~/.bash_profile")){
+      ".bash_profile"
+    } else if(file.exists("~/.bashrc")){
+      ".bashrc"
+    } else if(file.exists("~/.profile")){
+      ".profile"
+    }
+
+  # PATH <- system(sprintf("source ~/%s; echo $PATH", profile_to_look_for), intern = TRUE)
+  # the above doesn't work on ubuntu, which uses the dash shell (which doesn't have source)
+  PATH <- system(sprintf("echo 'source ~/%s; echo $PATH' | /bin/bash", profile_to_look_for), intern = TRUE)
+  dirs_to_check <- stringr::str_split(PATH, ":")[[1]]
 
   # check for main dir name
-  ndxApps  <- which(stringr::str_detect(tolower(apps), baseName))
-  ndxHome  <- which(stringr::str_detect(tolower(home), baseName))
+  ndx_with_baseName_dir  <- which(stringr::str_detect(tolower(dirs_to_check), baseName))
+  baseName_path <- dirs_to_check[ndx_with_baseName_dir]
 
-  if(length(ndxApps) == 0 && length(ndxHome) == 0){
-    return(NULL)
-  } else if(length(ndxApps) != 0){
-    path <- mac_find(exec, paste0("/Applications/", apps[ndxApps]))
-  } else if(length(ndxHome) != 0){
-    path <- mac_find(exec, paste0("~/", apps[ndxApps]))
+  # seek and find
+  for(path in dirs_to_check){
+    found_path <- unix_find(exec, path)
+    if(!is.na(found_path)) break
   }
 
-  setOption(optionName, dirname(path))
+  # break in a failure
+  if(is.na(found_path)) return()
 
+  # set option and exit
+  setOption(optionName, dirname(found_path))
+
+  # invisibly return path
+  invisible(dirname(found_path))
 }
