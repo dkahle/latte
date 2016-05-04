@@ -248,8 +248,10 @@ unix_search_and_set <- function(exec, baseName, optionName){
       ".profile"
     }
 
-  PATH <- system(sprintf("source ~/%s; echo $PATH", profile_to_look_for), intern = TRUE)
-  dirs_to_check <- stringr::str_split(PATH, ":")[[1]] #, "~/", "/Applications")
+  # PATH <- system(sprintf("source ~/%s; echo $PATH", profile_to_look_for), intern = TRUE)
+  # the above doesn't work on ubuntu, which uses the dash shell (which doesn't have source)
+  PATH <- system(sprintf("echo 'source ~/%s; echo $PATH' | /bin/bash", profile_to_look_for), intern = TRUE)
+  dirs_to_check <- stringr::str_split(PATH, ":")[[1]]
 
   # check for main dir name
   ndx_with_baseName_dir  <- which(stringr::str_detect(tolower(dirs_to_check), baseName))
