@@ -249,7 +249,7 @@ unix_search_and_set <- function(exec, baseName, optionName){
     }
 
   PATH <- system(sprintf("source ~/%s; echo $PATH", profile_to_look_for), intern = TRUE)
-  dirs_to_check <- c(stringr::str_split(PATH, ":")[[1]], "~/", "/Applications")
+  dirs_to_check <- stringr::str_split(PATH, ":")[[1]] #, "~/", "/Applications")
 
   # check for main dir name
   ndx_with_baseName_dir  <- which(stringr::str_detect(tolower(dirs_to_check), baseName))
