@@ -134,6 +134,11 @@ startup_check_for_program <- function(optionName){
   longName <- longName(optionName)
   setFun <- setFun(optionName)
 
+  if(!is.null(getOption(optionName))){
+    psms("%s found in %s", longName, getOption(optionName))
+    return(invisible(FALSE))
+  }
+
   if(is.null(getOption(optionName))){
     psms("%s not found. Set the location with %s", longName, setFun)
     return(invisible(FALSE))
