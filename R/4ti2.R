@@ -13,8 +13,6 @@
 #' @param all If TRUE, all moves (+ and -) are given.  if FALSE,
 #'   only the + moves are given as returned by the executable.
 #' @param dir Directory to place the files in, without an ending /
-#' @param opts Options for basis ("-parb" for markov, zbasis, and
-#'   groebner; "" for graver)
 #' @param quiet If FALSE, messages the 4ti2 output
 #' @param shell Messages the shell code used to do the computation
 #' @param dbName The name of the model in the markov bases database,
@@ -22,7 +20,7 @@
 #' @param ... Additional arguments to pass to the function
 #' @return a matrix containing the Markov basis as its columns (for
 #'   easy addition to tables)
-#' @rdname fourTiTwo
+#' @name fourTiTwo
 #' @references Drton, M., B. Sturmfels, and S. Sullivant (2009).
 #'   \emph{Lectures on Algebraic Statistics}, Basel: Birkhauser
 #'   Verlag AG.
@@ -172,7 +170,8 @@
 
 
 
-
+#' @param exec don't use this parameter
+#' @param memoise don't use this parameter
 basis <- function(exec, memoise = TRUE){
 
   ## stuff in basis
@@ -192,15 +191,6 @@ basis <- function(exec, memoise = TRUE){
     graver = "graver",
     zbasis = "lattice",
     zsolve = "solve"
-  )
-
-  defaultOpts = switch(exec,
-    markov = "-parb",
-    groebner = "-parb",
-    hilbert = "-p=gmp",
-    graver = "-p=gmp",
-    zbasis = "-parb",
-    zsolve = "-p=gmp"
   )
 
 

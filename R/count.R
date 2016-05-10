@@ -18,9 +18,6 @@
 #'
 #' @param spec Specification, see details and examples
 #' @param dir Directory to place the files in, without an ending /
-#' @param opts Options for count; "" for a hyperplane
-#'   representation, "--vrep" for a vertex representation; see the
-#'   LattE manual at \url{http://www.math.ucdavis.edu/~latte}
 #' @param quiet Show latte output?
 #' @param mpoly When opts = "--ehrhart-polynomial", return the mpoly
 #'   version of it

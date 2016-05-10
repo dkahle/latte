@@ -25,10 +25,6 @@ version of it}
 \item{...}{Additional arguments to pass to the function, see
 count --help at the command line to see examples.  Note that
 dashes - should be specified with underscores _}
-
-\item{opts}{Options for count; "" for a hyperplane
-representation, "--vrep" for a vertex representation; see the
-LattE manual at \url{http://www.math.ucdavis.edu/~latte}}
 }
 \value{
 The count.  If the count is a number has less than 10
