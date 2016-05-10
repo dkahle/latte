@@ -2,28 +2,33 @@
 % Please edit documentation in R/count.R
 \name{count}
 \alias{count}
-\alias{mem_count}
+\alias{count_core}
+\alias{fcount}
 \title{Count integer points in a polytope}
 \usage{
-count(spec, dir = tempdir(), opts = "", quiet = TRUE, mpoly = TRUE)
+count_core(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...)
 
-mem_count(...)
+count(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...)
+
+fcount(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...)
 }
 \arguments{
 \item{spec}{Specification, see details and examples}
 
 \item{dir}{Directory to place the files in, without an ending /}
 
-\item{opts}{Options for count; "" for a hyperplane
-representation, "--vrep" for a vertex representation; see the
-LattE manual at \url{http://www.math.ucdavis.edu/~latte}}
-
 \item{quiet}{Show latte output?}
 
 \item{mpoly}{When opts = "--ehrhart-polynomial", return the mpoly
 version of it}
 
-\item{...}{...}
+\item{...}{Additional arguments to pass to the function, see
+count --help at the command line to see examples.  Note that
+dashes - should be specified with underscores _}
+
+\item{opts}{Options for count; "" for a hyperplane
+representation, "--vrep" for a vertex representation; see the
+LattE manual at \url{http://www.math.ucdavis.edu/~latte}}
 }
 \value{
 The count.  If the count is a number has less than 10
@@ -54,37 +59,38 @@ on it.
 
 spec <- c("x + y <= 10", "x >= 1", "y >= 1")
 count(spec) # 45
-count(spec, opts = "--dilation=10") # 3321
-count(spec, opts = "--homog") # 45
+count(spec, quiet = FALSE) # 45
+count(spec, dilation = 10) # 3321
+count(spec, homog = TRUE) # 45
 
 # by default, the output from LattE is in
 list.files(tempdir())
 list.files(tempdir(), recursive = TRUE)
 
 # ehrhart polynomials
-count(spec, opts = "--ehrhart-polynomial")
-count(spec, opts = "--ehrhart-polynomial", mpoly = FALSE)
+count(spec, ehrhart_polynomial = TRUE)
+count(spec, ehrhart_polynomial = TRUE, mpoly = FALSE)
 
 # ehrhart series (raw since mpoly can't handle rational functions)
-count(spec, opts = "--ehrhart-series")
+count(spec, ehrhart_series = TRUE)
 
 # simplified ehrhart series - not yet implemented
-#count(spec, opts = "--simplified-ehrhart-polynomial")
+#count(spec, simplified_ehrhart_polynomial = TRUE)
 
 # first terms of the ehrhart series
-count(spec, opts = "--ehrhart-taylor=1")
-count(spec, opts = "--ehrhart-taylor=2")
-count(spec, opts = "--ehrhart-taylor=3")
-count(spec, opts = "--ehrhart-taylor=4")
+count(spec, ehrhart_taylor = 1)
+count(spec, ehrhart_taylor = 2)
+count(spec, ehrhart_taylor = 3)
+count(spec, ehrhart_taylor = 4)
 
 # multivariate generating function
-count(spec, opts = "--multivariate-generating-function")
+count(spec, multivariate_generating_function = TRUE)
 
 
 # by vertices
 spec <- list(c(1,1), c(10,1), c(1,10), c(10,10))
 count(spec)
-count(spec, opts = "--vrep")
+count(spec, vrep = TRUE)
 
 code <- "
 5 3
@@ -111,13 +117,12 @@ count(list(A = A, b = b))
 
 
 
-
+count(spec, dilation = 1e5) # 3321
 
 
 
 
 
 }
-
 }
 
