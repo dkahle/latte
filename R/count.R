@@ -18,54 +18,54 @@
 #'
 #' @param spec Specification, see details and examples
 #' @param dir Directory to place the files in, without an ending /
-#' @param opts Options for count; "" for a hyperplane
-#'   representation, "--vrep" for a vertex representation; see the
-#'   LattE manual at \url{http://www.math.ucdavis.edu/~latte}
 #' @param quiet Show latte output?
 #' @param mpoly When opts = "--ehrhart-polynomial", return the mpoly
 #'   version of it
+#' @param ... Additional arguments to pass to the function, see
+#'   count --help at the command line to see examples.  Note that
+#'   dashes - should be specified with underscores _
 #' @return The count.  If the count is a number has less than 10
 #'   digits, an integer is returned.  If the number has 10 or more
 #'   digits, an integer in a character string is returned. You may
 #'   want to use the gmp package's as.bigz to parse it.
-#' @export
 #' @name count
 #' @examples
 #' \dontrun{
 #'
 #' spec <- c("x + y <= 10", "x >= 1", "y >= 1")
 #' count(spec) # 45
-#' count(spec, opts = "--dilation=10") # 3321
-#' count(spec, opts = "--homog") # 45
+#' count(spec, quiet = FALSE) # 45
+#' count(spec, dilation = 10) # 3321
+#' count(spec, homog = TRUE) # 45
 #'
 #' # by default, the output from LattE is in
 #' list.files(tempdir())
 #' list.files(tempdir(), recursive = TRUE)
 #'
 #' # ehrhart polynomials
-#' count(spec, opts = "--ehrhart-polynomial")
-#' count(spec, opts = "--ehrhart-polynomial", mpoly = FALSE)
+#' count(spec, ehrhart_polynomial = TRUE)
+#' count(spec, ehrhart_polynomial = TRUE, mpoly = FALSE)
 #'
 #' # ehrhart series (raw since mpoly can't handle rational functions)
-#' count(spec, opts = "--ehrhart-series")
+#' count(spec, ehrhart_series = TRUE)
 #'
 #' # simplified ehrhart series - not yet implemented
-#' #count(spec, opts = "--simplified-ehrhart-polynomial")
+#' #count(spec, simplified_ehrhart_polynomial = TRUE)
 #'
 #' # first terms of the ehrhart series
-#' count(spec, opts = "--ehrhart-taylor=1")
-#' count(spec, opts = "--ehrhart-taylor=2")
-#' count(spec, opts = "--ehrhart-taylor=3")
-#' count(spec, opts = "--ehrhart-taylor=4")
+#' count(spec, ehrhart_taylor = 1)
+#' count(spec, ehrhart_taylor = 2)
+#' count(spec, ehrhart_taylor = 3)
+#' count(spec, ehrhart_taylor = 4)
 #'
 #' # multivariate generating function
-#' count(spec, opts = "--multivariate-generating-function")
+#' count(spec, multivariate_generating_function = TRUE)
 #'
 #'
 #' # by vertices
 #' spec <- list(c(1,1), c(10,1), c(1,10), c(10,10))
 #' count(spec)
-#' count(spec, opts = "--vrep")
+#' count(spec, vrep = TRUE)
 #'
 #' code <- "
 #' 5 3
@@ -92,16 +92,20 @@
 #'
 #'
 #'
-#'
+#' count(spec, dilation = 1e5) # 3321
 #'
 #'
 #'
 #'
 #'
 #' }
-#'
-count <- function(spec, dir = tempdir(), opts = "", quiet = TRUE, mpoly = TRUE){
 
+
+
+
+
+
+count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   ## check for latte
   program_not_found_stop("latte_path")
@@ -111,19 +115,29 @@ count <- function(spec, dir = tempdir(), opts = "", quiet = TRUE, mpoly = TRUE){
   specification <- "unknown"
 
 
+  ## compute other args
+  opts <- as.list(match.call(expand.dots = FALSE))[["..."]]
+  if(is.null(opts)){
+    opts <- ""
+  } else {
+    opts_names <- names(opts)
+    opts_names <- str_replace_all(opts_names, "_", "-")
+    opts <- paste0("--", opts_names, "=", unlist(opts))
+    opts <- str_replace_all(opts, "=TRUE", "")
+    opts <- paste(opts, collapse = " ")
+  }
+
+
   ## look at opts
-  if(opts == "--ehrhart-series" && mpoly){
-    #stop("this option is not yet supported by algstat.",
-    #  call. = FALSE)
+  if(str_detect(opts, "--ehrhart-series") && mpoly){
+    #stop("this option is not yet supported by algstat.", call. = FALSE)
     message("mpoly can't handle rational functions; reverting to raw output.")
     mpoly <- FALSE
   }
 
-  if(opts == "--simplified-ehrhart-polynomial"){
-    stop("this option is not supported by algstat.",
-      call. = FALSE)
+  if(str_detect(opts, "--simplified-ehrhart-polynomial")){
+    stop("this option is not supported by algstat.", call. = FALSE)
   }
-
 
 
 
@@ -150,14 +164,14 @@ count <- function(spec, dir = tempdir(), opts = "", quiet = TRUE, mpoly = TRUE){
   }
 
 
-  ## check for vertex specification
-  if(is.list(spec) && !is.mpolyList(spec)){
-  	specification <- "vertex"
 
-    if(opts == ""){
-      message('setting opts = \"--vrep\"; see ?count')
-      opts <- "--vrep"
-    }
+  ## check for vertex specification
+  if(str_detect(opts, "--vrep")) specification <- "vertex"
+  if(is.list(spec) && !is.mpolyList(spec) && !str_detect(opts, "--vrep")){
+
+    specification <- "vertex"
+    message("Undeclared vertex specification, setting vrep = TRUE; see ?count")
+    opts <- paste(opts, "--vrep")
 
   }
 
@@ -417,12 +431,18 @@ count <- function(spec, dir = tempdir(), opts = "", quiet = TRUE, mpoly = TRUE){
 
 
 
-#' @param ... ...
+
 #' @export
 #' @rdname count
-mem_count <- memoise::memoise(count)
+count <- memoise::memoise(count_core)
 
 
+
+
+
+#' @export
+#' @rdname count
+fcount <- count_core
 
 
 
