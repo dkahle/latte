@@ -4,22 +4,22 @@
 #' bases for a configuration matrix A.  See the references for
 #' details.
 #'
-#' @param A a matrix
-#' @param format how the basis (moves) should be returned.  if
+#' @param A The configuration matrix
+#' @param format How the basis (moves) should be returned.  if
 #'   "mat", the moves are returned as the columns of a matrix.
-#' @param dim the dimension to be passed to \code{\link{vec2tab}} if
+#' @param dim The dimension to be passed to \code{\link{vec2tab}} if
 #'   format = "tab" is used; a vector of the number of levels of
 #'   each variable in order
-#' @param all if TRUE, all moves (+ and -) are given.  if FALSE,
+#' @param all If TRUE, all moves (+ and -) are given.  if FALSE,
 #'   only the + moves are given as returned by the executable.
-#' @param dir directory to place the files in, without an ending /
-#' @param opts options for basis ("-parb" for markov, zbasis, and
+#' @param dir Directory to place the files in, without an ending /
+#' @param opts Options for basis ("-parb" for markov, zbasis, and
 #'   groebner; "" for graver)
-#' @param quiet if FALSE, messages the 4ti2 output
-#' @param dbName the name of the model in the markov bases database,
+#' @param quiet If FALSE, messages the 4ti2 output
+#' @param shell Messages the shell code used to do the computation
+#' @param dbName The name of the model in the markov bases database,
 #'   http://markov-bases.de, see examples
-#' @param ... ...
-#' @param exec (temporary, don't use)
+#' @param ... Additional arguments to pass to the function
 #' @return a matrix containing the Markov basis as its columns (for
 #'   easy addition to tables)
 #' @rdname fourTiTwo
@@ -39,44 +39,25 @@
 #'   kprod(ones(1,3), diag(3))
 #' ))
 #' markov(A)
+#'
+#'
+#'
+#' # you can get the output formatted in different ways:
+#' markov(A, all = TRUE)
 #' markov(A, "vec")
 #' markov(A, "tab", c(3, 3))
-#' markov(A, "tab", c(3, 3), all = TRUE)
 #' tableau(markov(A), dim = c(3, 3)) # tableau notation
 #'
 #'
 #'
-#'
-#' # a slighly larger example, 2x3 independence)
-#' # (source: LAS ex 1.2.1, p.12)
-#' (A <- rbind(
-#'   kprod(diag(2), ones(1,3)),
-#'   kprod(ones(1,2), diag(3))
-#' ))
-#'
-#' markov(A, "tab", c(3, 3))
-#' # Prop 1.2.2 says that there should be
-#' 2*choose(2, 2)*choose(3,2) # = 6
-#' # moves (up to +-1)
-#' markov(A, "tab", c(3, 3), TRUE)
+#' # you can add options by listing them off
+#' # to see the options available to you by function,
+#' # go to http://www.4ti2.de
+#' markov(A, p = "arb")
 #'
 #'
 #'
-#'
-#' # comparing the bases for the 3x3x3 no-three-way interaction model
-#' A <- rbind(
-#'   kprod(  diag(3),   diag(3), ones(1,3)),
-#'   kprod(  diag(3), ones(1,3),   diag(3)),
-#'   kprod(ones(1,3),   diag(3),   diag(3))
-#' )
-#' str(zbasis(A))   #    8 elements = ncol(A) - qr(A)$rank
-#' str(markov(A))   #   81 elements
-#' str(groebner(A)) #  110 elements
-#' str(graver(A))   #  795 elements
-#'
-#'
-#'
-#' # the 4ti2 functions are automatically cached for future use.
+#' # the basis functions are automatically cached for future use.
 #' # (note that it doesn't persist across sessions.)
 #' A <- rbind(
 #'   kprod(  diag(4), ones(1,4), ones(1,4)),
@@ -91,6 +72,35 @@
 #' system.time(fmarkov(A))
 #' system.time(fmarkov(A))
 #'
+#'
+#'
+#' # you can see the code used by typing shell = TRUE
+#' # but since the function is cached, it is only shown
+#' # the first time the function is run
+#' (A <- rbind(
+#'   kprod(diag(2), ones(1,4)),
+#'   kprod(ones(1,4), diag(2))
+#' ))
+#' markov(A, shell = TRUE)
+#' markov(A, shell = TRUE) # no message
+#' fmarkov(A, shell = TRUE)
+#'
+#'
+#'
+#' # compare the bases for the 3x3x3 no-three-way interaction model
+#' A <- rbind(
+#'   kprod(  diag(3),   diag(3), ones(1,3)),
+#'   kprod(  diag(3), ones(1,3),   diag(3)),
+#'   kprod(ones(1,3),   diag(3),   diag(3))
+#' )
+#' str(zbasis(A))   #    8 elements = ncol(A) - qr(A)$rank
+#' str(markov(A))   #   81 elements
+#' str(groebner(A)) #  110 elements
+#' str(graver(A))   #  795 elements
+#'
+#'
+#'
+#' # the other bases are also cached
 #' A <- rbind(
 #'   kprod(  diag(3), ones(1,3), ones(1,2)),
 #'   kprod(ones(1,3),   diag(3), ones(1,2)),
@@ -103,9 +113,17 @@
 #'
 #'
 #'
+#' # LAS ex 1.2.1, p.12 : 2x3 independence
+#' (A <- rbind(
+#'   kprod(diag(2), ones(1,3)),
+#'   kprod(ones(1,2), diag(3))
+#' ))
 #'
-#'
-#'
+#' markov(A, "tab", c(3, 3))
+#' # Prop 1.2.2 says that there should be
+#' 2*choose(2, 2)*choose(3,2) # = 6
+#' # moves (up to +-1)
+#' markov(A, "tab", c(3, 3), TRUE)
 #'
 #'
 #'
@@ -115,26 +133,11 @@
 #'   kprod(  diag(2), ones(1,2),   diag(2)),
 #'   kprod(ones(1,2),   diag(2),   diag(2))
 #' ))
-#' markov(A)
-#' tableau(markov(A), dim = c(2,2,2))
-#'
-#'
-#'
-#' # LAS example 1.2.12, p.16  (no 3-way interaction)
-#' A <- rbind(
-#'   kprod(  diag(2),   diag(2),  ones(1,2), ones(1,2)),
-#'   kprod(  diag(2), ones(1,2),  ones(1,2),   diag(2)),
-#'   kprod(ones(1,2),   diag(2),    diag(2), ones(1,2))
-#' )
 #' plot_matrix(A)
-#' zbasis(A)
 #' markov(A)
 #' groebner(A)
 #' graver(A)
-#'
-#'
-#'
-#'
+#' tableau(markov(A), dim = c(2,2,2))
 #'
 #'
 #'
@@ -147,12 +150,6 @@
 #'   kprod(ones(1,3), diag(3))
 #' ))
 #' # all(A == B)
-#'
-#'
-#'
-#'
-#'
-#'
 #'
 #'
 #'
@@ -213,8 +210,8 @@ basis <- function(exec, memoise = TRUE){
 
   ## create the function to return
   mem_or_not(function(A, format = c("mat", "vec", "tab"), dim = NULL,
-    all = FALSE, dir = tempdir(), opts = defaultOpts, quiet = TRUE,
-    dbName = NULL
+    all = FALSE, dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL,
+    ...
   ){
 
     ## check for 4ti2
@@ -228,6 +225,17 @@ basis <- function(exec, memoise = TRUE){
     }
 
 
+    ## compute other args
+    opts <- as.list(match.call(expand.dots = FALSE))[["..."]]
+    if(is.null(opts)){
+      opts <- ""
+    } else {
+      opts <- paste0("-", names(opts), "", unlist(opts))
+      opts <- paste(opts, collapse = " ")
+    }
+
+
+
     ## make dir to put 4ti2 files in (within the tempdir) timestamped
     dir2 <- file.path2(dir, timeStamp())
     suppressWarnings(dir.create(dir2))
@@ -239,8 +247,7 @@ basis <- function(exec, memoise = TRUE){
 
     ## switch to temporary directory
     oldWd <- getwd()
-    setwd(dir2)
-    on.exit(setwd(oldWd), add = TRUE)
+    setwd(dir2); on.exit(setwd(oldWd), add = TRUE)
 
 
     ## create/retrieve markov basis
@@ -254,6 +261,14 @@ basis <- function(exec, memoise = TRUE){
           paste(opts, file.path2(dir2, "PROJECT")),
           stdout = paste0(exec, "Out"), stderr = FALSE
         )
+
+        # generate shell code
+        shell_code <- paste(
+          file.path2(getOption("4ti2_path"), exec),
+          paste(opts, file.path2(dir2, "PROJECT")),
+          ">", paste0(exec, "Out")
+        )
+        if(shell) message(shell_code)
 
       } else if(is.win()){
 
@@ -269,6 +284,13 @@ basis <- function(exec, memoise = TRUE){
             opts, matFile
           ), stdout = paste0(exec, "Out"), stderr = FALSE
         )
+
+        # generate shell code
+        shell_code <- paste("cmd.exe",
+          "/c env.exe", file.path(getOption("4ti2_path"), exec),
+          opts, matFile, ">", paste0(exec, "Out")
+        )
+        if(shell) message(shell_code)
 
       }
 
