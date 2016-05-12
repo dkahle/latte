@@ -23,8 +23,7 @@ list of vectors of variable indices}
 \item{...}{Additional arguments to pass to the function}
 }
 \value{
-a matrix containing the Markov basis as its columns (for
-  easy addition to tables)
+The configuration matrix of the model provided
 }
 \description{
 genmodel runs 4ti2's genmodel program to compute the

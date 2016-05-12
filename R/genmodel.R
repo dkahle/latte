@@ -12,8 +12,7 @@
 #' @param quiet If FALSE, messages the 4ti2 output
 #' @param shell Messages the shell code used to do the computation
 #' @param ... Additional arguments to pass to the function
-#' @return a matrix containing the Markov basis as its columns (for
-#'   easy addition to tables)
+#' @return The configuration matrix of the model provided
 #' @export
 #' @examples
 #'
