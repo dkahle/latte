@@ -341,9 +341,9 @@ basis <- function(exec, memoise = TRUE){
 
 
 
-#' @export
-#' @rdname fourTiTwo
-zsolve <- basis("zsolve", memoise = TRUE)
+# #' @export
+# #' @rdname fourTiTwo
+# zsolve <- basis("zsolve", memoise = TRUE)
 
 #' @export
 #' @rdname fourTiTwo
@@ -370,9 +370,9 @@ graver <- basis("graver", memoise = TRUE)
 
 
 
-#' @export
-#' @rdname fourTiTwo
-fzsolve <- basis("zsolve", memoise = FALSE)
+# #' @export
+# #' @rdname fourTiTwo
+# fzsolve <- basis("zsolve", memoise = FALSE)
 
 #' @export
 #' @rdname fourTiTwo

@@ -8,19 +8,14 @@
 \alias{fmarkov}
 \alias{fourTiTwo}
 \alias{fzbasis}
-\alias{fzsolve}
 \alias{graver}
 \alias{groebner}
 \alias{hilbert}
 \alias{markov}
 \alias{zbasis}
-\alias{zsolve}
 \title{Compute a basis with 4ti2}
 \usage{
 basis(exec, memoise = TRUE)
-
-zsolve(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
 
 zbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
@@ -35,9 +30,6 @@ hilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
 
 graver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
-
-fzsolve(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
 
 fzbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
