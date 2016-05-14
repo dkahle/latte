@@ -2,7 +2,7 @@
 % Please edit documentation in R/zsolve.R
 \name{zsolve}
 \alias{zsolve}
-\title{Generate a configuration matrix}
+\title{Solve a linear system over the integers}
 \usage{
 zsolve(mat, rel, rhs, sign, lat, lb, ub, dir = tempdir(), quiet = TRUE,
   shell = FALSE, ...)

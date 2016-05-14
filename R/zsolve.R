@@ -1,4 +1,4 @@
-#' Generate a configuration matrix
+#' Solve a linear system over the integers
 #'
 #' zsolve runs 4ti2's zsolve program to compute the
 #' configuration matrix A corresponding to graphical statistical
