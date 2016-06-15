@@ -38,7 +38,7 @@ genmodel(varlvls, facets)
 
 varlvls <- rep(3, 3)
 facets <- list(1:2, 2:3, c(3,1))
-A <- genmodel(varlvls, facets)
+genmodel(varlvls, facets)
 
 # compare this to algstat's hmat function
 
