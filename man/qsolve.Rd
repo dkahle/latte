@@ -31,19 +31,22 @@ models given by a simplicial complex and levels on the nodes.
 }
 \examples{
 
+
+# x + y > 0
+# x + y < 0
+
 mat <- rbind(
-  c( 1, -1),
-  c(-3,  1),
+  c( 1,  1),
   c( 1,  1)
 )
-rel <- c("<", "<", ">")
-sign <- c(0, 1)
+rel <- c(">", "<")
+sign <- c(0, 0)
 
 qsolve(mat, rel, sign)
 qsolve(mat, rel, sign, quiet = FALSE)
-qsolve(mat, rel, sign, shell = TRU
+qsolve(mat, rel, sign, shell = TRUE)
 
-qsolve(mat, rel, sign, p = "gmp", quiet = FALSE)
+qsolve(mat, rel, sign, p = "arb", quiet = FALSE)
 
 
 }
