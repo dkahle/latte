@@ -10,8 +10,8 @@ It is currently being developed.
 
 ``` r
 library(latter)
-#> LattE found in /Applications/latte/dest/bin
-#> 4ti2 found in /Applications/latte/dest/bin
+#   LattE found in /Applications/latte/dest/bin
+#   4ti2 found in /Applications/latte/dest/bin
 ```
 
 Lattice point counting
@@ -21,7 +21,7 @@ Most [LattE](https://www.math.ucdavis.edu/~latte/) programs are available as fun
 
 ``` r
 count(c("x + y <= 10", "x >= 0", "y >= 0"))
-#> [1] 66
+# [1] 66
 ```
 
 It's easy to confirm the solution with a simple visualization:
@@ -48,19 +48,19 @@ In addition to table counting, it can also do integer programming with LattE's `
 
 ``` r
 latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
-#> $par
-#>  x  y 
-#>  0 10 
-#> 
-#> $value
-#> [1] 30
+# $par
+#  x  y 
+#  0 10 
+# 
+# $value
+# [1] 30
 latte_min("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
-#> $par
-#>  x  y 
-#> 10  0 
-#> 
-#> $value
-#> [1] -20
+# $par
+#  x  y 
+# 10  0 
+# 
+# $value
+# [1] -20
 ```
 
 We can check that the solution given above is correct, but the value is not. So, it needs some more work:
