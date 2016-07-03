@@ -11,6 +11,9 @@ Description: Back-end connections to LattE (\url{https://www.math.ucdavis.edu/
     facilitating its use in the R ecosystem.
 License: GPL-2
 LazyData: TRUE
+SystemRequirements:
+    LattE,
+    4ti2
 Imports:
     magrittr,
     stringr,
