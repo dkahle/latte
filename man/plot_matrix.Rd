@@ -26,4 +26,3 @@ plot_matrix(markov(A))
 \author{
 David Kahle \email{david.kahle@gmail.com}
 }
-

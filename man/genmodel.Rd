@@ -43,4 +43,3 @@ genmodel(varlvls, facets)
 # compare this to algstat's hmat function
 
 }
-

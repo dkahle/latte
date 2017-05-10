@@ -40,4 +40,3 @@ all(vec2tab(tab2vec(Titanic), dim(Titanic)) == Titanic)
 \code{\link{tab2vec}}, \code{\link{aperm}},
   \code{\link{array}}
 }
-

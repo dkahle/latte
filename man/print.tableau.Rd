@@ -23,4 +23,3 @@ Pretty printing of tableau output.
 
 
 }
-

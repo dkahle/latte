@@ -57,4 +57,3 @@ zsolve(mat, rel, rhs, sign, p = "gmp", quiet = FALSE)
 
 
 }
-

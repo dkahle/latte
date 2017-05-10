@@ -2,8 +2,8 @@
 % Please edit documentation in R/set_paths.R
 \name{setPaths}
 \alias{setPaths}
-\alias{set_4ti2_path}
 \alias{set_latte_path}
+\alias{set_4ti2_path}
 \title{Set paths to LattE and 4ti2 executables}
 \usage{
 set_latte_path(path)
@@ -77,4 +77,3 @@ set_4ti2_path(4ti2_path) # undoes example
 \author{
 David Kahle \email{david.kahle@gmail.com}
 }
-

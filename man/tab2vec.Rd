@@ -37,4 +37,3 @@ Titanic[1,1,1,2]
 \seealso{
 \code{\link{vec2tab}}
 }
-

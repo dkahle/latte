@@ -50,4 +50,3 @@ qsolve(mat, rel, sign, p = "arb", quiet = FALSE)
 
 
 }
-

@@ -3,8 +3,8 @@
 \docType{package}
 \name{latter}
 \alias{latter}
-\alias{latter-package}
 \alias{package-latter}
+\alias{latter-package}
 \title{LattE and 4ti2 in R}
 \description{
 Back-end connections to LattE
@@ -12,4 +12,3 @@ Back-end connections to LattE
 (\url{http://www.4ti2.de/}) executables and front-end tools
 facilitating its use in the R ecosystem.
 }
-
