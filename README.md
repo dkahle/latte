@@ -39,7 +39,7 @@ ggplot(aes(x = x, y = y), data = polytope) +
   coord_equal()
 ```
 
-![](README-countExample-1.png)
+![](tools/countExample-1.png)
 
 Integer programming
 -------------------
@@ -73,7 +73,7 @@ ggplot(aes(x = x, y = y), data = polytope) +
   coord_equal()
 ```
 
-![](README-ipCheck-1.png)
+![](tools/ipCheck-1.png)
 
 Installation
 ============
