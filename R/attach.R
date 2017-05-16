@@ -257,6 +257,8 @@ unix_search_and_set <- function(exec, baseName, optionName){
       ".bashrc"
     } else if(file.exists("~/.profile")){
       ".profile"
+    } else {
+      return(invisible(FALSE))
     }
 
   # PATH <- system(sprintf("source ~/%s; echo $PATH", profile_to_look_for), intern = TRUE)
@@ -275,7 +277,7 @@ unix_search_and_set <- function(exec, baseName, optionName){
   }
 
   # break in a failure
-  if(is.na(found_path)) return()
+  if(is.na(found_path)) return(invisible(FALSE))
 
   # set option and exit
   setOption(optionName, dirname(found_path))

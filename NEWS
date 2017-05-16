@@ -1,0 +1,7 @@
+Version 0.1.0
+-------------------------------------------------------------------------
+
+FIXES
+
+* The package can now be loaded on unix-alikes without a .bash_profile,
+  .bashrc, or .profile (thanks @GrantInnerst)
