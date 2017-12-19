@@ -4,7 +4,7 @@ Title: LattE and 4ti2 in R
 Version: 0.1.1
 Authors@R: c(person("David", "Kahle", email = "david.kahle@gmail.com", role = c("aut", "cph", "cre")),
   person("Luis", "Garcia",email = "lgarcia@shsu.edu", role = c("aut", "cph")),
-  person("Ruriko", "Yoshida", email = "ruriko.yoshida@uky.edu", role = c("aut", "cph")))
+  person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut", "cph")))
 Maintainer: David Kahle <david.kahle@gmail.com>
 Description: Back-end connections to LattE (\url{https://www.math.ucdavis.edu/
     ~latte/}) and 4ti2 (\url{http://www.4ti2.de/}) executables and front-end tools
