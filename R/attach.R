@@ -1,5 +1,7 @@
 .onAttach <- function(...) {
 
+  packageStartupMessage('  Please cite latter! See citation("latter") for details.')
+
   ##### find LattE/4ti2 on a mac
   ########################################
   if(is.mac()){
