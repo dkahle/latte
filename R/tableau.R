@@ -14,12 +14,11 @@
 #'   \emph{Lectures on Algebraic Statistics}, Basel: Birkhauser
 #'   Verlag AG.
 #' @examples
-#' \dontrun{
 #'
 #' vec <- matrix(c(1, -1, -1, 1), nrow = 4)
+#' varlvls <- c(2, 2)
 #' tableau(vec, varlvls)
 #'
-#' }
 #'
 tableau <- function(move, dim){
 

@@ -37,7 +37,7 @@
 #' @author David Kahle \email{david.kahle@@gmail.com}
 #' @examples
 #'
-#' \dontrun{ # the below code requires suggested external software
+#' \dontrun{ requires LattE and 4ti2
 #'
 #' ## for LattE
 #' getOption("latte_path")

@@ -3,13 +3,19 @@
 \name{latteFiles}
 \alias{latteFiles}
 \alias{format_latte}
+\alias{write_latte}
 \alias{write.latte}
+\alias{read_latte}
 \alias{read.latte}
 \title{Format/read/write a matrix in latte's style}
 \usage{
 format_latte(mat, file)
 
+write_latte(mat, file)
+
 write.latte(mat, file)
+
+read_latte(file, format = c("mat", "Ab"))
 
 read.latte(file, format = c("mat", "Ab"))
 }
@@ -33,7 +39,7 @@ read.latte(file, format = c("mat", "Ab"))
 }
 \examples{
 
-\dontrun{
+\dontrun{ creates files
 
 (mat <- matrix(sample(9), 3, 3))
 

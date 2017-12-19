@@ -1,7 +1,7 @@
 Package: latter
 Type: Package
 Title: LattE and 4ti2 in R
-Version: 0.1.0.900
+Version: 0.1.1
 Authors@R: c(person("David", "Kahle", email = "david.kahle@gmail.com", role = c("aut", "cph", "cre")),
   person("Luis", "Garcia",email = "lgarcia@shsu.edu", role = c("aut", "cph")),
   person("Ruriko", "Yoshida", email = "ruriko.yoshida@uky.edu", role = c("aut", "cph")))
@@ -12,8 +12,8 @@ Description: Back-end connections to LattE (\url{https://www.math.ucdavis.edu/
 License: GPL-2
 LazyData: TRUE
 SystemRequirements:
-    LattE,
-    4ti2
+    LattE <https://www.math.ucdavis.edu/~latte/>,
+    4ti2 <http://www.4ti2.de/>
 Imports:
     magrittr,
     stringr,

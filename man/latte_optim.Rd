@@ -51,7 +51,7 @@ details.
 \examples{
 
 
-\dontrun{ # user must have LattE installed
+\dontrun{ requires LattE
 
 latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
 

@@ -17,14 +17,14 @@
   if(is.win()){
 
   	if(!any(stringr::str_detect(tolower(list.files("C:\\")), "cygwin"))){
-  	  psm("Cygwin is required to run most of algstat on a Windows platform.")
+  	  psm("  Cygwin is required to run most of algstat on a Windows platform.")
   	  psm("  It needs to be in your C:\\ drive, but wasn't found.")
   	  return(invisible())
   	}
 
     if(!whereis_is_accessible()){ # check for whereis, return if not found
       psm(
-        "The whereis function was not found, so algstat can't find the required exe's.\n",
+        "  The whereis function was not found, so algstat can't find the required exe's.\n",
         "  Try setting the paths with set_latte_path() and set_4ti2_path()."
       )
       return()
@@ -166,7 +166,7 @@ program_not_found_stop <- function(optionName){
   setFun <- setFun(optionName)
 
   if(is.null(getOption(optionName))){
-    stop(sprintf("%s not found. Set the location with %s", longName, setFun))
+    stop(sprintf("  %s not found. Set the location with %s", longName, setFun))
     return(invisible(FALSE))
   }
 
@@ -235,7 +235,7 @@ unix_find <- function(exec, where){
   attributes(finding) <- NULL
 
   # get the bin first
-  path <- finding[stringr::str_detect(finding, paste0("bin/", exec))][1]
+  path <- finding[str_detect(finding, paste0("bin/", exec))][1]
 
   # bertini isn't in a bin directory
   if(is.na(path)) path <- finding[1]
@@ -266,10 +266,10 @@ unix_search_and_set <- function(exec, baseName, optionName){
   # PATH <- system(sprintf("source ~/%s; echo $PATH", profile_to_look_for), intern = TRUE)
   # the above doesn't work on ubuntu, which uses the dash shell (which doesn't have source)
   PATH <- system(sprintf("echo 'source ~/%s; echo $PATH' | /bin/bash", profile_to_look_for), intern = TRUE)
-  dirs_to_check <- stringr::str_split(PATH, ":")[[1]]
+  dirs_to_check <- str_split(PATH, ":")[[1]]
 
   # check for main dir name
-  ndx_with_baseName_dir  <- which(stringr::str_detect(tolower(dirs_to_check), baseName))
+  ndx_with_baseName_dir  <- which(str_detect(tolower(dirs_to_check), baseName))
   baseName_path <- dirs_to_check[ndx_with_baseName_dir]
 
   # seek and find

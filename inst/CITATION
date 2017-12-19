@@ -4,8 +4,8 @@ citEntry(entry="Manual",
   author = "David Kahle and Luis Garcia-Puente and Ruriko Yoshida",
   title = "latter: {LattE} and {4ti2} in {R}",
   year = "2017",
-  note = "R package version 0.1.0",
+  note = "R package version 0.1.1",
   url = "https://github.com/dkahle/latter",
-  textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. algstat: Algebraic Statistics in R. R package version 0.1.0. https://github.com/dkahle/algstat"
+  textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. algstat: Algebraic Statistics in R. R package version 0.1.1. https://github.com/dkahle/algstat"
 )
 

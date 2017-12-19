@@ -10,8 +10,9 @@ It is currently being developed.
 
 ``` r
 library(latter)
-#   LattE found in /Applications/latte/dest/bin
-#   4ti2 found in /Applications/latte/dest/bin
+#   Please cite latter! See citation("latter") for details.
+#   LattE found in /Applications/latte/bin
+#   4ti2 found in /Applications/latte/bin
 ```
 
 Lattice point counting

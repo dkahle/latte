@@ -15,7 +15,7 @@
 #' @name latteFiles
 #' @examples
 #'
-#' \dontrun{
+#' \dontrun{ creates files
 #'
 #' (mat <- matrix(sample(9), 3, 3))
 #'
@@ -119,7 +119,7 @@ format_latte <- function(mat, file){
 
 #' @rdname latteFiles
 #' @export
-write.latte <- function(mat, file){
+write_latte <- function(mat, file){
 
   ## arg check
   if(missing(file)) stop("file (a filename) must be provided.")
@@ -137,7 +137,9 @@ write.latte <- function(mat, file){
   invisible(out)
 }
 
-
+#' @rdname latteFiles
+#' @export
+write.latte <- write_latte
 
 
 
@@ -153,7 +155,7 @@ write.latte <- function(mat, file){
 
 #' @rdname latteFiles
 #' @export
-read.latte <- function(file, format = c("mat", "Ab")){
+read_latte <- function(file, format = c("mat", "Ab")){
 
   ## check args
   format <- match.arg(format)
@@ -223,7 +225,9 @@ read.latte <- function(file, format = c("mat", "Ab")){
   }
 }
 
-
+#' @rdname latteFiles
+#' @export
+read.latte <- read_latte
 
 
 

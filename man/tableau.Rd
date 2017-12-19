@@ -22,12 +22,11 @@ Print the tableau notation for a Markov move.  See the reference
 provided, p. 13.
 }
 \examples{
-\dontrun{
 
 vec <- matrix(c(1, -1, -1, 1), nrow = 4)
+varlvls <- c(2, 2)
 tableau(vec, varlvls)
 
-}
 
 }
 \references{

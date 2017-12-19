@@ -20,39 +20,38 @@ fcount(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...)
 
 \item{quiet}{Show latte output?}
 
-\item{mpoly}{When opts = "--ehrhart-polynomial", return the mpoly
-version of it}
+\item{mpoly}{When opts = "--ehrhart-polynomial", return the mpoly version of
+it}
 
-\item{...}{Additional arguments to pass to the function, see
-count --help at the command line to see examples.  Note that
-dashes - should be specified with underscores _}
+\item{...}{Additional arguments to pass to the function, see count --help at
+the command line to see examples.  Note that dashes - should be specified
+with underscores _}
 }
 \value{
-The count.  If the count is a number has less than 10
-  digits, an integer is returned.  If the number has 10 or more
-  digits, an integer in a character string is returned. You may
-  want to use the gmp package's as.bigz to parse it.
+The count.  If the count is a number has less than 10 digits, an
+  integer is returned.  If the number has 10 or more digits, an integer in a
+  character string is returned. You may want to use the gmp package's as.bigz
+  to parse it.
 }
 \description{
-\code{count} uses LattE's count function to count the (integer)
-lattice points in a polytope and compute Ehrhart polynomials.
+\code{count} uses LattE's count function to count the (integer) lattice
+points in a polytope and compute Ehrhart polynomials.
 }
 \details{
-The specification should be one of the following: (1) a character
-string or strings containing an inequality in the mpoly
-expression format (see examples), (2) a list of vertices, (3) a
-list of A and b for the equation Ax <= b (see examples), or (4)
-raw code for LattE's count program. If a character vector is
-supplied, (1) and (4) are distinguished by the number of strings.
+The specification should be one of the following: (1) a character string or
+strings containing an inequality in the mpoly expression format (see
+examples), (2) a list of vertices, (3) a list of A and b for the equation Ax
+<= b (see examples), or (4) raw code for LattE's count program. If a
+character vector is supplied, (1) and (4) are distinguished by the number of
+strings.
 
-Behind the scenes, count works by writing a latte file and
-running count on it.  If a specification other than a length one
-character is given to it (which is considered to be the code),
-count attempts to convert it into LattE code and then run count
-on it.
+Behind the scenes, count works by writing a latte file and running count on
+it.  If a specification other than a length one character is given to it
+(which is considered to be the code), count attempts to convert it into LattE
+code and then run count on it.
 }
 \examples{
-\dontrun{
+\dontrun{ requires LattE
 
 spec <- c("x + y <= 10", "x >= 1", "y >= 1")
 count(spec) # 45

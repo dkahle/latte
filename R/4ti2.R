@@ -26,7 +26,7 @@
 #'   Verlag AG.
 #' @examples
 #'
-#' \dontrun{ these examples require having 4ti2 installed
+#' \dontrun{ requires 4ti2
 #'
 #'
 #'
