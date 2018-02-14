@@ -9,3 +9,10 @@ citEntry(entry="Manual",
   textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. algstat: Algebraic Statistics in R. R package version 0.1.1. https://github.com/dkahle/algstat"
 )
 
+citEntry(entry="Manual",
+  author = "V. Baldoni and N. Berline and J.A. De Loera and B. Dutra and M. Koppe and S. Moreinis and G. Pinto and M. Vergne and J. Wu",
+  title = "A User's Guide for {L}att{E} integrale v1.7.2",
+  year = "2013",
+  url = "http://www.math.ucdavis.edu/~latte/",
+  textVersion = "V. Baldoni, N. Berline, J.A. De Loera, B. Dutra, M. Koppe, S. Moreinis, G. Pinto, M. Vergne, J. Wu, A User's Guide for LattE Integrale v1.7.2, 2013, software package LattE is available at http://www.math.ucdavis.edu/~latte/"
+)
