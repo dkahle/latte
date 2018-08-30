@@ -38,8 +38,9 @@ fzbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
 fmarkov(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
 
-fgroebner(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+fgroebner(A, format = c("mat", "vec", "tab"), dim = NULL,
+  all = FALSE, dir = tempdir(), quiet = TRUE, shell = FALSE,
+  dbName = NULL, ...)
 
 fhilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
   dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)

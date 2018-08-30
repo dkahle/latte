@@ -3,7 +3,6 @@
 \name{count}
 \alias{count}
 \alias{count_core}
-\alias{count}
 \alias{fcount}
 \title{Count integer points in a polytope}
 \usage{
