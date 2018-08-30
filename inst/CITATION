@@ -4,9 +4,9 @@ citEntry(entry="Manual",
   author = "David Kahle and Luis Garcia-Puente and Ruriko Yoshida",
   title = "latter: {LattE} and {4ti2} in {R}",
   year = "2017",
-  note = "R package version 0.1.1",
+  note = "R package version 0.1.1.901",
   url = "https://github.com/dkahle/latter",
-  textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. algstat: Algebraic Statistics in R. R package version 0.1.1. https://github.com/dkahle/algstat"
+  textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. latter: LattE and 4ti2 in R. R package version 0.1.1.901. https://github.com/dkahle/latter"
 )
 
 citEntry(entry="Manual",
@@ -16,3 +16,12 @@ citEntry(entry="Manual",
   url = "http://www.math.ucdavis.edu/~latte/",
   textVersion = "V. Baldoni, N. Berline, J.A. De Loera, B. Dutra, M. Koppe, S. Moreinis, G. Pinto, M. Vergne, J. Wu, A User's Guide for LattE Integrale v1.7.2, 2013, software package LattE is available at http://www.math.ucdavis.edu/~latte/"
 )
+
+citEntry(entry="Manual",
+  author = "4ti2 Team",
+  title = "4ti2---A software package for algebraic, geometric and combinatorial problems on linear spaces",
+  year = "2013",
+  url = "http://www.4ti2.de",
+  textVersion = "4ti2 Team.  4ti2---A Software Package for Algebraic, Geometric and Combinatorial Problems on Linear Spaces. Available at www.4ti2.de"
+)
+
