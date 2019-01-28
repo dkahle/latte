@@ -1,14 +1,14 @@
-Package: latter
+Package: latte
 Type: Package
 Title: LattE and 4ti2 in R
-Version: 0.1.1.901
+Version: 0.2.0
 Authors@R: c(person("David", "Kahle", email = "david.kahle@gmail.com", role = c("aut", "cph", "cre"), comment = c(ORCID = "0000-0002-9999-1558")),
   person("Luis", "Garcia",email = "lgarcia@shsu.edu", role = c("aut", "cph")),
   person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut", "cph")))
 Maintainer: David Kahle <david.kahle@gmail.com>
-Description: Back-end connections to LattE (\url{https://www.math.ucdavis.edu/
-    ~latte/}) and 4ti2 (\url{http://www.4ti2.de/}) executables and front-end tools
-    facilitating its use in the R ecosystem.
+Description: Back-end connections to LattE (<https://www.math.ucdavis.edu/
+    ~latte>) and 4ti2 (<http://www.4ti2.de/>) executables and front-end tools
+    facilitating their use in the R ecosystem.
 License: GPL-2
 LazyData: TRUE
 SystemRequirements:

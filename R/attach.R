@@ -1,6 +1,6 @@
 .onAttach <- function(...) {
 
-  packageStartupMessage('  Please cite latter! See citation("latter") for details.')
+  packageStartupMessage('  Please cite latte! See citation("latte") for details.')
 
   ##### find LattE/4ti2 on a mac
   ########################################
@@ -73,7 +73,7 @@
 
 
 # .onUnload <- function (libpath) {
-#   library.dynam.unload("latter", libpath)
+#   library.dynam.unload("latte", libpath)
 # }
 
 

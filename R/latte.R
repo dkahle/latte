@@ -16,6 +16,6 @@
 #'   str_split str_trim
 #' @importFrom dplyr filter mutate arrange
 #' @importFrom memoise memoise
-#' @name latter
-#' @aliases latter package-latter
+#' @name latte
+#' @aliases latte package-latte
 NULL

@@ -1,12 +1,12 @@
-citHeader("To cite latter in publications, please use:")
+citHeader("To cite latte in publications, please use:")
 
 citEntry(entry="Manual",
   author = "David Kahle and Luis Garcia-Puente and Ruriko Yoshida",
-  title = "latter: {LattE} and {4ti2} in {R}",
+  title = "latte: {LattE} and {4ti2} in {R}",
   year = "2017",
-  note = "R package version 0.1.1.901",
-  url = "https://github.com/dkahle/latter",
-  textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. latter: LattE and 4ti2 in R. R package version 0.1.1.901. https://github.com/dkahle/latter"
+  note = "R package version 0.2.0",
+  url = "https://github.com/dkahle/latte",
+  textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. latte: LattE and 4ti2 in R. R package version 0.2.0. https://github.com/dkahle/latte"
 )
 
 citEntry(entry="Manual",
