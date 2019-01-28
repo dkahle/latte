@@ -1,16 +1,23 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-latter
-======
 
-**latter** is an R package that makes back-end connections to [LattE](https://www.math.ucdavis.edu/~latte/software.php) and [4ti2](http://www.4ti2.de). Most of its functions were previously part of the [**algstat** package](https://github.com/dkahle/algstat), but have been pulled out and improved upon.
+latte
+=====
+
+**latte** is an R package that makes back-end connections to
+[LattE](https://www.math.ucdavis.edu/~latte/software.php) and
+[4ti2](http://www.4ti2.de). Most of its functions were previously part
+of the [**algstat** package](https://github.com/dkahle/algstat), but
+have been pulled out and improved upon.
 
 It is currently being developed.
 
-*Note: the following assumes you have [LattE](https://www.math.ucdavis.edu/~latte/) and [4ti2](http://www.4ti2.de) installed and latter recognizes their path.*
+*Note: the following assumes you have
+[LattE](https://www.math.ucdavis.edu/~latte/) and
+[4ti2](http://www.4ti2.de) installed and latte recognizes their path.*
 
 ``` r
-library(latter)
-#   Please cite latter! See citation("latter") for details.
+library("latte")
+#   Please cite latte! See citation("latte") for details.
 #   LattE found in /Applications/latte/bin
 #   4ti2 found in /Applications/latte/bin
 ```
@@ -18,14 +25,17 @@ library(latter)
 Lattice point counting
 ----------------------
 
-Most [LattE](https://www.math.ucdavis.edu/~latte/) programs are available as functions in **latter**. For example, `count()` uses LattE's `count` to determine the number of integer points in a [polytope](http://en.wikipedia.org/wiki/Polytope):
+Most [LattE](https://www.math.ucdavis.edu/~latte/) programs are
+available as functions in **latte**. For example, `latte_count()` uses
+LattE’s `count` to determine the number of integer points in a
+[polytope](http://en.wikipedia.org/wiki/Polytope):
 
 ``` r
-count(c("x + y <= 10", "x >= 0", "y >= 0"))
+latte_count(c("x + y <= 10", "x >= 0", "y >= 0"))
 # [1] 66
 ```
 
-It's easy to confirm the solution with a simple visualization:
+It’s easy to confirm the solution with a simple visualization:
 
 ``` r
 library(ggplot2); theme_set(theme_bw())
@@ -45,7 +55,9 @@ ggplot(aes(x = x, y = y), data = polytope) +
 Integer programming
 -------------------
 
-In addition to table counting, it can also do integer programming with LattE's `latte-maximize` and `latte-minimize` programs. To do this, it uses tools from [**mpoly**](http://github.com/dkahle/mpoly):
+In addition to table counting, it can also do integer programming with
+LattE’s `latte-maximize` and `latte-minimize` programs. To do this, it
+uses tools from [**mpoly**](http://github.com/dkahle/mpoly):
 
 ``` r
 latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
@@ -64,7 +76,8 @@ latte_min("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
 # [1] -20
 ```
 
-We can check that the solution given above is correct, but the value is not. So, it needs some more work:
+We can check that the solution given above is correct, but the value is
+not. So, it needs some more work:
 
 ``` r
 points$objective <- with(points, -2*x + 3*y)
@@ -79,15 +92,15 @@ ggplot(aes(x = x, y = y), data = polytope) +
 Installation
 ============
 
-Installing latter
------------------
+Installing latte
+----------------
 
 -   From Github (dev version):
 
 ``` r
 if (!("devtools" %in% installed.packages())) install.packages("devtools")
 devtools::install_github("dkahle/mpoly")
-devtools::install_github("dkahle/latter")
+devtools::install_github("dkahle/latte")
 ```
 
 Installing supporting software

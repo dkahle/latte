@@ -1,6 +1,6 @@
 #' Count integer points in a polytope
 #'
-#' \code{count} uses LattE's count function to count the (integer) lattice
+#' \code{latte_count} uses LattE's count function to count the (integer) lattice
 #' points in a polytope and compute Ehrhart polynomials.
 #'
 #' The specification should be one of the following: (1) a character string or
@@ -27,44 +27,44 @@
 #'   integer is returned.  If the number has 10 or more digits, an integer in a
 #'   character string is returned. You may want to use the gmp package's as.bigz
 #'   to parse it.
-#' @name count
+#' @name latte-count
 #' @examples
 #' \dontrun{ requires LattE
 #'
 #' spec <- c("x + y <= 10", "x >= 1", "y >= 1")
-#' count(spec) # 45
-#' count(spec, quiet = FALSE) # 45
-#' count(spec, dilation = 10) # 3321
-#' count(spec, homog = TRUE) # 45
+#' latte_count(spec) # 45
+#' latte_count(spec, quiet = FALSE) # 45
+#' latte_count(spec, dilation = 10) # 3321
+#' latte_count(spec, homog = TRUE) # 45
 #'
 #' # by default, the output from LattE is in
 #' list.files(tempdir())
 #' list.files(tempdir(), recursive = TRUE)
 #'
 #' # ehrhart polynomials
-#' count(spec, ehrhart_polynomial = TRUE)
-#' count(spec, ehrhart_polynomial = TRUE, mpoly = FALSE)
+#' latte_count(spec, ehrhart_polynomial = TRUE)
+#' latte_count(spec, ehrhart_polynomial = TRUE, mpoly = FALSE)
 #'
 #' # ehrhart series (raw since mpoly can't handle rational functions)
-#' count(spec, ehrhart_series = TRUE)
+#' latte_count(spec, ehrhart_series = TRUE)
 #'
 #' # simplified ehrhart series - not yet implemented
-#' #count(spec, simplified_ehrhart_polynomial = TRUE)
+#' #latte_count(spec, simplified_ehrhart_polynomial = TRUE)
 #'
 #' # first terms of the ehrhart series
-#' count(spec, ehrhart_taylor = 1)
-#' count(spec, ehrhart_taylor = 2)
-#' count(spec, ehrhart_taylor = 3)
-#' count(spec, ehrhart_taylor = 4)
+#' latte_count(spec, ehrhart_taylor = 1)
+#' latte_count(spec, ehrhart_taylor = 2)
+#' latte_count(spec, ehrhart_taylor = 3)
+#' latte_count(spec, ehrhart_taylor = 4)
 #'
 #' # multivariate generating function
-#' count(spec, multivariate_generating_function = TRUE)
+#' latte_count(spec, multivariate_generating_function = TRUE)
 #'
 #'
 #' # by vertices
 #' spec <- list(c(1,1), c(10,1), c(1,10), c(10,10))
-#' count(spec)
-#' count(spec, vrep = TRUE)
+#' latte_count(spec)
+#' latte_count(spec, vrep = TRUE)
 #'
 #' code <- "
 #' 5 3
@@ -74,7 +74,7 @@
 #' 0  1  0
 #' 0  0  1
 #' "
-#' count(code)
+#' latte_count(code)
 #'
 #'
 #' # for Ax <= b, see this example from the latte manual p.10
@@ -86,12 +86,12 @@
 #'    0, -1
 #' ), nrow = 5, byrow = TRUE)
 #' b <- c(1, 1, 1, 0, 0)
-#' count(list(A = A, b = b))
+#' latte_count(list(A = A, b = b))
 #'
 #'
 #'
 #'
-#' count(spec, dilation = 1e5) # 3321
+#' latte_count(spec, dilation = 1e5) # 3321
 #'
 #'
 #'
@@ -169,7 +169,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   if(is.list(spec) && !is.mpolyList(spec) && !str_detect(opts, "--vrep")){
 
     specification <- "vertex"
-    message("Undeclared vertex specification, setting vrep = TRUE; see ?count")
+    message("Undeclared vertex specification, setting vrep = TRUE; see ?latte_count")
     opts <- paste(opts, "--vrep")
 
   }
@@ -432,16 +432,16 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
 #' @export
-#' @rdname count
-count <- memoise::memoise(count_core)
+#' @rdname latte-count
+latte_count <- memoise::memoise(count_core)
 
 
 
 
 
 #' @export
-#' @rdname count
-fcount <- count_core
+#' @rdname latte-count
+latte_fcount <- count_core
 
 
 

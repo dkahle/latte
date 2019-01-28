@@ -56,28 +56,21 @@ details.
 
 latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
 
-
-df <- expand.grid(x = 0:10, y = 0:10)
-df <- subset(df, x + y <= 10)
-df$objective <- with(df, -2*x + 3*y)
-df[which.max(df$objective),]
-df[which.min(df$objective),]
-
-library(ggplot2)
-qplot(x, y, data = df, size = objective)
-
-latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
-latte_min("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
+library("tidyverse")
 
 
+tibble("x" = 0:10, "y" = 0:10) \%>\%
+  cross_df() \%>\%
+  filter(x + y <= 10L) \%>\%
+  mutate(objective = -2*x + 3*y) \%>\%
+  ggplot(aes(x, y, size = objective)) +
+    geom_point()
 
-
-latte_min("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"), method = "cones")
-
-
-
-
-
+latte_min(
+  "-2 x + 3 y",
+  c("x + y <= 10", "x >= 0", "y >= 0"),
+  method = "cones"
+)
 
 
 
@@ -87,17 +80,15 @@ latte_min("-2 x - 3 y - 4 z", c(
   "x >= 0", "y >= 0", "z >= 0"
 ), "cones", quiet = FALSE)
 
-
-# here we check the results above manually
-# recall that x \%>\% f(y) = f(x, y)
-library(dplyr)
-expand.grid(x = 0:10, y = 0:10, z = 0:10) \%>\%
+tibble("x" = 0:10, "y" = 0:10, "z" = 0:10) \%>\%
+  cross_df() \%>\%
   filter(
-    3*x + 2*y + 1*z <= 10,
+    3*x + 2*y + z <= 10,
     2*x + 5*y + 3*z <= 15
   ) \%>\%
-  mutate(objective = -2*x + -3*y + -4*z) \%>\%
-  arrange(objective) \%>\% head(10)
+  mutate(objective = -2*x - 3*y - 4*z) \%>\%
+  arrange(objective)
+
 
 
 
