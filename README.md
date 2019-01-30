@@ -107,3 +107,11 @@ Installing supporting software
 ------------------------------
 
 Coming soon! See the links above for direct information.
+
+Acknowledgements
+================
+
+This material is based upon work supported by the National Science
+Foundation under Grant Nos.
+[1622449](https://nsf.gov/awardsearch/showAward?AWD_ID=1622449) and
+[1622369](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1622369).
