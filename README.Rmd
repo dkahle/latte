@@ -84,9 +84,7 @@ ggplot(aes(x = x, y = y), data = polytope) +
 
 
 
-# Installation
-
-## Installing latte
+## Installation
 
 * From Github (dev version): 
 ```{r, eval=FALSE}
@@ -95,13 +93,10 @@ devtools::install_github("dkahle/mpoly")
 devtools::install_github("dkahle/latte")
 ```
 
-## Installing supporting software
-
-Coming soon!  See the links above for direct information.
 
 
 
 
-# Acknowledgements
+## Acknowledgements
 
 This material is based upon work supported by the National Science Foundation under Grant Nos. [1622449](https://nsf.gov/awardsearch/showAward?AWD_ID=1622449) and [1622369](https://www.nsf.gov/awardsearch/showAward?AWD_ID=1622369).

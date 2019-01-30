@@ -90,10 +90,7 @@ ggplot(aes(x = x, y = y), data = polytope) +
 ![](tools/ipCheck-1.png)
 
 Installation
-============
-
-Installing latte
-----------------
+------------
 
 -   From Github (dev version):
 
@@ -103,13 +100,8 @@ devtools::install_github("dkahle/mpoly")
 devtools::install_github("dkahle/latte")
 ```
 
-Installing supporting software
-------------------------------
-
-Coming soon! See the links above for direct information.
-
 Acknowledgements
-================
+----------------
 
 This material is based upon work supported by the National Science
 Foundation under Grant Nos.
