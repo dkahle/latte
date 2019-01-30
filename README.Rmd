@@ -90,7 +90,7 @@ ggplot(aes(x = x, y = y), data = polytope) +
 
 * From Github (dev version): 
 ```{r, eval=FALSE}
-if (!("devtools" %in% installed.packages())) install.packages("devtools")
+if (!requireNamespace("devtools")) install.packages("devtools")
 devtools::install_github("dkahle/mpoly")
 devtools::install_github("dkahle/latte")
 ```

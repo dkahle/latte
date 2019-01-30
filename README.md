@@ -98,7 +98,7 @@ Installing latte
 -   From Github (dev version):
 
 ``` r
-if (!("devtools" %in% installed.packages())) install.packages("devtools")
+if (!requireNamespace("devtools")) install.packages("devtools")
 devtools::install_github("dkahle/mpoly")
 devtools::install_github("dkahle/latte")
 ```
