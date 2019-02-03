@@ -51,6 +51,7 @@ it.  If a specification other than a length one character is given to it
 code and then run count on it.
 }
 \examples{
+
 \dontrun{ requires LattE
 
 spec <- c("x + y <= 10", "x >= 1", "y >= 1")
@@ -113,7 +114,6 @@ latte_count(list(A = A, b = b))
 
 
 
-latte_count(spec, dilation = 1e5) # 3321
 
 
 

@@ -29,6 +29,7 @@
 #'   to parse it.
 #' @name latte-count
 #' @examples
+#' 
 #' \dontrun{ requires LattE
 #'
 #' spec <- c("x + y <= 10", "x >= 1", "y >= 1")
@@ -91,7 +92,6 @@
 #'
 #'
 #'
-#' latte_count(spec, dilation = 1e5) # 3321
 #'
 #'
 #'
@@ -121,9 +121,9 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   } else {
     opts_names <- names(opts)
     opts_names <- str_replace_all(opts_names, "_", "-")
-    opts <- paste0("--", opts_names, "=", unlist(opts))
+    opts <- str_c("--", opts_names, "=", unlist(opts))
     opts <- str_replace_all(opts, "=TRUE", "")
-    opts <- paste(opts, collapse = " ")
+    opts <- str_c(opts, collapse = " ")
   }
 
 
@@ -135,7 +135,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   }
 
   if(str_detect(opts, "--simplified-ehrhart-polynomial")){
-    stop("this option is not supported by algstat.", call. = FALSE)
+    stop("This option is not yet supported by latte.", call. = FALSE)
   }
 
 
@@ -156,7 +156,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
     spec  <- paste(dim(bNegA), collapse = " ")
     bNegA <- paste(apply(bNegA, 1, paste, collapse = " "), collapse = "\n")
     spec  <- paste(spec, bNegA, sep = "\n")
-    spec  <- paste0("\n", spec)
+    spec  <- str_c("\n", spec)
 
     specification <- "code"
     code <- spec
@@ -170,7 +170,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
     specification <- "vertex"
     message("Undeclared vertex specification, setting vrep = TRUE; see ?latte_count")
-    opts <- paste(opts, "--vrep")
+    opts <- str_c(opts, "--vrep")
 
   }
 
@@ -217,28 +217,27 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
 
-  ## convert the mpoly specification into a matrix, see
-  ## latte manual, p. 8
+  ## convert the mpoly specification into a matrix, see latte manual, p. 8
   if(is.mpolyList(spec)){
   	specification <- "hyperplane"
     if(!all(is.linear(spec))){
-      stop("all polynomials must be linear.", call. = FALSE)
+      stop("All polynomials must be linear.", call. = FALSE)
     }
     mat <- mpoly_list_to_mat(spec)
     mat <- cbind(-mat[,"coef",drop=FALSE], -mat[,-ncol(mat)])
 
     # convert to code
     code <- paste(nrow(mat), ncol(mat))
-    code <- paste0(code, "\n")
-    code <- paste0(code,
+    code <- str_c(code, "\n")
+    code <- str_c(code,
       paste(apply(unname(mat), 1, paste, collapse = " "),
       collapse = "\n")
     )
 
     if(length(linearityNdcs) > 0){
-      code <- paste0(code, "\n")
-      code <- paste0(code,
-        paste0("linearity ", length(linearityNdcs), " ",
+      code <- str_c(code, "\n")
+      code <- str_c(code,
+        str_c("linearity ", length(linearityNdcs), " ",
           paste(linearityNdcs, collapse = " "))
       )
     }
@@ -252,8 +251,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   	if(any(!sapply(spec, function(v) length(v) != 1))){
   	  stop(
-  	    "if providing a vertex specification,\n",
-        "  each point must have the same number of coordinates.",
+  	    "Unequal number of coordinates in vertex specification.",
   	    call. = FALSE
   	  )
   	}
@@ -263,8 +261,8 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
     # convert to code
     mat <- cbind(1, mat)
     code <- paste(nrow(mat), ncol(mat))
-    code <- paste0(code, "\n")
-    code <- paste0(code,
+    code <- str_c(code, "\n")
+    code <- str_c(code,
       paste(apply(unname(mat), 1, paste, collapse = " "),
       collapse = "\n")
     )
@@ -371,7 +369,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
     # change x[0] to vars[1], and so on
     indets <- vars(spec)
     for(k in 1:length(indets)){
-      outPrint <- str_replace_all(outPrint, paste0("x\\[",k-1,"\\]"), indets[k])
+      outPrint <- str_replace_all(outPrint, str_c("x\\[",k-1,"\\]"), indets[k])
     }
     return(outPrint)
   }
