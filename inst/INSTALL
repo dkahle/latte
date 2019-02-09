@@ -1,0 +1,140 @@
+This file is intended to help you install LattE and 4ti2 for use in R
+through the latte package.
+
+
+
+
+
+
+
+On macOS or unix-alikes
+
+See the GitHub description of the install at
+https://github.com/latte-int/latte-distro. Essentially this will just
+require pulling down a tarball, extracting the files, navigating into
+the directory, and using the standard make sequence of ./configure,
+make, make install. Nevertheless, follow the very well-written
+instructions on that page.
+
+
+
+
+
+
+
+
+
+
+
+
+On Windows
+
+Windows is more challenging because both LattE and 4ti2 demand unix
+environments. In the future the Windows connection interface (Cygwin)
+will be changed to Docker containers to be significantly more
+extensible, lightweight, and easier to install. Nevertheless, the
+instructions below show how you can get up and running on a Windows
+machine. Feel free to contact david@kahle.io for more any
+questions/support!
+
+
+Step 1: Cygwin part.
+
+• Go to Cygwin website.
+• Click Install Cygwin on the left nav bar.
+• Click setup-x86.exe and Install from Internet.
+• When the "Select Roots Install Directory" page appears, click next.
+  (C:\cygwin64 is assumed for this writeup.)
+• Click next through until you get to the "Choose A Download Site"
+  page.
+• Select any mirror (e.g. http://mirrors.kernel.org).
+• In the Select Packages screen, 
+	* Click the icon to the right of Devel to change it from
+	  "Default" to "Install". 
+	* Click the icon to the right of Interpreters to change it
+	  from "Default" to "Install". 
+	* Click the icon to the right of Math to change it from
+	  "Default" to "Install". 
+	* Click the + icon to the left of Math to expand it and click
+	  twice on "3.1.0-1" (or whatever the version is) to change it
+	  to "Skip".  
+• Click next through everything to complete the download, and then
+  install it; this last part takes a while so be ready to wait.
+• Once you've installed Cygwin, open it from the start menu.
+
+
+Step 2: Unzip LattE.
+
+• Go to https://github.com/latte-int/latte/releases.
+• Click latte-integrale-1.7.5.tar.gz to download.
+• Move the downloaded file (latte-integrale-1.7.5.tar.gz) into your
+  Cygwin home directory, for example, from
+  C:\Users\david_kahle\Downloads to C:\cygwin64\home\david_kahle\  (Note
+  that if you didn't open Cygwin, the user directory (\David_Kahle\)
+  won't be there.)
+
+
+
+Step 3: In Cygwin.
+
+• Open Cygwin and type "pwd" and enter, the directory listed above
+  should come up. (Now as /home/david_kahle, for example.)
+• Type "ls" and enter, you should see the latte-integrale-1.7.5.tar.gz
+  that you put in from before.
+• Type tar -xf latte-integrale-1.7.5.tar.gz
+• Type mv latte-integrale-1.7.5 latte (this renames the directory to
+  latte)
+• Type cd latte 
+• Type ./configure --prefix=$HOME/latte --disable-lidia
+• Type make (this takes a very long time to work, so be ready to wait)
+(• Type make install)
+• Type ls -al bin, you should see a relatively long list of stuff that
+  includes count.exe (this is part of LattE) and markov.exe (this is
+  part of 4ti2).  If not, something went wrong.
+
+The executables are then made in the directory $HOME/latte/bin
+
+
+
+Step 4: Set the system path to include the new executables.
+
+• Edit the system path by the following:
+	* Right click the My Computer icon on the desktop.  Click
+	  "Advanced system settings" on the left nav bar, and then
+	  click Environment Variables under the Advanced tab (the
+	  window should be labeled System Properties).
+	* Under System variables, click Path, then Edit...
+	* To the beginning of the path string, add
+	  "C:\cygwin64\bin;C:\cygwin64\home\david_kahle\latte\bin;"
+	* Click Ok, Ok, and Ok, to get rid of all the windows.      
+
+
+
+Step 5: Inside R.
+
+• Open R (the x64 version), and inside R type
+  install.packages("latte") at the prompt and enter.  If you want the
+  dev version, see the instructions at https://github.com/dkahle/latte.
+• Type library(latte)
+• If you see a message saying that latte and/or 4ti2 are not found,
+  use set_latte_path() and/or set_4ti2_path() to tell R where those
+  files are. (Note: this will be changed later using environment
+  variables.). If you use one of those functions, navigate to where you
+  created the executables. This is probably something like
+  C:\cygwin64\home\David_Kahle\latte\bin. If you're setting the LattE
+  path, click count.exe and ok; if 4ti2, click markov.exe and ok.
+• To check that the 4ti2 connection is made, type ?markov and run the
+  first few examples; i.e.
+	(A <- rbind(
+	  kprod(diag(3), ones(1,3)),
+	  kprod(ones(1,3), diag(3))
+	))
+	markov(A)
+  You shouldn't get any errors.
+• To check that the LattE connection is made, type ?count and run the
+  first few examples there; namely
+	spec <- c("x + y <= 10", "x >= 1", "y >= 1")
+	latte_count(spec)
+  You shouldn't get any errors.
+
+
