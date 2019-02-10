@@ -70,5 +70,5 @@ set_4ti2_path(4ti2_path) # undoes example
 
 }
 \author{
-David Kahle \email{david.kahle@gmail.com}
+David Kahle \email{david@kahle.io}
 }

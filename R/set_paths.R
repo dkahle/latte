@@ -29,7 +29,7 @@
 #'   function has the side effect of setting the option "latte_path" or
 #'   "4ti2_path"
 #' @name setPaths
-#' @author David Kahle \email{david.kahle@@gmail.com}
+#' @author David Kahle \email{david@@kahle.io}
 #' @examples
 #'
 #' \dontrun{ requires LattE and 4ti2

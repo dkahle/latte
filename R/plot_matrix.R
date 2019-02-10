@@ -4,7 +4,7 @@
 #'
 #' @param A A matrix
 #' @return a ggplot object
-#' @author David Kahle \email{david.kahle@@gmail.com}
+#' @author David Kahle \email{david@@kahle.io}
 #' @export
 #' @examples
 #'
