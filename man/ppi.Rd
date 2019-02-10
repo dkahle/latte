@@ -27,10 +27,17 @@ identities, that is, the Graver basis of 1:N.
 }
 \examples{
 
+\dontrun{ required 4ti2
+
 ppi(3)
+plot_matrix(ppi(3))
+
 graver(t(1:3))
+plot_matrix(graver(t(1:3)))
 
 ppi(5, quiet = FALSE, shell = TRUE)
+
+}
 
 
 }
