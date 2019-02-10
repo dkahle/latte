@@ -15,6 +15,7 @@
 #' @export
 #' @examples
 #'
+#' \dontrun{ requires 4ti2
 #'
 #' # x + y > 0
 #' # x + y < 0
@@ -31,6 +32,8 @@
 #' qsolve(mat, rel, sign, shell = TRUE)
 #'
 #' qsolve(mat, rel, sign, p = "arb", quiet = FALSE)
+#' 
+#' }
 #'
 #'
 qsolve <- function(mat, rel, sign,

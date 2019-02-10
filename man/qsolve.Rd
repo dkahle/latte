@@ -32,6 +32,7 @@ models given by a simplicial complex and levels on the nodes.
 }
 \examples{
 
+\dontrun{ requires 4ti2
 
 # x + y > 0
 # x + y < 0
@@ -48,6 +49,8 @@ qsolve(mat, rel, sign, quiet = FALSE)
 qsolve(mat, rel, sign, shell = TRUE)
 
 qsolve(mat, rel, sign, p = "arb", quiet = FALSE)
+
+}
 
 
 }
