@@ -7,8 +7,8 @@
 #' @docType package
 #' @import mpoly
 #' @importFrom ggplot2 ggplot scale_x_continuous scale_y_continuous theme
-#'   element_blank theme_bw qplot coord_equal scale_fill_gradient
-#'   scale_fill_gradient2
+#'   element_blank theme_bw coord_equal scale_fill_gradient
+#'   scale_fill_gradient2 aes geom_tile
 #' @importFrom magrittr %>%
 #' @importFrom stats runif
 #' @importFrom utils download.file
