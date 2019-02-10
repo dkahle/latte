@@ -15,6 +15,8 @@
 #' @return The configuration matrix of the model provided
 #' @export
 #' @examples
+#' 
+#' \dontrun{ requires 4ti2
 #'
 #' varlvls <- rep(2, 2)
 #' facets <- list(1, 2)
@@ -25,6 +27,8 @@
 #' genmodel(varlvls, facets)
 #'
 #' # compare this to algstat's hmat function
+#'
+#' }
 #'
 genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
     shell = FALSE, ...
