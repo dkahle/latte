@@ -40,6 +40,8 @@ models given by a simplicial complex and levels on the nodes.
 }
 \examples{
 
+\dontrun{ requires 4ti2
+
 mat <- rbind(
   c( 1, -1),
   c(-3,  1),
@@ -54,6 +56,8 @@ zsolve(mat, rel, rhs, sign, quiet = FALSE)
 zsolve(mat, rel, rhs, sign, shell = TRUE)
 
 zsolve(mat, rel, rhs, sign, p = "gmp", quiet = FALSE)
+
+}
 
 
 }

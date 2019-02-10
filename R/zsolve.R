@@ -19,6 +19,8 @@
 #' @export
 #' @examples
 #'
+#' \dontrun{ requires 4ti2
+#'
 #' mat <- rbind(
 #'   c( 1, -1),
 #'   c(-3,  1),
@@ -33,6 +35,8 @@
 #' zsolve(mat, rel, rhs, sign, shell = TRUE)
 #'
 #' zsolve(mat, rel, rhs, sign, p = "gmp", quiet = FALSE)
+#' 
+#' }
 #'
 #'
 zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
