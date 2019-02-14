@@ -3,6 +3,14 @@
 latte
 =====
 
+<!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/latte)](https://cran.r-project.org/package=latte)
+[![Travis build
+status](https://travis-ci.org/dkahle/latte.svg?branch=master)](https://travis-ci.org/dkahle/latte)
+<!-- badges: end -->
+
 **latte** is an R package that makes back-end connections to
 [LattE](https://www.math.ucdavis.edu/~latte/software.php) and
 [4ti2](http://www.4ti2.de). Most of its functions were previously part
