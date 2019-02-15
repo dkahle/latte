@@ -9,6 +9,8 @@ latte
 status](https://www.r-pkg.org/badges/version/latte)](https://cran.r-project.org/package=latte)
 [![Travis build
 status](https://travis-ci.org/dkahle/latte.svg?branch=master)](https://travis-ci.org/dkahle/latte)
+[![AppVeyor build
+status](https://ci.appveyor.com/api/projects/status/github/dkahle/latte?branch=master&svg=true)](https://ci.appveyor.com/project/dkahle/latte)
 <!-- badges: end -->
 
 **latte** is an R package that makes back-end connections to
