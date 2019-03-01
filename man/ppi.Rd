@@ -19,7 +19,7 @@ ppi(N, dir = tempdir(), quiet = TRUE, shell = FALSE, ...)
 }
 \value{
 A matrix containing the basis as its columns (for easy
-  addition to tables)
+addition to tables)
 }
 \description{
 ppi runs 4ti2's ppi program to compute the primitive partition
@@ -42,5 +42,5 @@ ppi(5, quiet = FALSE, shell = TRUE)
 
 }
 \seealso{
-\code{\link{graver}}
+\code{\link[=graver]{graver()}}
 }

@@ -10,17 +10,16 @@ tab2vec(tab)
 \item{tab}{An array of counts}
 }
 \value{
-a Named integer vector.  The names correspond to the cell
-  indices in the table.
+a Named integer vector.  The names correspond to the cell indices in
+the table.
 }
 \description{
 Convert an array into a vector.
 }
 \details{
-This function converts an array (or a multi-way contingency
-table) into a vector, using a consistent ordering of the cells.
-The ordering of the cells is lexicographical and cannot be
-specified by the user.
+This function converts an array (or a multi-way contingency table) into a
+vector, using a consistent ordering of the cells. The ordering of the cells
+is lexicographical and cannot be specified by the user.
 }
 \examples{
 
@@ -35,5 +34,5 @@ Titanic[1,1,1,2]
 
 }
 \seealso{
-\code{\link{vec2tab}}
+\code{\link[=vec2tab]{vec2tab()}}
 }

@@ -7,11 +7,18 @@
 #' @param mat A matrix
 #' @param file A filename
 #' @param format "mat" or "Ab"
-#' @return (\code{format_latte}) A character string of the matrix in
-#'   latte format. (\code{write.latte}) An invisible character
-#'   string of the formatted output.  (\code{read.latte}) An integer
-#'   matrix.
-#' @seealso \code{\link{write.latte}}
+#' @return \itemize{
+#' 
+#'   \item [format_latte()] -- A character string of the matrix in
+#'   latte format. 
+#'   
+#'   \item [write.latte()] -- An invisible character
+#'   string of the formatted output.
+#'   
+#'   \item [read.latte()] -- An integer matrix.
+#'   
+#' }
+#' @seealso [write.latte()]
 #' @name latteFiles
 #' @examples
 #'

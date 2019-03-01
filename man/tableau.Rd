@@ -31,6 +31,6 @@ tableau(vec, varlvls)
 }
 \references{
 Drton, M., B. Sturmfels, and S. Sullivant (2009).
-  \emph{Lectures on Algebraic Statistics}, Basel: Birkhauser
-  Verlag AG.
+\emph{Lectures on Algebraic Statistics}, Basel: Birkhauser
+Verlag AG.
 }

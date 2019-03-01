@@ -55,15 +55,14 @@ fgraver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
 
 \item{A}{The configuration matrix}
 
-\item{format}{How the basis (moves) should be returned.  if
-"mat", the moves are returned as the columns of a matrix.}
+\item{format}{How the basis (moves) should be returned.  if "mat", the moves
+are returned as the columns of a matrix.}
 
-\item{dim}{The dimension to be passed to \code{\link{vec2tab}} if
-format = "tab" is used; a vector of the number of levels of
-each variable in order}
+\item{dim}{The dimension to be passed to \code{\link[=vec2tab]{vec2tab()}} if format = "tab" is
+used; a vector of the number of levels of each variable in order}
 
-\item{all}{If TRUE, all moves (+ and -) are given.  if FALSE,
-only the + moves are given as returned by the executable.}
+\item{all}{If TRUE, all moves (+ and -) are given.  if FALSE, only the +
+moves are given as returned by the executable.}
 
 \item{dir}{Directory to place the files in, without an ending /}
 
@@ -77,13 +76,12 @@ http://markov-bases.de, see examples}
 \item{...}{Additional arguments to pass to the function}
 }
 \value{
-a matrix containing the Markov basis as its columns (for
-  easy addition to tables)
+a matrix containing the Markov basis as its columns (for easy
+addition to tables)
 }
 \description{
-4ti2 provides several executables that can be used to generate
-bases for a configuration matrix A.  See the references for
-details.
+4ti2 provides several executables that can be used to generate bases for a
+configuration matrix A.  See the references for details.
 }
 \examples{
 
@@ -226,7 +224,6 @@ graver(diag(1, 4), "tab", all = TRUE, dim = c(2,2))
 
 }
 \references{
-Drton, M., B. Sturmfels, and S. Sullivant (2009).
-  \emph{Lectures on Algebraic Statistics}, Basel: Birkhauser
-  Verlag AG.
+Drton, M., B. Sturmfels, and S. Sullivant (2009). \emph{Lectures
+on Algebraic Statistics}, Basel: Birkhauser Verlag AG.
 }

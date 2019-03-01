@@ -1,29 +1,26 @@
 #' Compute a basis with 4ti2
 #'
-#' 4ti2 provides several executables that can be used to generate
-#' bases for a configuration matrix A.  See the references for
-#' details.
+#' 4ti2 provides several executables that can be used to generate bases for a
+#' configuration matrix A.  See the references for details.
 #'
 #' @param A The configuration matrix
-#' @param format How the basis (moves) should be returned.  if
-#'   "mat", the moves are returned as the columns of a matrix.
-#' @param dim The dimension to be passed to \code{\link{vec2tab}} if
-#'   format = "tab" is used; a vector of the number of levels of
-#'   each variable in order
-#' @param all If TRUE, all moves (+ and -) are given.  if FALSE,
-#'   only the + moves are given as returned by the executable.
+#' @param format How the basis (moves) should be returned.  if "mat", the moves
+#'   are returned as the columns of a matrix.
+#' @param dim The dimension to be passed to [vec2tab()] if format = "tab" is
+#'   used; a vector of the number of levels of each variable in order
+#' @param all If TRUE, all moves (+ and -) are given.  if FALSE, only the +
+#'   moves are given as returned by the executable.
 #' @param dir Directory to place the files in, without an ending /
 #' @param quiet If FALSE, messages the 4ti2 output
 #' @param shell Messages the shell code used to do the computation
 #' @param dbName The name of the model in the markov bases database,
 #'   http://markov-bases.de, see examples
 #' @param ... Additional arguments to pass to the function
-#' @return a matrix containing the Markov basis as its columns (for
-#'   easy addition to tables)
+#' @return a matrix containing the Markov basis as its columns (for easy
+#'   addition to tables)
 #' @name fourTiTwo
-#' @references Drton, M., B. Sturmfels, and S. Sullivant (2009).
-#'   \emph{Lectures on Algebraic Statistics}, Basel: Birkhauser
-#'   Verlag AG.
+#' @references Drton, M., B. Sturmfels, and S. Sullivant (2009). \emph{Lectures
+#'   on Algebraic Statistics}, Basel: Birkhauser Verlag AG.
 #' @examples
 #'
 #' \dontrun{ requires 4ti2
@@ -162,7 +159,7 @@
 #'
 #' }
 #'
-#'
+#' 
 
 
 

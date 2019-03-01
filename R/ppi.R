@@ -10,7 +10,7 @@
 #' @param ... Additional arguments to pass to the function
 #' @return A matrix containing the basis as its columns (for easy
 #'   addition to tables)
-#' @seealso \code{\link{graver}}
+#' @seealso [graver()]
 #' @export
 #' @examples
 #'

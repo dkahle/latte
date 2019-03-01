@@ -9,21 +9,20 @@ vec2tab(vec, dim)
 \arguments{
 \item{vec}{A vector}
 
-\item{dim}{The desired array dimensions, oftentimes a vector of
-the number of levels of each variable in order}
+\item{dim}{The desired array dimensions, oftentimes a vector of the number of
+levels of each variable in order}
 }
 \value{
 An array
 }
 \description{
-Convert a vector into an array given a set of dimensions; it
-therefore simply wraps \code{aperm} and \code{array}.
+Convert a vector into an array given a set of dimensions; it therefore simply
+wraps \code{\link[=aperm]{aperm()}} and \code{\link[=array]{array()}}.
 }
 \details{
-This function converts an array (or a multi-way contingency
-table) into a vector, using a consistent ordering of the cells.
-The ordering of the cells is lexicographical and cannot be
-specified by the user.
+This function converts an array (or a multi-way contingency table) into a
+vector, using a consistent ordering of the cells. The ordering of the cells
+is lexicographical and cannot be specified by the user.
 }
 \examples{
 
@@ -37,6 +36,5 @@ all(vec2tab(tab2vec(Titanic), dim(Titanic)) == Titanic)
 
 }
 \seealso{
-\code{\link{tab2vec}}, \code{\link{aperm}},
-  \code{\link{array}}
+\code{\link[=tab2vec]{tab2vec()}}, \code{\link[=aperm]{aperm()}}, \code{\link[=array]{array()}}
 }

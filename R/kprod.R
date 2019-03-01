@@ -2,13 +2,13 @@
 #'
 #' Compute the Kronecker product of several matrices.
 #'
-#' If kronecker is  the function that computes A x B, kprod computes
-#' A x B x C and so on; it's a wrapper of Reduce and kronecker.
+#' If kronecker is  the function that computes A x B, kprod computes A x B x C
+#' and so on; it's a wrapper of Reduce and kronecker.
 #'
 #' @param ... A listing of matrices
-#' @param FUN A function to pass to \code{\link{kronecker}}
-#' @return A matrix that is the kronecker product of the specified
-#'   matrices (from left to right).
+#' @param FUN A function to pass to [kronecker()]
+#' @return A matrix that is the kronecker product of the specified matrices
+#'   (from left to right).
 #' @export
 #' @examples
 #'
@@ -26,7 +26,7 @@
 #'   kprod(t(ones(2)), diag(2))
 #' ) # cf. aoki, hara, and takemura p.13
 #'
-#'
+#' 
 kprod <- function(..., FUN = `*`) {
   Reduce(
     function(X, Y) kronecker(X, Y, FUN),

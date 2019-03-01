@@ -2,16 +2,15 @@
 #'
 #' Convert an array into a vector.
 #'
-#' This function converts an array (or a multi-way contingency
-#' table) into a vector, using a consistent ordering of the cells.
-#' The ordering of the cells is lexicographical and cannot be
-#' specified by the user.
+#' This function converts an array (or a multi-way contingency table) into a
+#' vector, using a consistent ordering of the cells. The ordering of the cells
+#' is lexicographical and cannot be specified by the user.
 #'
 #' @param tab An array of counts
-#' @return a Named integer vector.  The names correspond to the cell
-#'   indices in the table.
+#' @return a Named integer vector.  The names correspond to the cell indices in
+#'   the table.
 #' @export
-#' @seealso \code{\link{vec2tab}}
+#' @seealso [vec2tab()]
 #' @examples
 #'
 #' a <- array(1:24, c(2,3,4))
@@ -22,7 +21,7 @@
 #' Titanic[1,1,1,1]
 #' Titanic[1,1,1,2]
 #'
-#'
+#' 
 tab2vec <- function(tab){
 
   # if is a vector, return

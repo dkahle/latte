@@ -27,10 +27,17 @@ read.latte(file, format = c("mat", "Ab"))
 \item{format}{"mat" or "Ab"}
 }
 \value{
-(\code{format_latte}) A character string of the matrix in
-  latte format. (\code{write.latte}) An invisible character
-  string of the formatted output.  (\code{read.latte}) An integer
-  matrix.
+\itemize{
+
+\item \code{\link[=format_latte]{format_latte()}} -- A character string of the matrix in
+latte format.
+
+\item \code{\link[=write.latte]{write.latte()}} -- An invisible character
+string of the formatted output.
+
+\item \code{\link[=read.latte]{read.latte()}} -- An integer matrix.
+
+}
 }
 \description{
 \code{format_latte} formats a matrix in latte's style.
@@ -67,5 +74,5 @@ file.remove("foo.hrep")
 
 }
 \seealso{
-\code{\link{write.latte}}
+\code{\link[=write.latte]{write.latte()}}
 }

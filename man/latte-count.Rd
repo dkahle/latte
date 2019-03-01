@@ -29,9 +29,9 @@ with underscores _}
 }
 \value{
 The count.  If the count is a number has less than 10 digits, an
-  integer is returned.  If the number has 10 or more digits, an integer in a
-  character string is returned. You may want to use the gmp package's as.bigz
-  to parse it.
+integer is returned.  If the number has 10 or more digits, an integer in a
+character string is returned. You may want to use the gmp package's as.bigz
+to parse it.
 }
 \description{
 \code{latte_count} uses LattE's count function to count the (integer) lattice

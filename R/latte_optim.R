@@ -1,27 +1,23 @@
 #' Solve an integer progam with LattE
 #'
-#' \code{latte_max} and \code{latte_min} use LattE's
-#' \code{latte-maximize} and \code{latte-minimize} functions to find
-#' the maximum or minimum of a linear objective function over the
-#' integers points in a polytope (i.e. satisfying linearity
-#' constraints). This makes use of the digging algorithm; see the
-#' LattE manual at \url{http://www.math.ucdavis.edu/~latte} for
-#' details.
+#' \code{latte_max} and \code{latte_min} use LattE's \code{latte-maximize} and
+#' \code{latte-minimize} functions to find the maximum or minimum of a linear
+#' objective function over the integers points in a polytope (i.e. satisfying
+#' linearity constraints). This makes use of the digging algorithm; see the
+#' LattE manual at \url{http://www.math.ucdavis.edu/~latte} for details.
 #'
-#' @param objective A linear polynomial to pass to \code{\link{mp}},
-#'   see examples
-#' @param constraints A collection of linear polynomial
-#'   (in)equalities that define the feasibility region, the integers
-#'   in the polytope
+#' @param objective A linear polynomial to pass to [mp()], see examples
+#' @param constraints A collection of linear polynomial (in)equalities that
+#'   define the feasibility region, the integers in the polytope
 #' @param method Method \code{"LP"} or \code{"cones"}
 #' @param dir Directory to place the files in, without an ending /
 #' @param opts Options; see the LattE manual at
 #'   \url{http://www.math.ucdavis.edu/~latte}
 #' @param quiet Show latte output
 #' @param type \code{"max"} or \code{"min"}
-#' @return A named list with components \code{par}, a named-vector
-#'   of optimizing arguments, and \code{value}, the value of the
-#'   objective function at the optimial point.
+#' @return A named list with components \code{par}, a named-vector of optimizing
+#'   arguments, and \code{value}, the value of the objective function at the
+#'   optimial point.
 #' @name latte_optim
 #' @examples
 #'
@@ -67,7 +63,7 @@
 #'
 #'
 #' }
-#'
+#' 
 latte_optim <- function(objective, constraints, type = c("max", "min"),
   method = c("lp","cones"), dir = tempdir(),
   opts = "", quiet = TRUE

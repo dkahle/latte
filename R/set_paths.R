@@ -1,7 +1,7 @@
 #' Set paths to LattE and 4ti2 executables
 #'
 #' These functions set the path to external programs either by (1) passing them
-#' a character string or (2) using \code{\link{file.choose}}.
+#' a character string or (2) using [file.choose()].
 #'
 #' When latte is loaded it attempts to find LattE and 4ti2 executables
 #' (represented by count and markov, respectively).  How it looks depends on
@@ -19,8 +19,8 @@
 #' If it's not present, it does the same for .bashrc and then .profile. In any
 #' case, once it has its best guess at your path, it looks for "latte".
 #'
-#' On Windows, latte just uses Sys.which() on "whereis" to On Windows, latte
-#' just uses Sys.which() on "whereis" to determine where the executables count
+#' On Windows, latte just uses [Sys.which()] on "whereis" to On Windows, latte
+#' just uses [Sys.which()] on "whereis" to determine where the executables count
 #' and markov are (for LattE and 4ti2, respectively).
 #'
 #' @param path A character string, the path to a 4ti2 function (e.g. markov) for
