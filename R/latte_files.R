@@ -12,10 +12,10 @@
 #'   \item [format_latte()] -- A character string of the matrix in
 #'   latte format. 
 #'   
-#'   \item [write.latte()] -- An invisible character
+#'   \item [write_latte()] -- An invisible character
 #'   string of the formatted output.
 #'   
-#'   \item [read.latte()] -- An integer matrix.
+#'   \item [read_latte()] -- An integer matrix.
 #'   
 #' }
 #' @seealso [write.latte()]
@@ -29,19 +29,19 @@
 #' format_latte(mat)
 #' cat(format_latte(mat))
 #'
-#' write.latte(mat, "foo.hrep")
+#' write_latte(mat, "foo.hrep")
 #' file.show("foo.hrep")
-#' read.latte("foo.hrep")
-#' read.latte("foo.hrep", "Ab")
+#' read_latte("foo.hrep")
+#' read_latte("foo.hrep", "Ab")
 #'
 #' attr(mat, "linearity") <- c(1, 3)
 #' attr(mat, "nonnegative") <- 2
 #' mat
 #' format_latte(mat)
 #' cat(format_latte(mat))
-#' write.latte(mat, "foo.hrep")
+#' write_latte(mat, "foo.hrep")
 #' file.show("foo.hrep")
-#' read.latte("foo.hrep")
+#' read_latte("foo.hrep")
 #'
 #' file.remove("foo.hrep")
 #'

@@ -32,10 +32,10 @@ read.latte(file, format = c("mat", "Ab"))
 \item \code{\link[=format_latte]{format_latte()}} -- A character string of the matrix in
 latte format.
 
-\item \code{\link[=write.latte]{write.latte()}} -- An invisible character
+\item \code{\link[=write_latte]{write_latte()}} -- An invisible character
 string of the formatted output.
 
-\item \code{\link[=read.latte]{read.latte()}} -- An integer matrix.
+\item \code{\link[=read_latte]{read_latte()}} -- An integer matrix.
 
 }
 }
@@ -53,19 +53,19 @@ string of the formatted output.
 format_latte(mat)
 cat(format_latte(mat))
 
-write.latte(mat, "foo.hrep")
+write_latte(mat, "foo.hrep")
 file.show("foo.hrep")
-read.latte("foo.hrep")
-read.latte("foo.hrep", "Ab")
+read_latte("foo.hrep")
+read_latte("foo.hrep", "Ab")
 
 attr(mat, "linearity") <- c(1, 3)
 attr(mat, "nonnegative") <- 2
 mat
 format_latte(mat)
 cat(format_latte(mat))
-write.latte(mat, "foo.hrep")
+write_latte(mat, "foo.hrep")
 file.show("foo.hrep")
-read.latte("foo.hrep")
+read_latte("foo.hrep")
 
 file.remove("foo.hrep")
 
