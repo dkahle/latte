@@ -2,7 +2,7 @@
 % Please edit documentation in R/ones.R
 \name{ones}
 \alias{ones}
-\title{Make an array of ones}
+\title{Ones}
 \usage{
 ones(...)
 }
@@ -18,8 +18,8 @@ Make an array of ones
 \examples{
 
 ones(5)
-ones(5,1)
-ones(1,5)
+ones(5, 1)
+ones(1, 5)
 ones(2, 3)
 ones(2, 3, 2)
 

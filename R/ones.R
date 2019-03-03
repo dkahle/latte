@@ -1,4 +1,4 @@
-#' Make an array of ones
+#' Ones
 #'
 #' Make an array of ones
 #'
@@ -8,8 +8,8 @@
 #' @examples
 #'
 #' ones(5)
-#' ones(5,1)
-#' ones(1,5)
+#' ones(5, 1)
+#' ones(1, 5)
 #' ones(2, 3)
 #' ones(2, 3, 2)
 #'
