@@ -238,11 +238,11 @@ basis <- function(exec, memoise = TRUE){
 
 
     ## create/retrieve markov basis
-    if(is.null(dbName)){
+    if (is.null(dbName)) {
 
       ## run 4ti2 if needed
-      if(is.mac() || is.unix()){
-
+      if (is_mac() || is_unix()) {
+      
         system2(
           file.path2(getOption("4ti2_path"), exec),
           paste(opts, file.path2(dir2, "PROJECT")),
@@ -257,7 +257,7 @@ basis <- function(exec, memoise = TRUE){
         )
         if(shell) message(shell_code)
 
-      } else if(is.win()){
+      } else if (is_win()) {
 
         matFile <- file.path2(dir2, "PROJECT")
         matFile <- chartr("\\", "/", matFile)

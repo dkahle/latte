@@ -28,7 +28,7 @@
 #' @return An invisible character string, the path found.  More importantly, the
 #'   function has the side effect of setting the option "latte_path" or
 #'   "4ti2_path"
-#' @name setPaths
+#' @name set_paths
 #' @author David Kahle \email{david@@kahle.io}
 #' @examples
 #'
@@ -67,15 +67,14 @@ NULL
 
 
 
-#' @rdname setPaths
-#' @aliases set_latte_path
+#' @rdname set_paths
 #' @export
 set_latte_path <- function(path){
 
   if(missing(path) && interactive()){
 
     latte_path <- dirname(file.choose())
-    if(is.win() && str_detect(latte_path,"C:/")){
+    if(is_win() && str_detect(latte_path,"C:/")){
       latte_path <- str_replace(dirname(latte_path), "C:/", "/cygdrive/c/")
     }
     options(latte_path = latte_path)
@@ -95,8 +94,6 @@ set_latte_path <- function(path){
 }
 
 
-#' @export
-set_latte_path <- set_latte_path
 
 
 
@@ -108,14 +105,14 @@ set_latte_path <- set_latte_path
 
 
 
-#' @rdname setPaths
+#' @rdname set_paths
 #' @export
 set_4ti2_path <- function(path){
 
   if(missing(path) && interactive()){
 
     `4ti2_path` <- dirname(file.choose())
-    if(is.win() && str_detect(`4ti2_path`,"C:/")){
+    if(is_win() && str_detect(`4ti2_path`,"C:/")){
       `4ti2_path` <- str_replace(`4ti2_path`, "C:/", "/cygdrive/c/")
     }
     options(`4ti2_path` = `4ti2_path`)

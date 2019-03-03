@@ -36,11 +36,11 @@ is.formula <- function(x) inherits(x, "formula")
 
 
 
-is.mac <- function() grepl("darwin", R.version$platform)
-is.win <- function() .Platform$OS.type == "windows"
-is.linux <- function() (.Platform$OS.type == "unix") && (is.mac() == FALSE)
-is.unix <- function() .Platform$OS.type == "unix"
-is.solaris <- function() grepl("solaris", R.version$os)
+is_mac <- function() grepl("darwin", R.version$platform)
+is_win <- function() .Platform$OS.type == "windows"
+is_linux <- function() (.Platform$OS.type == "unix") && (is_mac() == FALSE)
+is_unix <- function() .Platform$OS.type == "unix"
+is_solaris <- function() grepl("solaris", R.version$os)
 
 
 

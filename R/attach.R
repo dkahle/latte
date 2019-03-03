@@ -2,9 +2,14 @@
 
   packageStartupMessage('  Please cite latte! See citation("latte") for details.')
 
+  
+  
+  
+  
+  
   ##### find LattE/4ti2 on a mac
   ########################################
-  if(is.mac()){
+  if (is_mac()) {
 
     unix_search_and_set("count", "latte", "latte_path")
     unix_search_and_set("markov", "latte", "4ti2_path")
@@ -14,7 +19,7 @@
 
   ##### find LattE/4ti2 on a pc
   ########################################
-  if(is.win()){
+  if (is_win()) {
 
   	if(!any(stringr::str_detect(tolower(list.files("C:\\")), "cygwin"))){
   	  psm("  Cygwin is required to run most of algstat on a Windows platform.")
@@ -38,7 +43,7 @@
 
   ##### find LattE/4ti2 on a linux box
   ########################################
-  if(is.linux()){
+  if (is_linux()) {
 
     unix_search_and_set("count", "latte", "latte_path")
     unix_search_and_set("markov", "latte", "4ti2_path")
@@ -75,10 +80,6 @@
 # .onUnload <- function (libpath) {
 #   library.dynam.unload("latte", libpath)
 # }
-
-
-
-
 
 
 

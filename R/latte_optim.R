@@ -184,7 +184,7 @@ latte_optim <- function(objective, constraints, type = c("max", "min"),
 
 
   ## run latte function
-  if(is.unix()){ # includes OS-X
+  if(is_unix()){ # includes OS-X
   	# bizarrely, latte-maximize returns its output as stderr
     system(
       paste(
@@ -195,7 +195,7 @@ latte_optim <- function(objective, constraints, type = c("max", "min"),
       intern = FALSE, ignore.stderr = FALSE
     )
     outPrint <- readLines(file.path2(dir2, "out.txt"))
-  } else if(is.win()){ # windows
+  } else if(is_win()){ # windows
     matFile <- file.path2(dir2, "optimCode 2> out.txt")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))

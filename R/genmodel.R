@@ -85,7 +85,7 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
 
   ## run 4ti2
-  if(is.mac() || is.unix()){
+  if (is_mac() || is_unix()) {
 
     system2(
       file.path2(getOption("4ti2_path"), "genmodel"),
@@ -101,7 +101,7 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
     )
     if(shell) message(shell_code)
 
-  } else if(is.win()){
+  } else if (is_win()) {
 
     matFile <- file.path2(dir2, "PROJECT")
     matFile <- chartr("\\", "/", matFile)

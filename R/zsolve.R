@@ -100,8 +100,8 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
   ####################################
 
   ## run 4ti2
-  if(is.mac() || is.unix()){
-
+  if (is_mac() || is_unix()) {
+  
     system2(
       file.path2(getOption("4ti2_path"), "zsolve"),
       paste(opts, file.path2(dir2, "system")),
@@ -116,7 +116,7 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
     )
     if(shell) message(shell_code)
 
-  } else if(is.win()){
+  } else if (is_win()) {
 
     matFile <- file.path2(dir2, "system")
     matFile <- chartr("\\", "/", matFile)

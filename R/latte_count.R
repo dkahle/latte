@@ -294,15 +294,15 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## run count
-  if(is.mac() || is.unix()){
-
+  if (is_mac() || is_unix()) {
+  
     system2(
       file.path2(getOption("latte_path"), "count"),
       paste(opts, file.path2(dir2, "countCode.latte")),
       stdout = "countOut", stderr = "countErr"
     )
 
-  } else if(is.win()){
+  } else if (is_win()) {
 
     matFile <- file.path2(dir2, "countCode.latte")
     matFile <- chartr("\\", "/", matFile)
