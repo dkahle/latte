@@ -19,7 +19,7 @@
 #'   
 #' }
 #' @seealso [write.latte()]
-#' @name latteFiles
+#' @name latte-files
 #' @examples
 #'
 #' \dontrun{ creates files
@@ -54,7 +54,7 @@
 
 
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 format_latte <- function(mat, file){
 
@@ -124,7 +124,7 @@ format_latte <- function(mat, file){
 
 
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 write_latte <- function(mat, file){
 
@@ -144,7 +144,7 @@ write_latte <- function(mat, file){
   invisible(out)
 }
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 write.latte <- write_latte
 
@@ -160,7 +160,7 @@ write.latte <- write_latte
 
 
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 read_latte <- function(file, format = c("mat", "Ab")){
 
@@ -232,7 +232,7 @@ read_latte <- function(file, format = c("mat", "Ab")){
   }
 }
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 read.latte <- read_latte
 
