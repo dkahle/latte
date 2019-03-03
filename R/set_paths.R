@@ -28,9 +28,24 @@
 #' @return An invisible character string, the path found.  More importantly, the
 #'   function has the side effect of setting the option "latte_path" or
 #'   "4ti2_path"
-#' @name set_paths
+#' @name pathing
 #' @author David Kahle \email{david@@kahle.io}
 #' @examples
+#' 
+#' 
+#' has_4ti2()
+#' if (has_4ti2()) get_4ti2_path()
+#' 
+#' has_latte()
+#' if (has_4ti2()) get_latte_path()
+#' 
+#' # these are stored in your .Renviron file; that's where you should put the 
+#' # path to LattE and 4ti2 executables. for example, you should have a lines 
+#' # that look like
+#' # LATTE=/Applications/latte/bin
+#' # 4TI2=/Applications/latte/bin
+#' # you can set these with 
+#' usethis::edit_r_environ()
 #'
 #' \dontrun{ requires LattE and 4ti2
 #'
@@ -67,7 +82,7 @@ NULL
 
 
 
-#' @rdname set_paths
+#' @rdname pathing
 #' @export
 set_latte_path <- function(path){
 
@@ -86,10 +101,12 @@ set_latte_path <- function(path){
     return(invisible(path))
 
   } else {
+    
     stop(
       "If the session is not interactive, a path must be specified.",
       call. = FALSE
     )
+    
   }
 }
 
@@ -105,7 +122,7 @@ set_latte_path <- function(path){
 
 
 
-#' @rdname set_paths
+#' @rdname pathing
 #' @export
 set_4ti2_path <- function(path){
 
@@ -124,9 +141,74 @@ set_4ti2_path <- function(path){
     return(invisible(path))
 
   } else {
+    
     stop(
       "If the session is not interactive, a path must be specified.",
       call. = FALSE
     )
+    
   }
 }
+
+
+
+
+
+
+
+
+
+#' @rdname pathing
+#' @export
+get_4ti2_path <- function() Sys.getenv("4TI2")
+
+
+
+#' @rdname pathing
+#' @export
+get_latte_path <- function() Sys.getenv("LATTE")
+
+
+
+#' @rdname pathing
+#' @export
+has_4ti2 <- function() get_4ti2_path() != ""
+
+
+
+#' @rdname pathing
+#' @export
+has_latte <- function() get_latte_path() != ""
+
+
+
+#' @rdname pathing
+#' @export
+missing_4ti2_stop <- function() {
+  stop(
+    "latte doesn't know where 4ti2 is.\n", 
+    "See ?set_4ti2_path to learn how to set it.", 
+    call. = FALSE
+  )
+}
+
+
+
+#' @rdname pathing
+#' @export
+missing_latte_stop <- function() {
+  stop(
+    "latte doesn't know where LattE is.\n", 
+    "See ?set_latte_path to learn how to set it.", 
+    call. = FALSE
+  )
+}
+
+
+
+#' @importFrom usethis edit_r_environ
+#' @export
+usethis::edit_r_environ
+
+
+

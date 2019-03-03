@@ -106,8 +106,7 @@
 
 count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
-  ## check for latte
-  program_not_found_stop("latte_path")
+  if (!has_latte()) missing_latte_stop()
 
 
   ## initialize specification

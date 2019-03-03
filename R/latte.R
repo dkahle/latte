@@ -16,6 +16,7 @@
 #'   str_split str_trim
 #' @importFrom dplyr filter mutate arrange
 #' @importFrom memoise memoise
+#' @importFrom usethis edit_r_environ
 #' @name latte
 #' @aliases latte package-latte
 NULL

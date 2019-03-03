@@ -31,6 +31,10 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE,
     shell = FALSE, ...
 ){
 
+  
+  if (!has_4ti2()) missing_4ti2_stop()
+  
+  ## arg checking
   stopifnot(is.wholenumber(N) && N > 2)
 
   ## compute other args

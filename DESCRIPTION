@@ -1,7 +1,7 @@
 Package: latte
 Type: Package
 Title: 'LattE' and '4ti2' in R
-Version: 0.2.0
+Version: 0.2.0.900
 Authors@R: c(person("David", "Kahle", email = "david@kahle.io", role = c("aut", "cph", "cre"), comment = c(ORCID = "0000-0002-9999-1558")),
   person("Luis", "Garcia",email = "lgarcia@shsu.edu", role = c("aut", "cph")),
   person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut", "cph")))
@@ -22,7 +22,8 @@ Imports:
     mpoly,
     ggplot2,
     memoise,
-    dplyr
+    dplyr,
+    usethis
 Suggests:
     knitr,
     rmarkdown

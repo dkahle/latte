@@ -42,6 +42,8 @@
 zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
   dir = tempdir(), quiet = TRUE, shell = FALSE, ...
 ){
+  
+  if (!has_4ti2()) missing_4ti2_stop()
 
   ## compute other args
   opts <- as.list(match.call(expand.dots = FALSE))[["..."]]

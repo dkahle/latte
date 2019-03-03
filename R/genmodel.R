@@ -33,6 +33,9 @@
 genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
     shell = FALSE, ...
 ){
+  
+  if (!has_4ti2()) missing_4ti2_stop()
+  
 
   ## compute other args
   opts <- as.list(match.call(expand.dots = FALSE))[["..."]]

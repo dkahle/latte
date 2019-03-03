@@ -70,31 +70,14 @@ latte_optim <- function(objective, constraints, type = c("max", "min"),
 ){
 
 
-  ## check for latte
-  program_not_found_stop("latte_path")
+  if (!has_latte()) missing_latte_stop()
 
-
-
-  ## check args
   type   <- match.arg(type)
   method <- match.arg(method)
 
 
   ## set executable to use
-  if(type == "max"){
-    latteProgram <- "latte-maximize"
-  } else if(type == "min"){
-    latteProgram <- "latte-minimize"
-  }
-
-
-  ## check for latte
-  if(is.null(getOption("latte_path"))){
-    stop(
-      "algstat doesn't know where ", latteProgram, " is (or any other latte programs),\n",
-      "  and so can't perform maximization.  see ?setLattePath", call. = FALSE
-    )
-  }
+  latteProgram <- if(type == "max") "latte-maximize" else "latte-minimize"
 
 
   ## parse objective

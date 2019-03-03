@@ -201,8 +201,7 @@ basis <- function(exec, memoise = TRUE){
     ...
   ){
 
-    ## check for 4ti2
-    program_not_found_stop("4ti2_path")
+    if (!has_4ti2()) missing_4ti2_stop()
 
 
     ## check args
