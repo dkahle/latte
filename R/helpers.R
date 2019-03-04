@@ -1,12 +1,18 @@
 
-
-
+rhash <- function(n) {
+  paste(
+    sample(c(letters, LETTERS, 0:9), n, replace = TRUE),
+    collapse = ""
+  )
+}
+# rhash(10)
 
 timeStamp <- function(){
   timeStamp <- as.character(Sys.time())
   timeStamp <- chartr("-", "_", timeStamp)
   timeStamp <- chartr(" ", "_", timeStamp)
   timeStamp <- chartr(":", "_", timeStamp)
+  timeStamp <- paste0(timeStamp, "_", rhash(10))
   timeStamp
 }
 
