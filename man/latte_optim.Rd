@@ -48,19 +48,26 @@ LattE manual at \url{http://www.math.ucdavis.edu/~latte} for details.
 \examples{
 
 
-\dontrun{ requires LattE
+if (has_latte()) {
 
-latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
+latte_max(
+  "-2 x + 3 y", 
+  c("x + y <= 10", "x >= 0", "y >= 0")
+)
 
-library("tidyverse")
+latte_max(
+  "-2 x + 3 y", 
+  c("x + y <= 10", "x >= 0", "y >= 0"),
+  quiet = FALSE
+)
 
 
-tibble("x" = 0:10, "y" = 0:10) \%>\%
-  cross_df() \%>\%
-  filter(x + y <= 10L) \%>\%
-  mutate(objective = -2*x + 3*y) \%>\%
-  ggplot(aes(x, y, size = objective)) +
-    geom_point()
+df <- expand.grid("x" = 0:10, "y" = 0:10)
+df <- subset(df, x + y <= 10L)
+df$objective <- with(df, -2*x + 3*y)
+library("ggplot2")
+ggplot(df, aes(x, y, size = objective)) +
+  geom_point()
 
 latte_min(
   "-2 x + 3 y",
@@ -76,14 +83,6 @@ latte_min("-2 x - 3 y - 4 z", c(
   "x >= 0", "y >= 0", "z >= 0"
 ), "cones", quiet = FALSE)
 
-tibble("x" = 0:10, "y" = 0:10, "z" = 0:10) \%>\%
-  cross_df() \%>\%
-  filter(
-    3*x + 2*y + z <= 10,
-    2*x + 5*y + 3*z <= 15
-  ) \%>\%
-  mutate(objective = -2*x - 3*y - 4*z) \%>\%
-  arrange(objective)
 
 
 

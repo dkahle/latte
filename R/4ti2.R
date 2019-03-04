@@ -18,14 +18,13 @@
 #' @param ... Additional arguments to pass to the function
 #' @return a matrix containing the Markov basis as its columns (for easy
 #'   addition to tables)
-#' @name fourTiTwo
+#' @name lattice-bases
 #' @references Drton, M., B. Sturmfels, and S. Sullivant (2009). \emph{Lectures
 #'   on Algebraic Statistics}, Basel: Birkhauser Verlag AG.
 #' @examples
 #'
-#' \dontrun{ requires 4ti2
 #'
-#'
+#' if (has_4ti2()) {
 #'
 #'
 #' # basic input and output for the 2x2 independence example
@@ -94,7 +93,6 @@
 #' str(graver(A))   #  795 elements
 #'
 #'
-#'
 #' # the other bases are also cached
 #' A <- rbind(
 #'   kprod(  diag(3), ones(1,3), ones(1,2)),
@@ -139,23 +137,25 @@
 #'
 #'
 #' # using the markov bases database, must be connected to internet
-#' # A <- markov(dbName = "ind3-3")
+#' A <- markov(dbName = "ind3-3")
 #' B <- markov(rbind(
 #'   kprod(diag(3), ones(1,3)),
 #'   kprod(ones(1,3), diag(3))
 #' ))
-#' # all(A == B)
+#' all(A == B)
 #'
 #'
 #'
 #'
 #'
 #' # possible issues
-#' markov(diag(1, 10))
-#' zbasis(diag(1, 10), "vec")
-#' groebner(diag(1, 10), "vec", all = TRUE)
-#' graver(diag(1, 10), "vec", all = TRUE)
-#' graver(diag(1, 4), "tab", all = TRUE, dim = c(2,2))
+#' # markov(diag(1, 10))
+#' # zbasis(diag(1, 10), "vec")
+#' # groebner(diag(1, 10), "vec", all = TRUE)
+#' # graver(diag(1, 10), "vec", all = TRUE)
+#' # graver(diag(1, 4), "tab", all = TRUE, dim = c(2,2))
+#'
+#'
 #'
 #' }
 #'
@@ -192,7 +192,7 @@ basis <- function(exec, memoise = TRUE){
 
 
   ## memoise or not
-  mem_or_not <- if(memoise) memoise::memoise else function(x) x
+  mem_or_not <- if(memoise) memoise::memoise else (function(x) x)
 
 
   ## create the function to return
@@ -224,7 +224,7 @@ basis <- function(exec, memoise = TRUE){
 
     ## make dir to put 4ti2 files in (within the tempdir) timestamped
     dir2 <- file.path2(dir, timeStamp())
-    suppressWarnings(dir.create(dir2))
+    dir.create(dir2, showWarnings = FALSE)
 
 
     ## make 4ti2 file
@@ -241,16 +241,16 @@ basis <- function(exec, memoise = TRUE){
 
       ## run 4ti2 if needed
       if (is_mac() || is_unix()) {
-      
+        
         system2(
-          file.path2(getOption("4ti2_path"), exec),
+          file.path2(get_4ti2_path(), exec),
           paste(opts, file.path2(dir2, "PROJECT")),
           stdout = paste0(exec, "Out"), stderr = FALSE
         )
 
         # generate shell code
         shell_code <- paste(
-          file.path2(getOption("4ti2_path"), exec),
+          file.path2(get_4ti2_path(), exec),
           paste(opts, file.path2(dir2, "PROJECT")),
           ">", paste0(exec, "Out")
         )
@@ -266,14 +266,14 @@ basis <- function(exec, memoise = TRUE){
           "cmd.exe",
           paste(
             "/c env.exe",
-            file.path(getOption("4ti2_path"), exec),
+            file.path(get_4ti2_path(), exec),
             opts, matFile
           ), stdout = paste0(exec, "Out"), stderr = FALSE
         )
 
         # generate shell code
         shell_code <- paste("cmd.exe",
-          "/c env.exe", file.path(getOption("4ti2_path"), exec),
+          "/c env.exe", file.path(get_4ti2_path(), exec),
           opts, matFile, ">", paste0(exec, "Out")
         )
         if(shell) message(shell_code)
@@ -338,27 +338,27 @@ basis <- function(exec, memoise = TRUE){
 
 
 # #' @export
-# #' @rdname fourTiTwo
+# #' @rdname lattice-bases
 # zsolve <- basis("zsolve", memoise = TRUE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 zbasis <- basis("zbasis", memoise = TRUE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 markov <- basis("markov", memoise = TRUE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 groebner <- basis("groebner", memoise = TRUE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 hilbert <- basis("hilbert", memoise = TRUE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 graver <- basis("graver", memoise = TRUE)
 
 
@@ -367,27 +367,27 @@ graver <- basis("graver", memoise = TRUE)
 
 
 # #' @export
-# #' @rdname fourTiTwo
+# #' @rdname lattice-bases
 # fzsolve <- basis("zsolve", memoise = FALSE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 fzbasis <- basis("zbasis", memoise = FALSE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 fmarkov <- basis("markov", memoise = FALSE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 fgroebner <- basis("groebner", memoise = FALSE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 fhilbert <- basis("hilbert", memoise = FALSE)
 
 #' @export
-#' @rdname fourTiTwo
+#' @rdname lattice-bases
 fgraver <- basis("graver", memoise = FALSE)
 
 

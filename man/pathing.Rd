@@ -76,30 +76,11 @@ if (has_4ti2()) get_latte_path()
 # that look like
 # LATTE=/Applications/latte/bin
 # 4TI2=/Applications/latte/bin
-# you can set these with 
-usethis::edit_r_environ()
+# you can set these with usethis::edit_r_environ() 
 
-\dontrun{ requires LattE and 4ti2
+# you can change these in your current session with set_latte_path() and 
+# set_4ti2_path(), for example set_4ti2_path("/path/to/4ti2")
 
-## for LattE
-getOption("latte_path")
-set_latte_path()
-
-## for 4ti2 (typically the same as LattE)
-getOption("4ti2_path")
-set_4ti2_path()
-
-
-
-## each of these functions can be used statically as well
-(`4ti2_path` <- getOption("4ti2_path"))
-set_4ti2_path("/path/to/4ti2/directory")
-getOption("4ti2_path")
-set_4ti2_path(4ti2_path) # undoes example
-
-
-
-}
 
 }
 \author{

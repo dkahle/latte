@@ -52,7 +52,7 @@ code and then run count on it.
 }
 \examples{
 
-\dontrun{ requires LattE
+if (has_latte()) {
 
 spec <- c("x + y <= 10", "x >= 1", "y >= 1")
 latte_count(spec) # 45
@@ -120,4 +120,6 @@ latte_count(list(A = A, b = b))
 
 
 }
+
+
 }

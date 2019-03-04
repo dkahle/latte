@@ -32,11 +32,12 @@ models given by a simplicial complex and levels on the nodes.
 }
 \examples{
 
-\dontrun{ requires 4ti2
+if (has_4ti2()) {
 
 varlvls <- rep(2, 2)
 facets <- list(1, 2)
 genmodel(varlvls, facets)
+genmodel(varlvls, facets, quiet = FALSE)
 
 varlvls <- rep(3, 3)
 facets <- list(1:2, 2:3, c(3,1))

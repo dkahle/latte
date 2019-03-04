@@ -19,7 +19,7 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{ requires 4ti2
+#' if (has_4ti2()) {
 #'
 #' mat <- rbind(
 #'   c( 1, -1),
@@ -105,14 +105,14 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
   if (is_mac() || is_unix()) {
   
     system2(
-      file.path2(getOption("4ti2_path"), "zsolve"),
+      file.path2(get_4ti2_path(), "zsolve"),
       paste(opts, file.path2(dir2, "system")),
       stdout = paste0("zsolve", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste(
-      file.path2(getOption("4ti2_path"), "zsolve"),
+      file.path2(get_4ti2_path(), "zsolve"),
       paste(opts, file.path2(dir2, "system")),
       ">", paste0("zsolve", "Out")
     )
@@ -128,14 +128,14 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
       "cmd.exe",
       paste(
         "/c env.exe",
-        file.path(getOption("4ti2_path"), "zsolve"),
+        file.path(get_4ti2_path(), "zsolve"),
         opts, matFile
       ), stdout = paste0("zsolve", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(getOption("4ti2_path"), "zsolve"),
+      "/c env.exe", file.path(get_4ti2_path(), "zsolve"),
       opts, matFile, ">", paste0("zsolve", "Out")
     )
     if(shell) message(shell_code)
@@ -144,7 +144,7 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
 
 
   ## print output, if desired
-  if(!quiet) cat(readLines(paste0("zsolve", "Out")), sep = "\n")
+  if(!quiet) message(paste(readLines("zsolveOut"), "\n"))
 
 
   ## read and return

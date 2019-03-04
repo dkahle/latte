@@ -44,30 +44,11 @@
 #' # that look like
 #' # LATTE=/Applications/latte/bin
 #' # 4TI2=/Applications/latte/bin
-#' # you can set these with 
-#' usethis::edit_r_environ()
+#' # you can set these with usethis::edit_r_environ() 
 #'
-#' \dontrun{ requires LattE and 4ti2
-#'
-#' ## for LattE
-#' getOption("latte_path")
-#' set_latte_path()
-#'
-#' ## for 4ti2 (typically the same as LattE)
-#' getOption("4ti2_path")
-#' set_4ti2_path()
-#'
-#'
-#'
-#' ## each of these functions can be used statically as well
-#' (`4ti2_path` <- getOption("4ti2_path"))
-#' set_4ti2_path("/path/to/4ti2/directory")
-#' getOption("4ti2_path")
-#' set_4ti2_path(4ti2_path) # undoes example
-#'
-#'
-#'
-#' }
+#' # you can change these in your current session with set_latte_path() and 
+#' # set_4ti2_path(), for example set_4ti2_path("/path/to/4ti2")
+#' 
 #' 
 NULL
 
@@ -92,12 +73,12 @@ set_latte_path <- function(path){
     if(is_win() && str_detect(latte_path,"C:/")){
       latte_path <- str_replace(dirname(latte_path), "C:/", "/cygdrive/c/")
     }
-    options(latte_path = latte_path)
+    Sys.setenv("LATTE" = latte_path)
     return(invisible(latte_path))
 
   } else if(!missing(path)){
 
-    options(latte_path = path)
+    Sys.setenv("LATTE" = path)
     return(invisible(path))
 
   } else {
@@ -132,12 +113,12 @@ set_4ti2_path <- function(path){
     if(is_win() && str_detect(`4ti2_path`,"C:/")){
       `4ti2_path` <- str_replace(`4ti2_path`, "C:/", "/cygdrive/c/")
     }
-    options(`4ti2_path` = `4ti2_path`)
+    Sys.setenv("4TI2" = `4ti2_path`)
     return(invisible(`4ti2_path`))
 
   } else if(!missing(path)){
 
-    options(`4ti2_path` = path)
+    Sys.setenv("4TI2" = path)
     return(invisible(path))
 
   } else {

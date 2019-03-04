@@ -30,7 +30,7 @@
 #' @name latte-count
 #' @examples
 #' 
-#' \dontrun{ requires LattE
+#' if (has_latte()) {
 #'
 #' spec <- c("x + y <= 10", "x >= 1", "y >= 1")
 #' latte_count(spec) # 45
@@ -98,6 +98,8 @@
 #'
 #'
 #' }
+#' 
+#' 
 
 
 
@@ -296,7 +298,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   if (is_mac() || is_unix()) {
   
     system2(
-      file.path2(getOption("latte_path"), "count"),
+      file.path2(get_latte_path(), "count"),
       paste(opts, file.path2(dir2, "countCode.latte")),
       stdout = "countOut", stderr = "countErr"
     )
@@ -311,7 +313,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
       "cmd.exe",
       paste(
         "/c env.exe",
-        file.path(getOption("latte_path"), "count"),
+        file.path(get_latte_path(), "count"),
         opts, matFile
       ), stdout = "countOut", stderr = "countErr"
     )
@@ -323,7 +325,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   ## print count output when quiet = FALSE
   if(!quiet) message(paste(readLines("countErr"), collapse = "\n"), appendLF = TRUE)
-  if(!quiet) cat(readLines("countOut"), sep = "\n")
+  if(!quiet) message(paste(readLines("countOut"), "\n"))
 
 
 

@@ -1,8 +1,8 @@
 #' Format/read/write a matrix in latte's style
 #'
-#' \code{format_latte} formats a matrix in latte's style.
-#' \code{write.latte} writes a latte-formatted file to file.
-#' \code{read.latte} reads a latte-formatted file from disk.
+#' [format_latte()] formats a matrix in latte's style.
+#' [write_latte()] writes a latte-formatted file to file.
+#' [read_latte()] reads a latte-formatted file from disk.
 #'
 #' @param mat A matrix
 #' @param file A filename

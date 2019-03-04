@@ -22,19 +22,26 @@
 #' @examples
 #'
 #'
-#' \dontrun{ requires LattE
+#' if (has_latte()) {
 #'
-#' latte_max("-2 x + 3 y", c("x + y <= 10", "x >= 0", "y >= 0"))
+#' latte_max(
+#'   "-2 x + 3 y", 
+#'   c("x + y <= 10", "x >= 0", "y >= 0")
+#' )
+#' 
+#' latte_max(
+#'   "-2 x + 3 y", 
+#'   c("x + y <= 10", "x >= 0", "y >= 0"),
+#'   quiet = FALSE
+#' )
 #'
-#' library("tidyverse")
 #'
-#'
-#' tibble("x" = 0:10, "y" = 0:10) %>%
-#'   cross_df() %>%
-#'   filter(x + y <= 10L) %>%
-#'   mutate(objective = -2*x + 3*y) %>%
-#'   ggplot(aes(x, y, size = objective)) +
-#'     geom_point()
+#' df <- expand.grid("x" = 0:10, "y" = 0:10)
+#' df <- subset(df, x + y <= 10L)
+#' df$objective <- with(df, -2*x + 3*y)
+#' library("ggplot2")
+#' ggplot(df, aes(x, y, size = objective)) +
+#'   geom_point()
 #'
 #' latte_min(
 #'   "-2 x + 3 y",
@@ -50,23 +57,20 @@
 #'   "x >= 0", "y >= 0", "z >= 0"
 #' ), "cones", quiet = FALSE)
 #'
-#' tibble("x" = 0:10, "y" = 0:10, "z" = 0:10) %>%
-#'   cross_df() %>%
-#'   filter(
-#'     3*x + 2*y + z <= 10,
-#'     2*x + 5*y + 3*z <= 15
-#'   ) %>%
-#'   mutate(objective = -2*x - 3*y - 4*z) %>%
-#'   arrange(objective)
 #'
 #'
 #'
 #'
 #' }
 #' 
-latte_optim <- function(objective, constraints, type = c("max", "min"),
-  method = c("lp","cones"), dir = tempdir(),
-  opts = "", quiet = TRUE
+latte_optim <- function(
+  objective, 
+  constraints, 
+  type = c("max", "min"),
+  method = c("lp","cones"), 
+  dir = tempdir(),
+  opts = "", 
+  quiet = TRUE
 ){
 
 
@@ -171,7 +175,7 @@ latte_optim <- function(objective, constraints, type = c("max", "min"),
   	# bizarrely, latte-maximize returns its output as stderr
     system(
       paste(
-        file.path2(getOption("latte_path"), latteProgram),
+        file.path2(get_latte_path(), latteProgram),
         opts,
         file.path2(dir2, "optimCode 2> out.txt")
       ),
@@ -185,7 +189,7 @@ latte_optim <- function(objective, constraints, type = c("max", "min"),
     system(
       paste(
         paste0("cmd.exe /c env.exe"),
-        file.path(getOption("latte_path"), latteProgram),
+        file.path(get_latte_path(), latteProgram),
         opts,
         matFile
       ),
@@ -196,8 +200,7 @@ latte_optim <- function(objective, constraints, type = c("max", "min"),
 
 
   ## print count output when quiet = FALSE
-  if(!quiet) cat(outPrint, sep = "\n")
-
+  if(!quiet) message(paste0(outPrint, "\n"))
 
   ## parse output
   lookFor <- ifelse(method == "cones", "An optimal", "A vertex which we found via LP")

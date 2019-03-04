@@ -14,7 +14,7 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{ required 4ti2
+#' if (has_4ti2()) {
 #'
 #' ppi(3)
 #' plot_matrix(ppi(3))
@@ -63,14 +63,14 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE,
   if (is_mac() || is_unix()) {
   
     system2(
-      file.path2(getOption("4ti2_path"), "ppi"),
+      file.path2(get_4ti2_path(), "ppi"),
       paste(opts, N),
       stdout = paste0("ppi", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste(
-      file.path2(getOption("4ti2_path"), "ppi"),
+      file.path2(get_4ti2_path(), "ppi"),
       paste(opts, N),
       ">", paste0("ppi", "Out"), paste0("\n(in ", dir2, ")")
     )
@@ -82,14 +82,14 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE,
       "cmd.exe",
       paste(
         "/c env.exe",
-        file.path(getOption("4ti2_path"), "ppi"),
+        file.path(get_4ti2_path(), "ppi"),
         opts, N
       ), stdout = paste0("ppi", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(getOption("4ti2_path"), "ppi"),
+      "/c env.exe", file.path(get_4ti2_path(), "ppi"),
       opts, N, ">", paste0("ppi", "Out"), paste0("\n(in ", dir2, ")")
     )
     if(shell) message(shell_code)

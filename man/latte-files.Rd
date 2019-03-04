@@ -40,9 +40,9 @@ string of the formatted output.
 }
 }
 \description{
-\code{format_latte} formats a matrix in latte's style.
-\code{write.latte} writes a latte-formatted file to file.
-\code{read.latte} reads a latte-formatted file from disk.
+\code{\link[=format_latte]{format_latte()}} formats a matrix in latte's style.
+\code{\link[=write_latte]{write_latte()}} writes a latte-formatted file to file.
+\code{\link[=read_latte]{read_latte()}} reads a latte-formatted file from disk.
 }
 \examples{
 
