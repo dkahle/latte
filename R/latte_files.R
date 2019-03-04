@@ -1,8 +1,8 @@
 #' Format/read/write a matrix in latte's style
 #'
-#' \code{format_latte} formats a matrix in latte's style.
-#' \code{write.latte} writes a latte-formatted file to file.
-#' \code{read.latte} reads a latte-formatted file from disk.
+#' [format_latte()] formats a matrix in latte's style.
+#' [write_latte()] writes a latte-formatted file to file.
+#' [read_latte()] reads a latte-formatted file from disk.
 #'
 #' @param mat A matrix
 #' @param file A filename
@@ -12,14 +12,14 @@
 #'   \item [format_latte()] -- A character string of the matrix in
 #'   latte format. 
 #'   
-#'   \item [write.latte()] -- An invisible character
+#'   \item [write_latte()] -- An invisible character
 #'   string of the formatted output.
 #'   
-#'   \item [read.latte()] -- An integer matrix.
+#'   \item [read_latte()] -- An integer matrix.
 #'   
 #' }
 #' @seealso [write.latte()]
-#' @name latteFiles
+#' @name latte-files
 #' @examples
 #'
 #' \dontrun{ creates files
@@ -29,19 +29,19 @@
 #' format_latte(mat)
 #' cat(format_latte(mat))
 #'
-#' write.latte(mat, "foo.hrep")
+#' write_latte(mat, "foo.hrep")
 #' file.show("foo.hrep")
-#' read.latte("foo.hrep")
-#' read.latte("foo.hrep", "Ab")
+#' read_latte("foo.hrep")
+#' read_latte("foo.hrep", "Ab")
 #'
 #' attr(mat, "linearity") <- c(1, 3)
 #' attr(mat, "nonnegative") <- 2
 #' mat
 #' format_latte(mat)
 #' cat(format_latte(mat))
-#' write.latte(mat, "foo.hrep")
+#' write_latte(mat, "foo.hrep")
 #' file.show("foo.hrep")
-#' read.latte("foo.hrep")
+#' read_latte("foo.hrep")
 #'
 #' file.remove("foo.hrep")
 #'
@@ -54,7 +54,7 @@
 
 
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 format_latte <- function(mat, file){
 
@@ -124,7 +124,7 @@ format_latte <- function(mat, file){
 
 
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 write_latte <- function(mat, file){
 
@@ -144,7 +144,7 @@ write_latte <- function(mat, file){
   invisible(out)
 }
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 write.latte <- write_latte
 
@@ -160,7 +160,7 @@ write.latte <- write_latte
 
 
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 read_latte <- function(file, format = c("mat", "Ab")){
 
@@ -232,7 +232,7 @@ read_latte <- function(file, format = c("mat", "Ab")){
   }
 }
 
-#' @rdname latteFiles
+#' @rdname latte-files
 #' @export
 read.latte <- read_latte
 

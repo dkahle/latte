@@ -16,11 +16,12 @@
 #' @export
 #' @examples
 #' 
-#' \dontrun{ requires 4ti2
+#' if (has_4ti2()) {
 #'
 #' varlvls <- rep(2, 2)
 #' facets <- list(1, 2)
 #' genmodel(varlvls, facets)
+#' genmodel(varlvls, facets, quiet = FALSE)
 #'
 #' varlvls <- rep(3, 3)
 #' facets <- list(1:2, 2:3, c(3,1))
@@ -33,6 +34,9 @@
 genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
     shell = FALSE, ...
 ){
+  
+  if (!has_4ti2()) missing_4ti2_stop()
+  
 
   ## compute other args
   opts <- as.list(match.call(expand.dots = FALSE))[["..."]]
@@ -88,14 +92,14 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
   if (is_mac() || is_unix()) {
 
     system2(
-      file.path2(getOption("4ti2_path"), "genmodel"),
+      file.path2(get_4ti2_path(), "genmodel"),
       paste(opts, file.path2(dir2, "PROJECT")),
       stdout = paste0("genmodel", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste(
-      file.path2(getOption("4ti2_path"), "genmodel"),
+      file.path2(get_4ti2_path(), "genmodel"),
       paste(opts, file.path2(dir2, "PROJECT")),
       ">", paste0("genmodel", "Out")
     )
@@ -111,14 +115,14 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
       "cmd.exe",
       paste(
         "/c env.exe",
-        file.path(getOption("4ti2_path"), "genmodel"),
+        file.path(get_4ti2_path(), "genmodel"),
         opts, matFile
       ), stdout = paste0("genmodel", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(getOption("4ti2_path"), "genmodel"),
+      "/c env.exe", file.path(get_4ti2_path(), "genmodel"),
       opts, matFile, ">", paste0("genmodel", "Out")
     )
     if(shell) message(shell_code)
@@ -127,7 +131,7 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
 
   ## print output, if desired
-  if(!quiet) cat(readLines(paste0("genmodel", "Out")), sep = "\n")
+  if(!quiet) message(paste0(readLines("genmodelOut"), "\n"))
 
 
   ## read and return

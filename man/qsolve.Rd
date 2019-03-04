@@ -32,7 +32,7 @@ models given by a simplicial complex and levels on the nodes.
 }
 \examples{
 
-\dontrun{ requires 4ti2
+if (has_4ti2()) {
 
 # x + y > 0
 # x + y < 0

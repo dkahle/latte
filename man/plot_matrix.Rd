@@ -21,7 +21,8 @@ plot_matrix is a R variant of Matlab's \code{spy} function.
 (A <- kprod(ones(1,3), diag(3), ones(3)))
 plot_matrix(A)
 
-\dontrun{ requires 4ti2
+
+if (has_4ti2()) {
 
 plot_matrix(markov(A))
 

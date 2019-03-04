@@ -40,7 +40,7 @@ models given by a simplicial complex and levels on the nodes.
 }
 \examples{
 
-\dontrun{ requires 4ti2
+if (has_4ti2()) {
 
 mat <- rbind(
   c( 1, -1),

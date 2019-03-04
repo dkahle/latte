@@ -21,10 +21,11 @@
 #' kprod(t(ones(2)), t(ones(2)), diag(2))
 #'
 #'
+#' # cf. aoki, hara, and takemura p.13
 #' rbind(
 #'   kprod(diag(2), t(ones(2))),
 #'   kprod(t(ones(2)), diag(2))
-#' ) # cf. aoki, hara, and takemura p.13
+#' ) 
 #'
 #' 
 kprod <- function(..., FUN = `*`) {

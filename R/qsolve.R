@@ -15,7 +15,7 @@
 #' @export
 #' @examples
 #'
-#' \dontrun{ requires 4ti2
+#' if (has_4ti2()) {
 #'
 #' # x + y > 0
 #' # x + y < 0
@@ -40,6 +40,8 @@ qsolve <- function(mat, rel, sign,
   dir = tempdir(), quiet = TRUE, shell = FALSE, ...
 ){
 
+  if (!has_4ti2()) missing_4ti2_stop()
+  
   ## compute other args
   opts <- as.list(match.call(expand.dots = FALSE))[["..."]]
   if("rhs" %in% names(opts)) stop("qsolve only solve homogeneous systems (b = 0).")
@@ -92,14 +94,14 @@ qsolve <- function(mat, rel, sign,
   if (is_mac() || is_unix()) {
     
     system2(
-      file.path2(getOption("4ti2_path"), "qsolve"),
+      file.path2(get_4ti2_path(), "qsolve"),
       paste(opts, file.path2(dir2, "PROJECT")),
       stdout = paste0("qsolve", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste(
-      file.path2(getOption("4ti2_path"), "qsolve"),
+      file.path2(get_4ti2_path(), "qsolve"),
       paste(opts, file.path2(dir2, "PROJECT")),
       ">", paste0("qsolve", "Out")
     )
@@ -115,14 +117,14 @@ qsolve <- function(mat, rel, sign,
       "cmd.exe",
       paste(
         "/c env.exe",
-        file.path(getOption("4ti2_path"), "qsolve"),
+        file.path(get_4ti2_path(), "qsolve"),
         opts, matFile
       ), stdout = paste0("qsolve", "Out"), stderr = FALSE
     )
 
     # generate shell code
     shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(getOption("4ti2_path"), "qsolve"),
+      "/c env.exe", file.path(get_4ti2_path(), "qsolve"),
       opts, matFile, ">", paste0("qsolve", "Out")
     )
     if(shell) message(shell_code)
@@ -131,7 +133,7 @@ qsolve <- function(mat, rel, sign,
 
 
   ## print output, if desired
-  if(!quiet) cat(readLines(paste0("qsolve", "Out")), sep = "\n")
+  if(!quiet) message(paste(readLines("qsolveOut"), "\n"))
 
 
   ## read and return
