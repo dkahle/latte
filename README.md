@@ -28,8 +28,6 @@ It is currently being developed.
 ``` r
 library("latte")
 #   Please cite latte! See citation("latte") for details.
-#   LattE found in /Applications/latte/bin
-#   4ti2 found in /Applications/latte/bin
 ```
 
 Lattice point counting
