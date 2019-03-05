@@ -42,24 +42,21 @@ Step 1: Cygwin part.
 
 • Go to Cygwin website.
 • Click Install Cygwin on the left nav bar.
-• Click setup-x86.exe and Install from Internet.
-• When the "Select Roots Install Directory" page appears, click next.
+• Click setup-x86.exe open the executable.
+• Install from Internet.
+• When the "Select Root Install Directory" page appears, click next.
   (C:\cygwin64 is assumed for this writeup.)
-• Click next through until you get to the "Choose A Download Site"
-  page.
+• Click next until you get to the "Choose A Download Site" page.
 • Select any mirror (e.g. http://mirrors.kernel.org).
-• In the Select Packages screen, 
+• In the Select Packages screen, click the + next to All. Then
 	* Click the icon to the right of Devel to change it from
 	  "Default" to "Install". 
 	* Click the icon to the right of Interpreters to change it
 	  from "Default" to "Install". 
 	* Click the icon to the right of Math to change it from
 	  "Default" to "Install". 
-	* Click the + icon to the left of Math to expand it and click
-	  twice on "3.1.0-1" (or whatever the version is) to change it
-	  to "Skip".  
 • Click next through everything to complete the download, and then
-  install it; this last part takes a while so be ready to wait.
+  install it; this last part takes a long time so be ready to wait.
 • Once you've installed Cygwin, open it from the start menu.
 
 
@@ -87,7 +84,6 @@ Step 3: In Cygwin.
 • Type cd latte 
 • Type ./configure --prefix=$HOME/latte --disable-lidia
 • Type make (this takes a very long time to work, so be ready to wait)
-(• Type make install)
 • Type ls -al bin, you should see a relatively long list of stuff that
   includes count.exe (this is part of LattE) and markov.exe (this is
   part of 4ti2).  If not, something went wrong.
@@ -104,9 +100,10 @@ Step 4: Set the system path to include the new executables.
 	  click Environment Variables under the Advanced tab (the
 	  window should be labeled System Properties).
 	* Under System variables, click Path, then Edit...
-	* To the beginning of the path string, add
-	  "C:\cygwin64\bin;C:\cygwin64\home\david_kahle\latte\bin;"
-	* Click Ok, Ok, and Ok, to get rid of all the windows.      
+	* Click New, then type "C:\cygwin64\bin", press Enter, click Move Up.
+	* Click New, then type "C:\cygwin64\home\david_kahle\latte\bin", press Enter.
+	  and click OK.
+	* Click Ok and Ok to get rid of all the windows.      
 
 
 
@@ -118,11 +115,10 @@ Step 5: Inside R.
 • Type library(latte)
 • If you see a message saying that latte and/or 4ti2 are not found,
   use set_latte_path() and/or set_4ti2_path() to tell R where those
-  files are. (Note: this will be changed later using environment
-  variables.). If you use one of those functions, navigate to where you
+  files are. If you use one of those functions, navigate to where you
   created the executables. This is probably something like
-  C:\cygwin64\home\David_Kahle\latte\bin. If you're setting the LattE
-  path, click count.exe and ok; if 4ti2, click markov.exe and ok.
+  C:\cygwin64\home\david_kahle\latte\bin. If you're setting the LattE
+  path, click count.exe and ok; if 4ti2, click markov and ok.
 • To check that the 4ti2 connection is made, type ?markov and run the
   first few examples; i.e.
 	(A <- rbind(
