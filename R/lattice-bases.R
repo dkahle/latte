@@ -29,7 +29,7 @@
 #' if (has_4ti2()) {
 #'
 #'
-#' # basic input and output for the 2x2 independence example
+#' # basic input and output for the 3x3 independence example
 #' (A <- rbind(
 #'   kprod(diag(3), ones(1,3)),
 #'   kprod(ones(1,3), diag(3))
