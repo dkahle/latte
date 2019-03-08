@@ -170,7 +170,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   if(is.list(spec) && !is.mpolyList(spec) && !str_detect(opts, "--vrep")){
 
     specification <- "vertex"
-    message("Undeclared vertex specification, setting vrep = TRUE; see ?latte_count")
+    message("Undeclared vertex specification, setting vrep = TRUE.")
     opts <- str_c(opts, "--vrep")
 
   }
@@ -180,6 +180,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   ## if giving a character string of equations, parse
   ## each to the poly <= 0 format
+  # this should transition to eq_to_mp
   if(is.character(spec) && length(spec) > 1){
 
   	parsedSpec <- as.list(rep(NA, length(spec)))
@@ -274,22 +275,21 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## make dir to put latte files in (within the tempdir) timestamped
-  dir2 <- file.path2(dir, timeStamp())
-  suppressWarnings(dir.create(dir2))
+  dir2 <- file.path(dir, timeStamp())
+  dir.create(dir2)
 
 
 
 
   ## write code file
-  writeLines(code, con = file.path2(dir2, "countCode.latte"))
+  writeLines(code, con = file.path(dir2, "count_code.latte"))
 
 
 
 
   ## switch to temporary directory
   oldWd <- getwd()
-  setwd(dir2)
-  on.exit(setwd(oldWd), add = TRUE)
+  setwd(dir2); on.exit(setwd(oldWd), add = TRUE)
 
 
 
@@ -298,14 +298,15 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   if (is_mac() || is_unix()) {
   
     system2(
-      file.path2(get_latte_path(), "count"),
-      paste(opts, file.path2(dir2, "countCode.latte")),
-      stdout = "countOut", stderr = "countErr"
+      file.path(get_latte_path(), "count"),
+      paste(opts, file.path(dir2, "count_code.latte")),
+      stdout = "count_out", 
+      stderr = "count_err"
     )
 
   } else if (is_win()) {
 
-    matFile <- file.path2(dir2, "countCode.latte")
+    matFile <- file.path(dir2, "count_code.latte")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 
@@ -315,7 +316,9 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
         "/c env.exe",
         file.path(get_latte_path(), "count"),
         opts, matFile
-      ), stdout = "countOut", stderr = "countErr"
+      ), 
+      stdout = "count_out", 
+      stderr = "count_err"
     )
 
   }
@@ -324,15 +327,17 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## print count output when quiet = FALSE
-  if(!quiet) message(paste(readLines("countErr"), collapse = "\n"), appendLF = TRUE)
-  if(!quiet) message(paste(readLines("countOut"), "\n"))
+  if(!quiet) cat(readLines("count_out"), sep = "\n")
+  # note: strangely, latte posts non-error info to stderr
+  if(!quiet) std_err <- readLines("count_err")
+  if(!quiet && any(std_err != "")) message(str_c(std_err, collapse = "\n"))
 
 
 
 
   ## parse ehrhart polynomial
   if(opts == "--ehrhart-polynomial"){
-    outPrint <- readLines("countOut")
+    outPrint <- readLines("count_out")
     rawPoly <- rev(outPrint)[2]
     if(!mpoly) return(str_trim(rawPoly))
     rawPoly <- str_replace_all(rawPoly, " \\* ", " ")
@@ -345,7 +350,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   ## parse ehrhart series
   if(opts == "--ehrhart-series"){
-    outPrint <- readLines("countCode.latte.rat")
+    outPrint <- readLines("count_code.latte.rat")
 
     # take off initial "x := " and terminating ":"
     outPrint <- str_sub(outPrint, start = 6, end = nchar(outPrint)-1)
@@ -359,7 +364,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   ## parse multivariate generating function
   if(opts == "--multivariate-generating-function"){
-    outPrint <- readLines("countCode.latte.rat")
+    outPrint <- readLines("count_code.latte.rat")
 
     # collapse
     outPrint <- paste(outPrint, collapse = "")
@@ -380,7 +385,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   ## parse truncated taylor series
   if(str_detect(opts, "--ehrhart-taylor=")){
-    outPrint <- readLines("countOut")
+    outPrint <- readLines("count_out")
 
     # collapse
     outPrint <- paste(outPrint, collapse = " + ")
@@ -390,7 +395,6 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
     if(!mpoly) return(outPrint)
     return(mp(outPrint))
   }
-
 
 
 
