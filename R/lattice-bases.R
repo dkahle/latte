@@ -223,8 +223,7 @@ basis <- function(exec, memoise = TRUE){
 
 
     ## make dir to put 4ti2 files in (within the tempdir) timestamped
-    dir2 <- file.path(dir, timeStamp())
-    dir.create(dir2, showWarnings = FALSE)
+    dir.create(dir2 <- file.path(dir, timeStamp()))
 
 
     ## make 4ti2 file

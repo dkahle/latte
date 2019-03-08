@@ -275,8 +275,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## make dir to put latte files in (within the tempdir) timestamped
-  dir2 <- file.path(dir, timeStamp())
-  dir.create(dir2)
+  dir.create(dir2 <- file.path(dir, timeStamp()))
 
 
 
