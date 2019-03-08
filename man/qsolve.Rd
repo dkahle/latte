@@ -44,11 +44,9 @@ mat <- rbind(
 rel <- c(">", "<")
 sign <- c(0, 0)
 
-qsolve(mat, rel, sign)
-qsolve(mat, rel, sign, quiet = FALSE)
-qsolve(mat, rel, sign, shell = TRUE)
-
+qsolve(mat, rel, sign, p = "arb")
 qsolve(mat, rel, sign, p = "arb", quiet = FALSE)
+qsolve(mat, rel, sign, p = "arb", shell = TRUE)
 
 }
 

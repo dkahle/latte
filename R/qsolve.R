@@ -27,11 +27,9 @@
 #' rel <- c(">", "<")
 #' sign <- c(0, 0)
 #'
-#' qsolve(mat, rel, sign)
-#' qsolve(mat, rel, sign, quiet = FALSE)
-#' qsolve(mat, rel, sign, shell = TRUE)
-#'
+#' qsolve(mat, rel, sign, p = "arb")
 #' qsolve(mat, rel, sign, p = "arb", quiet = FALSE)
+#' qsolve(mat, rel, sign, p = "arb", shell = TRUE)
 #' 
 #' }
 #'
@@ -93,16 +91,15 @@ qsolve <- function(mat, rel, sign,
   if (is_mac() || is_unix()) {
     
     system2(
-      file.path2(get_4ti2_path(), "qsolve"),
-      paste(opts, file.path2(dir2, "PROJECT")),
-      stdout = paste0("qsolve", "Out"), stderr = FALSE
+      file.path(get_4ti2_path(), "qsolve"),
+      paste(opts, file.path(dir2, "PROJECT")),
+      stdout = "qsolve_out", 
+      stderr = "qsolve_err"
     )
-
+    
     # generate shell code
-    shell_code <- paste(
-      file.path2(get_4ti2_path(), "qsolve"),
-      paste(opts, file.path2(dir2, "PROJECT")),
-      ">", paste0("qsolve", "Out")
+    shell_code <- glue(
+      "{file.path(get_4ti2_path(), 'qsolve')} {paste(opts, file.path(dir2, 'PROJECT'))} > qsolve_out 2> qsolve_err"
     )
     if(shell) message(shell_code)
 
@@ -111,20 +108,17 @@ qsolve <- function(mat, rel, sign,
     matFile <- file.path2(dir2, "PROJECT")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
-
+    
     system2(
       "cmd.exe",
-      paste(
-        "/c env.exe",
-        file.path(get_4ti2_path(), "qsolve"),
-        opts, matFile
-      ), stdout = paste0("qsolve", "Out"), stderr = FALSE
+      glue("/c env.exe {file.path(get_4ti2_path(), 'qsolve')} {opts} {matFile}"),
+      stdout = "genmodel_out", 
+      stderr = "genmodel_err"
     )
-
+    
     # generate shell code
-    shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(get_4ti2_path(), "qsolve"),
-      opts, matFile, ">", paste0("qsolve", "Out")
+    shell_code <- glue(
+      "cmd.exe /c env.exe {file.path(get_4ti2_path(), 'qsolve')} {opts} {matFile} > qsolve_out 2> qsolve_err"
     )
     if(shell) message(shell_code)
 
@@ -132,7 +126,9 @@ qsolve <- function(mat, rel, sign,
 
 
   ## print output, if desired
-  if(!quiet) message(paste(readLines("qsolveOut"), "\n"))
+  if(!quiet) message(paste(readLines("qsolve_out"), "\n"))
+  std_err <- readLines("qsolve_err")
+  if(any(std_err != "")) warning(str_c(std_err, collapse = "\n"), call. = FALSE)
 
 
   ## read and return
