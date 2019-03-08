@@ -105,15 +105,15 @@ qsolve <- function(mat, rel, sign,
 
   } else if (is_win()) {
 
-    matFile <- file.path2(dir2, "PROJECT")
+    matFile <- file.path(dir2, "PROJECT")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
     
     system2(
       "cmd.exe",
       glue("/c env.exe {file.path(get_4ti2_path(), 'qsolve')} {opts} {matFile}"),
-      stdout = "genmodel_out", 
-      stderr = "genmodel_err"
+      stdout = "qsolve_out", 
+      stderr = "qsolve_err"
     )
     
     # generate shell code
