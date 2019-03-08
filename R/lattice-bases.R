@@ -223,12 +223,12 @@ basis <- function(exec, memoise = TRUE){
 
 
     ## make dir to put 4ti2 files in (within the tempdir) timestamped
-    dir2 <- file.path2(dir, timeStamp())
+    dir2 <- file.path(dir, timeStamp())
     dir.create(dir2, showWarnings = FALSE)
 
 
     ## make 4ti2 file
-    if(!missing(A)) write.latte(A, file.path2(dir2, "PROJECT.mat"))
+    if(!missing(A)) write.latte(A, file.path(dir2, "PROJECT.mat"))
 
 
     ## switch to temporary directory
@@ -244,20 +244,20 @@ basis <- function(exec, memoise = TRUE){
         
         system2(
           file.path(get_4ti2_path(), exec),
-          paste(opts, file.path2(dir2, "PROJECT")),
+          paste(opts, file.path(dir2, "PROJECT")),
           stdout = glue("{exec}_out"), 
           stderr = glue("{exec}_err")
         )
 
         # generate shell code
         shell_code <- glue(
-          "{file.path2(get_4ti2_path(), exec)} {paste(opts, file.path2(dir2, 'PROJECT'))} > {exec}_out 2> {exec}_err"
+          "{file.path(get_4ti2_path(), exec)} {paste(opts, file.path(dir2, 'PROJECT'))} > {exec}_out 2> {exec}_err"
         )
         if(shell) message(shell_code)
 
       } else if (is_win()) {
 
-        matFile <- file.path2(dir2, "PROJECT")
+        matFile <- file.path(dir2, "PROJECT")
         matFile <- chartr("\\", "/", matFile)
         matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 
