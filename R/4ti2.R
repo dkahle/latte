@@ -181,7 +181,7 @@ basis <- function(exec, memoise = TRUE){
     zsolve = ".zfree"
   )
 
-  commonName = switch(exec,
+  commonName <- switch(exec,
     markov = "markov",
     groebner = "grobner",
     hilbert = "hilbert",
@@ -263,18 +263,13 @@ basis <- function(exec, memoise = TRUE){
         matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 
         system2(
-          "cmd.exe",
-          paste(
-            "/c env.exe",
-            file.path(get_4ti2_path(), exec),
-            opts, matFile
-          ), stdout = paste0(exec, "Out"), stderr = FALSE
+          glue("cmd.exe /c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile}"),
+          stdout = glue("{exec}Out"), stderr = FALSE
         )
 
         # generate shell code
-        shell_code <- paste("cmd.exe",
-          "/c env.exe", file.path(get_4ti2_path(), exec),
-          opts, matFile, ">", paste0(exec, "Out")
+        shell_code <- glue(
+          "cmd.exe /c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile} > {exec}Out"
         )
         if(shell) message(shell_code)
 

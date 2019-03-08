@@ -23,7 +23,8 @@ Imports:
     ggplot2,
     memoise,
     dplyr,
-    usethis
+    usethis,
+    glue
 Suggests:
     knitr,
     rmarkdown

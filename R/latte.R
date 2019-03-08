@@ -17,6 +17,7 @@
 #' @importFrom dplyr filter mutate arrange
 #' @importFrom memoise memoise
 #' @importFrom usethis edit_r_environ
+#' @importFrom glue glue
 #' @name latte
 #' @aliases latte package-latte
 NULL
