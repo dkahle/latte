@@ -206,20 +206,19 @@ basis <- function(exec, memoise = TRUE){
 
     ## check args
     format <- match.arg(format)
-    if(format == "tab" && missing(dim)){
-      stop('if format = "tab" is specified, dim must be also.', call. = FALSE)
+    if (format == "tab" && missing(dim)) {
+      stop('If format = "tab" is specified, dim must be also.', call. = FALSE)
     }
 
 
     ## compute other args
     opts <- as.list(match.call(expand.dots = FALSE))[["..."]]
-    if(is.null(opts)){
+    if (is.null(opts)) {
       opts <- ""
     } else {
-      opts <- paste0("-", names(opts), "", unlist(opts))
-      opts <- paste(opts, collapse = " ")
+      opts <- str_c("-", names(opts), "", unlist(opts))
+      opts <- str_c(opts, collapse = " ")
     }
-
 
 
     ## make dir to put 4ti2 files in (within the tempdir) timestamped
@@ -245,14 +244,12 @@ basis <- function(exec, memoise = TRUE){
         system2(
           file.path2(get_4ti2_path(), exec),
           paste(opts, file.path2(dir2, "PROJECT")),
-          stdout = paste0(exec, "Out"), stderr = FALSE
+          stdout = glue("{exec}_out"), stderr = FALSE
         )
 
         # generate shell code
-        shell_code <- paste(
-          file.path2(get_4ti2_path(), exec),
-          paste(opts, file.path2(dir2, "PROJECT")),
-          ">", paste0(exec, "Out")
+        shell_code <- glue(
+          "{file.path2(get_4ti2_path(), exec)} {paste(opts, file.path2(dir2, 'PROJECT'))} > {exec}_out"
         )
         if(shell) message(shell_code)
 
@@ -263,20 +260,21 @@ basis <- function(exec, memoise = TRUE){
         matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 
         system2(
-          glue("cmd.exe /c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile}"),
-          stdout = glue("{exec}Out"), stderr = FALSE
+          "cmd.exe",
+          glue("/c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile}"),
+          stdout = glue("{exec}_out"), stderr = FALSE
         )
 
         # generate shell code
         shell_code <- glue(
-          "cmd.exe /c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile} > {exec}Out"
+          "cmd.exe /c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile} > {exec}_out"
         )
         if(shell) message(shell_code)
 
       }
 
 
-      if(!quiet) cat(readLines(paste0(exec, "Out")), sep = "\n")
+      if(!quiet) cat(readLines(glue("{exec}_out")), sep = "\n")
 
     } else { # if the model name is specified
 
