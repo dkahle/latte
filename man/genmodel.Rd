@@ -8,11 +8,10 @@ genmodel(varlvls, facets, dir = tempdir(), quiet = TRUE,
   shell = FALSE, ...)
 }
 \arguments{
-\item{varlvls}{a vector containing the number of levels of each
-variable}
+\item{varlvls}{a vector containing the number of levels of each variable}
 
-\item{facets}{the facets generating the hierarchical model, a
-list of vectors of variable indices}
+\item{facets}{the facets generating the hierarchical model, a list of vectors
+of variable indices}
 
 \item{dir}{Directory to place the files in, without an ending /}
 
@@ -26,9 +25,9 @@ list of vectors of variable indices}
 The configuration matrix of the model provided
 }
 \description{
-genmodel runs 4ti2's genmodel program to compute the
-configuration matrix A corresponding to graphical statistical
-models given by a simplicial complex and levels on the nodes.
+genmodel runs 4ti2's genmodel program to compute the configuration matrix A
+corresponding to graphical statistical models given by a simplicial complex
+and levels on the nodes.
 }
 \examples{
 

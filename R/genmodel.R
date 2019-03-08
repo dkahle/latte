@@ -1,13 +1,12 @@
 #' Generate a configuration matrix
 #'
-#' genmodel runs 4ti2's genmodel program to compute the
-#' configuration matrix A corresponding to graphical statistical
-#' models given by a simplicial complex and levels on the nodes.
+#' genmodel runs 4ti2's genmodel program to compute the configuration matrix A
+#' corresponding to graphical statistical models given by a simplicial complex
+#' and levels on the nodes.
 #'
-#' @param varlvls a vector containing the number of levels of each
-#'   variable
-#' @param facets the facets generating the hierarchical model, a
-#'   list of vectors of variable indices
+#' @param varlvls a vector containing the number of levels of each variable
+#' @param facets the facets generating the hierarchical model, a list of vectors
+#'   of variable indices
 #' @param dir Directory to place the files in, without an ending /
 #' @param quiet If FALSE, messages the 4ti2 output
 #' @param shell Messages the shell code used to do the computation
@@ -15,7 +14,7 @@
 #' @return The configuration matrix of the model provided
 #' @export
 #' @examples
-#' 
+#'
 #' if (has_4ti2()) {
 #'
 #' varlvls <- rep(2, 2)
@@ -30,7 +29,7 @@
 #' # compare this to algstat's hmat function
 #'
 #' }
-#'
+#' 
 genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
     shell = FALSE, ...
 ){
@@ -40,11 +39,11 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
   ## compute other args
   opts <- as.list(match.call(expand.dots = FALSE))[["..."]]
-  if(is.null(opts)){
+  if (is.null(opts)) {
     opts <- ""
   } else {
-    opts <- paste0("-", names(opts), "", unlist(opts))
-    opts <- paste(opts, collapse = " ")
+    opts <- str_c("-", names(opts), "", unlist(opts))
+    opts <- str_c(opts, collapse = " ")
   }
 
 
@@ -71,12 +70,12 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
 
   ## make dir to put 4ti2 files in (within the tempdir) timestamped
-  dir2 <- file.path2(dir, timeStamp())
+  dir2 <- file.path(dir, timeStamp())
   suppressWarnings(dir.create(dir2))
 
 
   ## make 4ti2 file
-  writeLines(code, con = file.path2(dir2, "PROJECT.mod"))
+  writeLines(code, con = file.path(dir2, "PROJECT.mod"))
 
 
   ## move to dir and run 4it2 genmodel
@@ -92,38 +91,34 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
   if (is_mac() || is_unix()) {
 
     system2(
-      file.path2(get_4ti2_path(), "genmodel"),
-      paste(opts, file.path2(dir2, "PROJECT")),
-      stdout = paste0("genmodel", "Out"), stderr = FALSE
+      file.path(get_4ti2_path(), "genmodel"),
+      paste(opts, file.path(dir2, "PROJECT")),
+      stdout = "genmodel_out", 
+      stderr = "genmodel_err"
     )
 
     # generate shell code
-    shell_code <- paste(
-      file.path2(get_4ti2_path(), "genmodel"),
-      paste(opts, file.path2(dir2, "PROJECT")),
-      ">", paste0("genmodel", "Out")
+    shell_code <- glue(
+      "{file.path(get_4ti2_path(), 'genmodel')} {paste(opts, file.path(dir2, 'PROJECT'))} > genmodel_out 2> genmodel_err"
     )
     if(shell) message(shell_code)
 
   } else if (is_win()) {
 
-    matFile <- file.path2(dir2, "PROJECT")
+    matFile <- file.path(dir2, "PROJECT")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 
     system2(
       "cmd.exe",
-      paste(
-        "/c env.exe",
-        file.path(get_4ti2_path(), "genmodel"),
-        opts, matFile
-      ), stdout = paste0("genmodel", "Out"), stderr = FALSE
+      glue("/c env.exe {file.path(get_4ti2_path(), 'genmodel')} {opts} {matFile}"),
+      stdout = "genmodel_out", 
+      stderr = "genmodel_err"
     )
 
     # generate shell code
-    shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(get_4ti2_path(), "genmodel"),
-      opts, matFile, ">", paste0("genmodel", "Out")
+    shell_code <- glue(
+      "cmd.exe /c env.exe {file.path(get_4ti2_path(), 'genmodel')} {opts} {matFile} > genmodel_out 2> genmodel_err"
     )
     if(shell) message(shell_code)
 
@@ -131,8 +126,9 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
 
   ## print output, if desired
-  if(!quiet) message(paste0(readLines("genmodelOut"), "\n"))
-
+  if(!quiet) message(paste0(readLines("genmodel_out"), "\n"))
+  std_err <- readLines("genmodel_err")
+  if(any(std_err != "")) warning(str_c(std_err, collapse = "\n"), call. = FALSE)
 
   ## read and return
   read.latte(paste0("PROJECT", ".mat"))
