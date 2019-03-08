@@ -15,7 +15,9 @@
 #' @param shell Messages the shell code used to do the computation
 #' @param dbName The name of the model in the markov bases database,
 #'   http://markov-bases.de, see examples
-#' @param ... Additional arguments to pass to the function
+#' @param ... Additional arguments to pass to the function, e.g. \code{p =
+#'   "arb"} specifies the flag \code{-parb}; not setting this issues a common
+#'   warning
 #' @return a matrix containing the Markov basis as its columns (for easy
 #'   addition to tables)
 #' @name lattice-bases
@@ -32,15 +34,15 @@
 #'   kprod(diag(3), ones(1,3)),
 #'   kprod(ones(1,3), diag(3))
 #' ))
-#' markov(A)
+#' markov(A, p = "arb")
 #'
 #'
 #'
 #' # you can get the output formatted in different ways:
-#' markov(A, all = TRUE)
-#' markov(A, "vec")
-#' markov(A, "tab", c(3, 3))
-#' tableau(markov(A), dim = c(3, 3)) # tableau notation
+#' markov(A, p = "arb", all = TRUE)
+#' markov(A, p = "arb", "vec")
+#' markov(A, p = "arb", "tab", c(3, 3))
+#' tableau(markov(A, p = "arb"), dim = c(3, 3)) # tableau notation
 #'
 #'
 #'
@@ -58,26 +60,25 @@
 #'   kprod(ones(1,4),   diag(4), ones(1,4)),
 #'   kprod(ones(1,4), ones(1,4),   diag(4))
 #' )
-#' system.time(markov(A))
-#' system.time(markov(A))
+#' system.time(markov(A, p = "arb"))
+#' system.time(markov(A, p = "arb"))
 #'
 #' # the un-cashed versions begin with an "f"
 #' # (think: "forgetful" markov)
-#' system.time(fmarkov(A))
-#' system.time(fmarkov(A))
+#' system.time(fmarkov(A, p = "arb"))
+#' system.time(fmarkov(A, p = "arb"))
 #'
 #'
 #'
-#' # you can see the code used by typing shell = TRUE
-#' # but since the function is cached, it is only shown
-#' # the first time the function is run
+#' # you can see the command line code by typing shell = TRUE
+#' # and the standard output wiht quiet = FALSE
+#' # we illustrate these with fmarkov because otherwise it's cached
 #' (A <- rbind(
 #'   kprod(diag(2), ones(1,4)),
 #'   kprod(ones(1,4), diag(2))
 #' ))
-#' markov(A, shell = TRUE)
-#' markov(A, shell = TRUE) # no message
-#' fmarkov(A, shell = TRUE)
+#' fmarkov(A, p = "arb", shell = TRUE)
+#' fmarkov(A, p = "arb", quiet = FALSE)
 #'
 #'
 #'
@@ -87,10 +88,10 @@
 #'   kprod(  diag(3), ones(1,3),   diag(3)),
 #'   kprod(ones(1,3),   diag(3),   diag(3))
 #' )
-#' str(zbasis(A))   #    8 elements = ncol(A) - qr(A)$rank
-#' str(markov(A))   #   81 elements
-#' str(groebner(A)) #  110 elements
-#' str(graver(A))   #  795 elements
+#' str(  zbasis(A, p = "arb")) #    8 elements = ncol(A) - qr(A)$rank
+#' str(  markov(A, p = "arb")) #   81 elements
+#' str(groebner(A, p = "arb")) #  110 elements
+#' str(  graver(A))            #  795 elements
 #'
 #'
 #' # the other bases are also cached
@@ -99,8 +100,8 @@
 #'   kprod(ones(1,3),   diag(3), ones(1,2)),
 #'   kprod(ones(1,3), ones(1,3),   diag(2))
 #' )
-#' system.time(graver(A))
-#' system.time(graver(A))
+#' system.time( graver(A))
+#' system.time( graver(A))
 #' system.time(fgraver(A))
 #' system.time(fgraver(A))
 #'
@@ -112,11 +113,11 @@
 #'   kprod(ones(1,2), diag(3))
 #' ))
 #'
-#' markov(A, "tab", c(3, 3))
+#' markov(A, p = "arb", "tab", c(3, 3))
 #' # Prop 1.2.2 says that there should be
 #' 2*choose(2, 2)*choose(3,2) # = 6
 #' # moves (up to +-1)
-#' markov(A, "tab", c(3, 3), TRUE)
+#' markov(A, p = "arb", "tab", c(3, 3), TRUE)
 #'
 #'
 #'
@@ -127,10 +128,10 @@
 #'   kprod(ones(1,2),   diag(2),   diag(2))
 #' ))
 #' plot_matrix(A)
-#' markov(A)
-#' groebner(A)
+#' markov(A, p = "arb")
+#' groebner(A, p = "arb")
 #' graver(A)
-#' tableau(markov(A), dim = c(2,2,2))
+#' tableau(markov(A, p = "arb"), dim = c(2,2,2))
 #'
 #'
 #'
@@ -141,7 +142,7 @@
 #' B <- markov(rbind(
 #'   kprod(diag(3), ones(1,3)),
 #'   kprod(ones(1,3), diag(3))
-#' ))
+#' ), p = "arb")
 #' all(A == B)
 #'
 #'
@@ -242,14 +243,15 @@ basis <- function(exec, memoise = TRUE){
       if (is_mac() || is_unix()) {
         
         system2(
-          file.path2(get_4ti2_path(), exec),
+          file.path(get_4ti2_path(), exec),
           paste(opts, file.path2(dir2, "PROJECT")),
-          stdout = glue("{exec}_out"), stderr = FALSE
+          stdout = glue("{exec}_out"), 
+          stderr = glue("{exec}_err")
         )
 
         # generate shell code
         shell_code <- glue(
-          "{file.path2(get_4ti2_path(), exec)} {paste(opts, file.path2(dir2, 'PROJECT'))} > {exec}_out"
+          "{file.path2(get_4ti2_path(), exec)} {paste(opts, file.path2(dir2, 'PROJECT'))} > {exec}_out 2> {exec}_err"
         )
         if(shell) message(shell_code)
 
@@ -262,12 +264,13 @@ basis <- function(exec, memoise = TRUE){
         system2(
           "cmd.exe",
           glue("/c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile}"),
-          stdout = glue("{exec}_out"), stderr = FALSE
+          stdout = glue("{exec}_out"), 
+          stderr = glue("{exec}_err")
         )
 
         # generate shell code
         shell_code <- glue(
-          "cmd.exe /c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile} > {exec}_out"
+          "cmd.exe /c env.exe {file.path(get_4ti2_path(), exec)} {opts} {matFile} > {exec}_out 2> {exec}_err"
         )
         if(shell) message(shell_code)
 
@@ -275,6 +278,8 @@ basis <- function(exec, memoise = TRUE){
 
 
       if(!quiet) cat(readLines(glue("{exec}_out")), sep = "\n")
+      std_err <- readLines(glue("{exec}_err"))
+      if(any(std_err != "")) warning(str_c(std_err, collapse = "\n"), call. = FALSE)
 
     } else { # if the model name is specified
 
