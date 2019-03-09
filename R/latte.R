@@ -13,7 +13,7 @@
 #' @importFrom stats runif
 #' @importFrom utils download.file
 #' @importFrom stringr str_detect str_sub str_c str_replace str_replace_all
-#'   str_split str_trim
+#'   str_split str_trim str_extract str_extract_all str_which
 #' @importFrom dplyr filter mutate arrange
 #' @importFrom memoise memoise
 #' @importFrom usethis edit_r_environ

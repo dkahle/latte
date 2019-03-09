@@ -8,7 +8,7 @@
 \usage{
 latte_optim(objective, constraints, type = c("max", "min"),
   method = c("lp", "cones"), dir = tempdir(), opts = "",
-  quiet = TRUE)
+  quiet = TRUE, shell = FALSE)
 
 latte_max(objective, constraints, method = c("lp", "cones"),
   dir = tempdir(), opts = "", quiet = TRUE)
@@ -32,6 +32,8 @@ define the feasibility region, the integers in the polytope}
 \url{http://www.math.ucdavis.edu/~latte}}
 
 \item{quiet}{Show latte output}
+
+\item{shell}{Messages the shell code used to do the computation}
 }
 \value{
 A named list with components \code{par}, a named-vector of optimizing

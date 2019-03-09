@@ -14,6 +14,7 @@
 #' @param opts Options; see the LattE manual at
 #'   \url{http://www.math.ucdavis.edu/~latte}
 #' @param quiet Show latte output
+#' @param shell Messages the shell code used to do the computation
 #' @param type \code{"max"} or \code{"min"}
 #' @return A named list with components \code{par}, a named-vector of optimizing
 #'   arguments, and \code{value}, the value of the objective function at the
@@ -69,8 +70,9 @@ latte_optim <- function(
   type = c("max", "min"),
   method = c("lp","cones"), 
   dir = tempdir(),
-  opts = "", 
-  quiet = TRUE
+  opts = "",
+  quiet = TRUE,
+  shell = FALSE
 ){
 
 
@@ -81,7 +83,7 @@ latte_optim <- function(
 
 
   ## set executable to use
-  latteProgram <- if(type == "max") "latte-maximize" else "latte-minimize"
+  exec <- if(type == "max") "latte-maximize" else "latte-minimize"
 
 
   ## parse objective
@@ -126,9 +128,8 @@ latte_optim <- function(
     constraints <- parsedCons
     class(constraints) <- "mpolyList"
 
-    if(!all(is.linear(constraints))){
-      stop("all polynomials must be linear.", call. = FALSE)
-    }
+    if (!all(is.linear(constraints))) stop("all polynomials must be linear.", call. = FALSE)
+    
 
   }
 
@@ -152,12 +153,11 @@ latte_optim <- function(
     -matFull[-1,-ncol(matFull)]
   )
 
-  if(length(linearityNdcs) > 0){
-    attr(mat, "linearity")   <- linearityNdcs
-
-  }
-  # note: the nonnegative stuff is built into this
-  write.latte(mat, "optimCode")
+  if(length(linearityNdcs) > 0) attr(mat, "linearity")   <- linearityNdcs
+  
+  
+  ## note: the nonnegative stuff is built into this
+  write.latte(mat, "optim_code")
 
 
   ## convert objective to latte hrep code and write file
@@ -165,56 +165,65 @@ latte_optim <- function(
     matFull[1,"coef",drop=FALSE],
     matFull[1,-ncol(matFull),drop=FALSE]
   )[,-1, drop = FALSE]
-  write.latte(mat, "optimCode.cost")
+  write.latte(mat, "optim_code.cost")
 
 
 
   ## run latte function
-  if(is_unix()){ # includes OS-X
-  	# bizarrely, latte-maximize returns its output as stderr
-    system(
-      paste(
-        file.path2(get_latte_path(), latteProgram),
-        opts,
-        file.path2(dir2, "optimCode 2> out.txt")
-      ),
-      intern = FALSE, ignore.stderr = FALSE
+  if (is_mac() || is_unix()) { 
+    
+    system2(
+      file.path(get_latte_path(), exec),
+      paste(opts, file.path(dir2, "optim_code")),
+      stdout = glue("optim_out"), 
+      stderr = glue("optim_err")
     )
-    outPrint <- readLines(file.path2(dir2, "out.txt"))
+    
+    # generate shell code
+    shell_code <- glue(
+      "{file.path(get_latte_path(), exec)} {paste(opts, file.path(dir2, 'optim_code'))} > {exec}_out 2> {exec}_err"
+    )
+    if(shell) message(shell_code)
+    
   } else if(is_win()){ # windows
-    matFile <- file.path2(dir2, "optimCode 2> out.txt")
+    
+    matFile <- file.path(dir2, "optim_code 2> out.txt")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
     system(
       paste(
         paste0("cmd.exe /c env.exe"),
-        file.path(get_latte_path(), latteProgram),
+        file.path(get_latte_path(), exec),
         opts,
         matFile
       ),
       intern = FALSE, ignore.stderr = FALSE
     )
-    outPrint <- readLines(file.path2(dir2, "out.txt"))
+     
+  }
+  
+
+  
+  ## print count output when quiet = FALSE
+  std_out <- readLines("optim_out")
+  if(!quiet) cat(std_out, sep = "\n")
+  # note: strangely, latte posts non-error info to stderr
+  std_err <- readLines("optim_err")
+  if(!quiet && any(std_err != "")) message(str_c(std_err, collapse = "\n"))
+  
+  ## parse output
+  if (method == "cones") {
+    optimal_solution_string <- std_err[str_which(std_err, "An optimal solution")]
+  } else {
+    optimal_solution_string <- std_err[str_which(std_err, "A vertex which we found")]
   }
 
-
-  ## print count output when quiet = FALSE
-  if(!quiet) message(paste0(outPrint, "\n"))
-
-  ## parse output
-  lookFor <- ifelse(method == "cones", "An optimal", "A vertex which we found via LP")
-  par <- outPrint[which(str_detect(outPrint, lookFor))]
-  par <- strsplit(par, ": ")[[1]][2]
-  if(method == "cones") par <- str_sub(par, 2, -3)
-  if(method == "lp")    par <- str_sub(par, 2, -2)
-  par <- as.integer(strsplit(par, " ")[[1]])
+  optimal_solution_string <- str_extract(optimal_solution_string, "\\[-?\\d+( -?\\d+)+\\].?$")
+  par <- as.integer(str_extract_all(optimal_solution_string, "-?\\d+")[[1]])
   names(par) <- colnames(matFull)[1:(ncol(matFull)-1)]
-
-  lookFor <- ifelse(method == "cones", "The optimal value is", "The LP optimal value is")
-  val <- outPrint[which(str_detect(outPrint, lookFor))]
-  val <- strsplit(val, ": ")[[1]][2]
-  if(method == "cones") val <- str_sub(val, 1, -2)
-  val <- as.integer(val)
+  
+  val <- str_extract(std_err, "(?<=The optimal value is: )-?\\d+")
+  val <- as.integer(val[!is.na(val)])
 
   ## out
   list(par = par, value = val)
