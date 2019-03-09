@@ -79,9 +79,9 @@ qsolve <- function(mat, rel, sign,
   ## write files
   ####################################
 
-  if(!missing(mat)) write.latte(mat, "PROJECT.mat")
-  write.latte(t(rel), "PROJECT.rel")
-  if(!missing(sign)) write.latte(t(sign), "PROJECT.sign")
+  if(!missing(mat)) write.latte(mat, "system.mat")
+  write.latte(t(rel), "system.rel")
+  if(!missing(sign)) write.latte(t(sign), "system.sign")
 
 
   ## move to dir and run 4it2 qsolve
@@ -92,20 +92,20 @@ qsolve <- function(mat, rel, sign,
     
     system2(
       file.path(get_4ti2_path(), "qsolve"),
-      paste(opts, file.path(dir2, "PROJECT")),
+      paste(opts, file.path(dir2, "system")),
       stdout = "qsolve_out", 
       stderr = "qsolve_err"
     )
     
     # generate shell code
     shell_code <- glue(
-      "{file.path(get_4ti2_path(), 'qsolve')} {paste(opts, file.path(dir2, 'PROJECT'))} > qsolve_out 2> qsolve_err"
+      "{file.path(get_4ti2_path(), 'qsolve')} {paste(opts, file.path(dir2, 'system'))} > qsolve_out 2> qsolve_err"
     )
     if(shell) message(shell_code)
 
   } else if (is_win()) {
 
-    matFile <- file.path(dir2, "PROJECT")
+    matFile <- file.path(dir2, "system")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
     
@@ -133,8 +133,8 @@ qsolve <- function(mat, rel, sign,
 
   ## read and return
   list(
-    qhom = read.latte("PROJECT.qhom"),
-    qfree = read.latte("PROJECT.qfree")
+    qhom = read.latte("system.qhom"),
+    qfree = read.latte("system.qfree")
   )
 
 }
