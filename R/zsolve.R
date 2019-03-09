@@ -1,8 +1,8 @@
 #' Solve a linear system over the integers
 #'
-#' zsolve runs 4ti2's zsolve program to compute the
-#' configuration matrix A corresponding to graphical statistical
-#' models given by a simplicial complex and levels on the nodes.
+#' zsolve runs 4ti2's zsolve program to compute the configuration matrix A
+#' corresponding to graphical statistical models given by a simplicial complex
+#' and levels on the nodes.
 #'
 #' @param mat The A matrix (see the 4ti2 documentation or examples)
 #' @param rel A vector of "<" or ">" relations
@@ -35,10 +35,10 @@
 #' zsolve(mat, rel, rhs, sign, shell = TRUE)
 #'
 #' zsolve(mat, rel, rhs, sign, p = "gmp", quiet = FALSE)
-#' 
+#'
 #' }
 #'
-#'
+#' 
 zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
   dir = tempdir(), quiet = TRUE, shell = FALSE, ...
 ){

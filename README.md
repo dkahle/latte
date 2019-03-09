@@ -19,11 +19,21 @@ status](https://ci.appveyor.com/api/projects/status/github/dkahle/latte?branch=m
 of the [**algstat** package](https://github.com/dkahle/algstat), but
 have been pulled out and improved upon.
 
-It is currently being developed.
-
-*Note: the following assumes you have
+Note: the following assumes you have
 [LattE](https://www.math.ucdavis.edu/~latte/) and
-[4ti2](http://www.4ti2.de) installed and latte recognizes their path.*
+[4ti2](http://www.4ti2.de) installed and **latte** recognizes their
+path. To help **latte** find 4ti2 and LattE on your machine, you can use
+`set_4ti2_path()` and `set_latte_path()` at the beginning of the
+session. Better, you can save environment variables that point to where
+their executables are using `usethis::edit_r_environ()`; just add two
+lines. For example, my lines look like:
+
+``` bash
+LATTE=/Applications/latte/bin
+4TI2=/Applications/latte/bin
+```
+
+You load **latte** like this:
 
 ``` r
 library("latte")
@@ -96,6 +106,129 @@ ggplot(aes(x = x, y = y), data = polytope) +
 ```
 
 ![](tools/ipCheck-1.png)
+
+Lattice bases
+-------------
+
+You can compute all sorts of bases of integer lattices using
+[4ti2](http://www.4ti2.de). For example, if **A** is the matrix
+
+``` r
+(A <- genmodel(varlvls = c(2, 2), facets = list(1, 2)))
+#      [,1] [,2] [,3] [,4]
+# [1,]    1    0    1    0
+# [2,]    0    1    0    1
+# [3,]    1    1    0    0
+# [4,]    0    0    1    1
+```
+
+Its Markov basis can be computed
+
+``` r
+markov(A, p = "arb")
+#      [,1]
+# [1,]    1
+# [2,]   -1
+# [3,]   -1
+# [4,]    1
+```
+
+Note that the `p = "arb"` signifies that arbitrary precision arithmetic
+is supported by using the `-parb` flag at the command line.
+
+Other bases are available as well:
+
+``` r
+  zbasis(A, p = "arb")
+#      [,1]
+# [1,]   -1
+# [2,]    1
+# [3,]    1
+# [4,]   -1
+groebner(A, p = "arb")
+#      [,1]
+# [1,]   -1
+# [2,]    1
+# [3,]    1
+# [4,]   -1
+  graver(A)
+#      [,1]
+# [1,]    1
+# [2,]   -1
+# [3,]   -1
+# [4,]    1
+```
+
+`zsolve()` and `qsolve()`
+-------------------------
+
+You can solve linear systems over the integers and rationals uing
+`zsolve()` and `qsolve()`:
+
+``` r
+mat <- rbind(
+  c( 1, -1),
+  c(-3,  1),
+  c( 1,  1)
+)
+rel <- c("<", "<", ">")
+rhs <- c(2, 1, 1)
+sign <- c(0, 1)
+
+zsolve(mat, rel, rhs, sign)
+# $zinhom
+#      [,1] [,2]
+# [1,]    2    0
+# [2,]    0    1
+# [3,]    1    0
+# [4,]    1    1
+# 
+# $zhom
+#      [,1] [,2]
+# [1,]    1    3
+# [2,]    1    1
+# [3,]    1    2
+```
+
+``` r
+mat <- rbind(
+  c( 1,  1),
+  c( 1,  1)
+)
+rel <- c(">", "<")
+sign <- c(0, 0)
+
+qsolve(mat, rel, sign, p = "arb")
+# $qhom
+#      [,1] [,2]
+# 
+# $qfree
+#      [,1] [,2]
+# [1,]    1   -1
+```
+
+Primitive partition identities
+------------------------------
+
+The primitive partition identities can be computed with `ppi()`:
+
+``` r
+ppi(3)
+#      [,1] [,2] [,3] [,4] [,5]
+# [1,]   -2    0   -1   -3    1
+# [2,]    1   -3   -1    0   -2
+# [3,]    0    2    1    1    1
+```
+
+This is equivalent to the Graver basis of the numbers 1 to 3. In other
+words, its the numbers whose columns, when multiplied by \[1, 2, 3\]
+element-wise, sum to zero:
+
+``` r
+t(1:3) %*% ppi(3)
+#      [,1] [,2] [,3] [,4] [,5]
+# [1,]    0    0    0    0    0
+```
 
 Installation
 ------------

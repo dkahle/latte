@@ -1,15 +1,15 @@
 #' Compute the primitive partition identities
 #'
-#' ppi runs 4ti2's ppi program to compute the primitive partition
-#' identities, that is, the Graver basis of 1:N.
+#' ppi runs 4ti2's ppi program to compute the primitive partition identities,
+#' that is, the Graver basis of 1:N.
 #'
 #' @param N A postive integer > 2
 #' @param dir Directory to place the files in, without an ending /
 #' @param quiet If FALSE, messages the 4ti2 output
 #' @param shell Messages the shell code used to do the computation
 #' @param ... Additional arguments to pass to the function
-#' @return A matrix containing the basis as its columns (for easy
-#'   addition to tables)
+#' @return A matrix containing the basis as its columns (for easy addition to
+#'   tables)
 #' @seealso [graver()]
 #' @export
 #' @examples
@@ -19,15 +19,15 @@
 #' ppi(3)
 #' t(ppi(3)) %*% 1:3
 #' plot_matrix(ppi(3))
-#' 
+#'
 #' graver(t(1:3))
 #' plot_matrix(graver(t(1:3)))
 #'
 #' ppi(5, quiet = FALSE, shell = TRUE)
-#' 
+#'
 #' }
 #'
-#'
+#' 
 ppi <- function(N, dir = tempdir(), quiet = TRUE, shell = FALSE, ...){
 
   
