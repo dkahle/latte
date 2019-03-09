@@ -17,6 +17,7 @@
 #' if (has_4ti2()) {
 #'
 #' ppi(3)
+#' t(ppi(3)) %*% 1:3
 #' plot_matrix(ppi(3))
 #' 
 #' graver(t(1:3))
@@ -27,9 +28,7 @@
 #' }
 #'
 #'
-ppi <- function(N, dir = tempdir(), quiet = TRUE,
-    shell = FALSE, ...
-){
+ppi <- function(N, dir = tempdir(), quiet = TRUE, shell = FALSE, ...){
 
   
   if (!has_4ti2()) missing_4ti2_stop()
@@ -42,8 +41,8 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE,
   if(is.null(opts)){
     opts <- ""
   } else {
-    opts <- paste0("-", names(opts), "", unlist(opts))
-    opts <- paste(opts, collapse = " ")
+    opts <- str_c("-", names(opts), "", unlist(opts))
+    opts <- str_c(opts, collapse = " ")
   }
 
   ## move to dir and run 4it2 ppi
@@ -62,34 +61,30 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE,
   if (is_mac() || is_unix()) {
   
     system2(
-      file.path2(get_4ti2_path(), "ppi"),
+      file.path(get_4ti2_path(), "ppi"),
       paste(opts, N),
-      stdout = paste0("ppi", "Out"), stderr = FALSE
+      stdout = "ppi_out", 
+      stderr = "ppi_err"
     )
-
+    
     # generate shell code
-    shell_code <- paste(
-      file.path2(get_4ti2_path(), "ppi"),
-      paste(opts, N),
-      ">", paste0("ppi", "Out"), paste0("\n(in ", dir2, ")")
+    shell_code <- glue(
+      "{file.path(get_4ti2_path(), 'ppi')} {paste(opts, file.path(dir2, 'system'))} > ppi_out 2> ppi_err"
     )
     if(shell) message(shell_code)
 
   } else if (is_win()) {
-
+    
     system2(
       "cmd.exe",
-      paste(
-        "/c env.exe",
-        file.path(get_4ti2_path(), "ppi"),
-        opts, N
-      ), stdout = paste0("ppi", "Out"), stderr = FALSE
+      glue("/c env.exe {file.path(get_4ti2_path(), 'ppi')} {opts} {N}"),
+      stdout = "ppi_out", 
+      stderr = "ppi_err"
     )
-
+    
     # generate shell code
-    shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(get_4ti2_path(), "ppi"),
-      opts, N, ">", paste0("ppi", "Out"), paste0("\n(in ", dir2, ")")
+    shell_code <- glue(
+      "cmd.exe /c env.exe {file.path(get_4ti2_path(), 'ppi')} {opts} {N} > ppi_out 2> ppi_err"
     )
     if(shell) message(shell_code)
 
@@ -97,10 +92,10 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE,
 
 
   ## print output, if desired
-  if(!quiet) cat(readLines(paste0("ppi", "Out")), sep = "\n")
+  if(!quiet) cat(readLines("ppi_out"), sep = "\n")
 
 
   ## read and return
-  t(read.latte(paste0("ppi", N, ".gra")))
+  t(read.latte(str_c("ppi", N, ".gra")))
 
 }

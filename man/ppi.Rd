@@ -30,6 +30,7 @@ identities, that is, the Graver basis of 1:N.
 if (has_4ti2()) {
 
 ppi(3)
+t(ppi(3)) \%*\% 1:3
 plot_matrix(ppi(3))
 
 graver(t(1:3))
