@@ -102,40 +102,36 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
 
   ## run 4ti2
   if (is_mac() || is_unix()) {
-  
+    
     system2(
-      file.path2(get_4ti2_path(), "zsolve"),
-      paste(opts, file.path2(dir2, "system")),
-      stdout = paste0("zsolve", "Out"), stderr = FALSE
+      file.path(get_4ti2_path(), "zsolve"),
+      paste(opts, file.path(dir2, "system")),
+      stdout = "zsolve_out", 
+      stderr = "zsolve_err"
     )
-
+    
     # generate shell code
-    shell_code <- paste(
-      file.path2(get_4ti2_path(), "zsolve"),
-      paste(opts, file.path2(dir2, "system")),
-      ">", paste0("zsolve", "Out")
+    shell_code <- glue(
+      "{file.path(get_4ti2_path(), 'zsolve')} {paste(opts, file.path(dir2, 'system'))} > zsolve_out 2> zsolve_err"
     )
     if(shell) message(shell_code)
 
   } else if (is_win()) {
 
-    matFile <- file.path2(dir2, "system")
+    matFile <- file.path(dir2, "system")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 
     system2(
       "cmd.exe",
-      paste(
-        "/c env.exe",
-        file.path(get_4ti2_path(), "zsolve"),
-        opts, matFile
-      ), stdout = paste0("zsolve", "Out"), stderr = FALSE
+      glue("/c env.exe {file.path(get_4ti2_path(), 'zsolve')} {opts} {matFile}"),
+      stdout = "zsolve_out", 
+      stderr = "zsolve_err"
     )
-
+    
     # generate shell code
-    shell_code <- paste("cmd.exe",
-      "/c env.exe", file.path(get_4ti2_path(), "zsolve"),
-      opts, matFile, ">", paste0("zsolve", "Out")
+    shell_code <- glue(
+      "cmd.exe /c env.exe {file.path(get_4ti2_path(), 'zsolve')} {opts} {matFile} > zsolve_out 2> zsolve_err"
     )
     if(shell) message(shell_code)
 
@@ -143,7 +139,9 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
 
 
   ## print output, if desired
-  if(!quiet) message(paste(readLines("zsolveOut"), "\n"))
+  if(!quiet) message(paste(readLines("zsolve_out"), "\n"))
+  std_err <- readLines("zsolve_err")
+  if(any(std_err != "")) warning(str_c(std_err, collapse = "\n"), call. = FALSE)
 
 
   ## read and return
