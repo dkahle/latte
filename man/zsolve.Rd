@@ -34,9 +34,9 @@ zsolve(mat, rel, rhs, sign, lat, lb, ub, dir = tempdir(), quiet = TRUE,
 The configuration matrix of the model provided
 }
 \description{
-zsolve runs 4ti2's zsolve program to compute the
-configuration matrix A corresponding to graphical statistical
-models given by a simplicial complex and levels on the nodes.
+zsolve runs 4ti2's zsolve program to compute the configuration matrix A
+corresponding to graphical statistical models given by a simplicial complex
+and levels on the nodes.
 }
 \examples{
 

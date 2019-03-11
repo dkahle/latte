@@ -18,12 +18,12 @@ ppi(N, dir = tempdir(), quiet = TRUE, shell = FALSE, ...)
 \item{...}{Additional arguments to pass to the function}
 }
 \value{
-A matrix containing the basis as its columns (for easy
-addition to tables)
+A matrix containing the basis as its columns (for easy addition to
+tables)
 }
 \description{
-ppi runs 4ti2's ppi program to compute the primitive partition
-identities, that is, the Graver basis of 1:N.
+ppi runs 4ti2's ppi program to compute the primitive partition identities,
+that is, the Graver basis of 1:N.
 }
 \examples{
 
