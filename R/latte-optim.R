@@ -19,7 +19,7 @@
 #' @return A named list with components \code{par}, a named-vector of optimizing
 #'   arguments, and \code{value}, the value of the objective function at the
 #'   optimial point.
-#' @name latte_optim
+#' @name latte-optim
 #' @examples
 #'
 #'
@@ -240,7 +240,7 @@ latte_optim <- function(
 
 
 
-#' @rdname latte_optim
+#' @rdname latte-optim
 #' @export
 latte_max <- function(objective, constraints, method = c("lp","cones"),
   dir = tempdir(), opts = "", quiet = TRUE
@@ -253,7 +253,7 @@ latte_max <- function(objective, constraints, method = c("lp","cones"),
 
 
 
-#' @rdname latte_optim
+#' @rdname latte-optim
 #' @export
 latte_min <- function(objective, constraints, method = c("lp","cones"),
   dir = tempdir(), opts = "", quiet = TRUE

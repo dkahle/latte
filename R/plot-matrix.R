@@ -5,7 +5,7 @@
 #' @param A A matrix
 #' @return a ggplot object
 #' @author David Kahle \email{david@@kahle.io}
-#' @export
+#' @name plot-matrix
 #' @examples
 #'
 #' # the no-three-way interaction configuration
@@ -27,6 +27,14 @@
 #' 
 #' }
 #'
+
+
+
+
+
+
+#' @rdname plot-matrix
+#' @export
 plot_matrix <- function(A){
   x <- NULL; rm(x)
   y <- NULL; rm(y)
