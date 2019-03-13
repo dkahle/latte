@@ -18,7 +18,6 @@
 #'   \item [read_latte()] -- An integer matrix.
 #'   
 #' }
-#' @seealso [write.latte()]
 #' @name latte-files
 #' @examples
 #'

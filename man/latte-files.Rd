@@ -73,6 +73,3 @@ file.remove("foo.hrep")
 
 
 }
-\seealso{
-\code{\link[=write.latte]{write.latte()}}
-}
