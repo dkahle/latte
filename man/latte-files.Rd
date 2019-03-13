@@ -46,7 +46,6 @@ string of the formatted output.
 }
 \examples{
 
-\dontrun{ creates files
 
 (mat <- matrix(sample(9), 3, 3))
 
@@ -70,7 +69,6 @@ read_latte(file)
 
 file.remove(file)
 
-}
 
 
 }

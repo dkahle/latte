@@ -21,7 +21,6 @@
 #' @name latte-files
 #' @examples
 #'
-#' \dontrun{ creates files
 #'
 #' (mat <- matrix(sample(9), 3, 3))
 #'
@@ -45,7 +44,6 @@
 #'
 #' file.remove(file)
 #'
-#' }
 #'
 #'
 
