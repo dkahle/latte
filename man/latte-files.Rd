@@ -53,21 +53,22 @@ string of the formatted output.
 format_latte(mat)
 cat(format_latte(mat))
 
-write_latte(mat, "foo.hrep")
-file.show("foo.hrep")
-read_latte("foo.hrep")
-read_latte("foo.hrep", "Ab")
+(file <- file.path(tempdir(), "foo.hrep"))
+write_latte(mat, file)
+file.show(file)
+read_latte(file)
+read_latte(file, "Ab")
 
 attr(mat, "linearity") <- c(1, 3)
 attr(mat, "nonnegative") <- 2
 mat
 format_latte(mat)
 cat(format_latte(mat))
-write_latte(mat, "foo.hrep")
-file.show("foo.hrep")
-read_latte("foo.hrep")
+write_latte(mat, file)
+file.show(file)
+read_latte(file)
 
-file.remove("foo.hrep")
+file.remove(file)
 
 }
 
