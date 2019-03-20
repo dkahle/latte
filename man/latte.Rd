@@ -5,7 +5,7 @@
 \alias{latte}
 \alias{package-latte}
 \alias{latte-package}
-\title{LattE and 4ti2 in R}
+\title{R Interface to LattE and 4ti2}
 \description{
 Back-end connections to LattE (\url{https://www.math.ucdavis.edu/~latte/})
 and 4ti2 (\url{http://www.4ti2.de/}) executables and front-end tools

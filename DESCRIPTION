@@ -1,33 +1,35 @@
 Package: latte
 Type: Package
-Title: 'LattE' and '4ti2' in R
+Title: Interface to 'LattE' and '4ti2'
 Version: 0.2.1
 Authors@R: c(person("David", "Kahle", email = "david@kahle.io", role = c("aut", "cph", "cre"), comment = c(ORCID = "0000-0002-9999-1558")),
-  person("Luis", "Garcia",email = "lgarcia@shsu.edu", role = c("aut", "cph")),
-  person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut", "cph")))
+	person("Luis", "Garcia",email = "lgarcia@shsu.edu", role = c("aut", "cph")),
+	person("Ruriko", "Yoshida", email = "ryoshida@nps.edu", role = c("aut", "cph")))
 Maintainer: David Kahle <david@kahle.io>
 Description: Back-end connections to 'LattE' (<https://www.math.ucdavis.edu/~latte>) 
-    for counting lattice points and integration inside convex polytopes and 
-    '4ti2' (<http://www.4ti2.de/>) for algebraic, geometric, and combinatorial 
-    problems on linear spaces and front-end tools facilitating their use in the 
-    R ecosystem.
+	for counting lattice points and integration inside convex polytopes and 
+	'4ti2' (<http://www.4ti2.de/>) for algebraic, geometric, and combinatorial 
+	problems on linear spaces and front-end tools facilitating their use in the 
+	'R' ecosystem.
 License: GPL-2
+URL: https://github.com/dkahle/latte
+BugReports: https://github.com/dkahle/latte/issues
 LazyData: TRUE
 SystemRequirements:
-    LattE <https://www.math.ucdavis.edu/~latte/>,
-    4ti2 <http://www.4ti2.de/>
+	LattE <https://www.math.ucdavis.edu/~latte/>,
+	4ti2 <http://www.4ti2.de/>
 Imports:
-    magrittr,
-    stringr,
-    mpoly,
-    ggplot2,
-    memoise,
-    dplyr,
-    usethis,
-    glue
+	magrittr,
+	stringr,
+	mpoly,
+	ggplot2,
+	memoise,
+	dplyr,
+	usethis,
+	glue
 Suggests:
-    knitr,
-    rmarkdown
+	knitr,
+	rmarkdown
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 Encoding: UTF-8
