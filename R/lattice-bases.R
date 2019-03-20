@@ -138,12 +138,13 @@
 #'
 #'
 #' # using the markov bases database, must be connected to internet
-#' A <- markov(dbName = "ind3-3")
-#' B <- markov(rbind(
-#'   kprod(diag(3), ones(1,3)),
-#'   kprod(ones(1,3), diag(3))
-#' ), p = "arb")
-#' all(A == B)
+#' # commented out for predictable and fast cran checks time
+#' # A <- markov(dbName = "ind3-3")
+#' # B <- markov(rbind(
+#' #   kprod(diag(3), ones(1,3)),
+#' #   kprod(ones(1,3), diag(3))
+#' # ), p = "arb")
+#' # all(A == B)
 #'
 #'
 #'
