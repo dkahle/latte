@@ -143,8 +143,8 @@ latte_optim <- function(
 
 
   ## switch to temporary directory
-  oldWd <- getwd(); on.exit(setwd(oldWd), add = TRUE)
-  setwd(dir2)
+  user_working_directory <- getwd()
+  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
 
 
   ## convert constraints to latte hrep code and write file

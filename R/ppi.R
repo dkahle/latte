@@ -53,8 +53,8 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE, shell = FALSE, ...){
 
 
   ## switch to temporary directory
-  oldWd <- getwd()
-  setwd(dir2); on.exit(setwd(oldWd), add = TRUE)
+  user_working_directory <- getwd()
+  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
 
 
   ## run 4ti2
