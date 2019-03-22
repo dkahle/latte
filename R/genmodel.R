@@ -70,7 +70,7 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
 
   ## make dir to put 4ti2 files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, timeStamp()))
+  dir.create(dir2 <- file.path(dir, time_stamp()))
 
 
   ## make 4ti2 file

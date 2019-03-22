@@ -7,15 +7,15 @@ rhash <- function(n) {
 }
 # rhash(10)
 
-timeStamp <- function(){
-  timeStamp <- as.character(Sys.time())
-  timeStamp <- chartr("-", "_", timeStamp)
-  timeStamp <- chartr(" ", "_", timeStamp)
-  timeStamp <- chartr(":", "_", timeStamp)
-  timeStamp <- paste0(timeStamp, "_", rhash(10))
-  timeStamp
+time_stamp <- function(){
+  time_stamp <- as.character(Sys.time())
+  time_stamp <- chartr("-", "_", time_stamp)
+  time_stamp <- chartr(" ", "_", time_stamp)
+  time_stamp <- chartr(":", "_", time_stamp)
+  time_stamp <- paste0(time_stamp, "_", rhash(10))
+  time_stamp
 }
-
+# time_stamp()
 
 
 

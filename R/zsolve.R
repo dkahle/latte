@@ -59,7 +59,7 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
   ####################################
 
   ## make dir to put 4ti2 files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, timeStamp()))
+  dir.create(dir2 <- file.path(dir, time_stamp()))
 
 
   ## switch to temporary directory
