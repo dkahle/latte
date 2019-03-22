@@ -33,34 +33,27 @@ missing_latte_stop()
 setting 4ti2's path or a LattE function (e.g. count) for LattE's path}
 }
 \value{
-An invisible character string, the path found.  More importantly, the
-function has the side effect of setting the option "latte_path" or
-"4ti2_path"
+A logical(1) or character(1) containing the path.
 }
 \description{
-These functions set the path to external programs either by (1) passing them
-a character string or (2) using \code{\link[=file.choose]{file.choose()}}.
+These are helper functions that deal with pathing to external programs and
+asking if they are present. When latte is loaded it attempts to find LattE
+and 4ti2 executables by looking for environment variables specifying them,
+i.e. their paths as specified in your .Renviron file.
 }
 \details{
-When latte is loaded it attempts to find LattE and 4ti2 executables
-(represented by count and markov, respectively).  How it looks depends on
-your operating system.
+For easiest use, you'll want to specify the paths of LattE and 4ti2
+executables in your ~/.Renviron file. They should look something like
 
-If you're using a Mac or Linux machine, it looks based on your system's path.
-Unfortunately, R changes the system path in such a way that the path that R
-sees is not the same as the path that you'd see if you were working in the
-terminal. (You can open the Terminal app on a Mac by going to
-/Applications/Utilities/Terminal.)  Consequently, latte tries to guess the
-file in which your path is set.  To do so, it first checks if your home
-directory (type echo ~/ in the terminal to figure out which directory this is
-if you don't know) for the file named .bash_profile.  If this file is
-present, it runs it and then checks your system's path variable (echo $PATH).
-If it's not present, it does the same for .bashrc and then .profile. In any
-case, once it has its best guess at your path, it looks for "latte".
+\code{LATTE=/Applications/latte/bin}
 
-On Windows, latte just uses \code{\link[=Sys.which]{Sys.which()}} on "whereis" to On Windows, latte
-just uses \code{\link[=Sys.which]{Sys.which()}} on "whereis" to determine where the executables count
-and markov are (for LattE and 4ti2, respectively).
+\code{4TI2=/Applications/latte/bin}
+
+You can set these permanently with \code{\link[=edit_r_environ]{edit_r_environ()}}.
+
+You can change these for the current session using, e.g., \code{\link[=set_latte_path]{set_latte_path()}},
+which accepts a character string or, if missing, uses \code{\link[=file.choose]{file.choose()}} to let
+you interactively; you just select an arbitrary executable.
 }
 \examples{
 
@@ -71,16 +64,13 @@ if (has_4ti2()) get_4ti2_path()
 has_latte()
 if (has_4ti2()) get_latte_path()
 
-# these are stored in your .Renviron file; that's where you should put the 
-# path to LattE and 4ti2 executables. for example, you should have a lines 
-# that look like
-# LATTE=/Applications/latte/bin
-# 4TI2=/Applications/latte/bin
-# you can set these with usethis::edit_r_environ() 
+# you can change these in your current session with set_latte_path() and
+if (had_latte <- has_latte()) old_latte_path <- get_latte_path()
+set_latte_path("/path/to/latte")
+get_latte_path()
 
-# you can change these in your current session with set_latte_path() and 
-# set_4ti2_path(), for example set_4ti2_path("/path/to/4ti2")
-
+if (had_latte) set_latte_path(old_latte_path)
+get_latte_path()
 
 }
 \author{
