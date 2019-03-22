@@ -32,11 +32,18 @@
 #' has_latte()
 #' if (has_4ti2()) get_latte_path()
 #'
+#'
+#' # you can set these paths permanently with the following. note that you'll 
+#' # need to re-start the R session afterwards or simply pass the path into, 
+#' # e.g., set_latte_path(). see below for more details on that.
+#' if (interactive()) edit_r_environ()
+#'
+#'
 #' # you can change these in your current session with set_latte_path() and
 #' if (had_latte <- has_latte()) old_latte_path <- get_latte_path()
 #' set_latte_path("/path/to/latte")
 #' get_latte_path()
-#' 
+#'
 #' if (had_latte) set_latte_path(old_latte_path)
 #' get_latte_path()
 #' 
