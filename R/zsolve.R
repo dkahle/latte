@@ -59,12 +59,12 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
   ####################################
 
   ## make dir to put 4ti2 files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, time_stamp()))
+  dir.create(scratch_dir <- file.path(dir, time_stamp()))
 
 
   ## switch to temporary directory
   user_working_directory <- getwd()
-  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
+  setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
   ## arg check
@@ -105,20 +105,20 @@ zsolve <- function(mat, rel, rhs, sign, lat, lb, ub,
     
     system2(
       file.path(get_4ti2_path(), "zsolve"),
-      paste(opts, file.path(dir2, "system")),
+      paste(opts, file.path(scratch_dir, "system")),
       stdout = "zsolve_out", 
       stderr = "zsolve_err"
     )
     
     # generate shell code
     shell_code <- glue(
-      "{file.path(get_4ti2_path(), 'zsolve')} {paste(opts, file.path(dir2, 'system'))} > zsolve_out 2> zsolve_err"
+      "{file.path(get_4ti2_path(), 'zsolve')} {paste(opts, file.path(scratch_dir, 'system'))} > zsolve_out 2> zsolve_err"
     )
     if(shell) message(shell_code)
 
   } else if (is_win()) {
 
-    matFile <- file.path(dir2, "system")
+    matFile <- file.path(scratch_dir, "system")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 

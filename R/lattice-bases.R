@@ -224,16 +224,16 @@ basis <- function(exec, memoise = TRUE){
 
 
     ## make dir to put 4ti2 files in (within the tempdir) timestamped
-    dir.create(dir2 <- file.path(dir, time_stamp()))
+    dir.create(scratch_dir <- file.path(dir, time_stamp()))
 
 
     ## make 4ti2 file
-    if(!missing(A)) write.latte(A, file.path(dir2, "PROJECT.mat"))
+    if(!missing(A)) write.latte(A, file.path(scratch_dir, "PROJECT.mat"))
 
 
     ## switch to temporary directory
     user_working_directory <- getwd()
-    setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
+    setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
     ## create/retrieve markov basis
@@ -244,20 +244,20 @@ basis <- function(exec, memoise = TRUE){
         
         system2(
           file.path(get_4ti2_path(), exec),
-          paste(opts, file.path(dir2, "PROJECT")),
+          paste(opts, file.path(scratch_dir, "PROJECT")),
           stdout = glue("{exec}_out"), 
           stderr = glue("{exec}_err")
         )
 
         # generate shell code
         shell_code <- glue(
-          "{file.path(get_4ti2_path(), exec)} {paste(opts, file.path(dir2, 'PROJECT'))} > {exec}_out 2> {exec}_err"
+          "{file.path(get_4ti2_path(), exec)} {paste(opts, file.path(scratch_dir, 'PROJECT'))} > {exec}_out 2> {exec}_err"
         )
         if(shell) message(shell_code)
 
       } else if (is_win()) {
 
-        matFile <- file.path(dir2, "PROJECT")
+        matFile <- file.path(scratch_dir, "PROJECT")
         matFile <- chartr("\\", "/", matFile)
         matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 
@@ -292,7 +292,7 @@ basis <- function(exec, memoise = TRUE){
 
     ## fix case of no graver basis
     if(exec == "graver"){
-      if(paste0("PROJECT", extension) %notin% list.files(dir2)){
+      if(paste0("PROJECT", extension) %notin% list.files(scratch_dir)){
         warning(sprintf("%s basis empty, returning 0's.", capitalize(commonName)), call. = FALSE)
         return(fix_graver(A, format, dim))
       }

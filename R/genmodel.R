@@ -70,11 +70,11 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
 
   ## make dir to put 4ti2 files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, time_stamp()))
+  dir.create(scratch_dir <- file.path(dir, time_stamp()))
 
 
   ## make 4ti2 file
-  writeLines(code, con = file.path(dir2, "PROJECT.mod"))
+  writeLines(code, con = file.path(scratch_dir, "PROJECT.mod"))
 
 
   ## move to dir and run 4it2 genmodel
@@ -83,7 +83,7 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
   ## switch to temporary directory
   user_working_directory <- getwd()
-  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
+  setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
   ## run 4ti2
@@ -91,20 +91,20 @@ genmodel <- function(varlvls, facets, dir = tempdir(), quiet = TRUE,
 
     system2(
       file.path(get_4ti2_path(), "genmodel"),
-      paste(opts, file.path(dir2, "PROJECT")),
+      paste(opts, file.path(scratch_dir, "PROJECT")),
       stdout = "genmodel_out", 
       stderr = "genmodel_err"
     )
 
     # generate shell code
     shell_code <- glue(
-      "{file.path(get_4ti2_path(), 'genmodel')} {paste(opts, file.path(dir2, 'PROJECT'))} > genmodel_out 2> genmodel_err"
+      "{file.path(get_4ti2_path(), 'genmodel')} {paste(opts, file.path(scratch_dir, 'PROJECT'))} > genmodel_out 2> genmodel_err"
     )
     if(shell) message(shell_code)
 
   } else if (is_win()) {
 
-    matFile <- file.path(dir2, "PROJECT")
+    matFile <- file.path(scratch_dir, "PROJECT")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 

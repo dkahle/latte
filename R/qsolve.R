@@ -55,12 +55,12 @@ qsolve <- function(mat, rel, sign,
   ####################################
 
   ## make dir to put 4ti2 files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, time_stamp()))
+  dir.create(scratch_dir <- file.path(dir, time_stamp()))
 
 
   ## switch to temporary directory
   user_working_directory <- getwd()
-  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
+  setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
   ## arg check
@@ -92,20 +92,20 @@ qsolve <- function(mat, rel, sign,
     
     system2(
       file.path(get_4ti2_path(), "qsolve"),
-      paste(opts, file.path(dir2, "system")),
+      paste(opts, file.path(scratch_dir, "system")),
       stdout = "qsolve_out", 
       stderr = "qsolve_err"
     )
     
     # generate shell code
     shell_code <- glue(
-      "{file.path(get_4ti2_path(), 'qsolve')} {paste(opts, file.path(dir2, 'system'))} > qsolve_out 2> qsolve_err"
+      "{file.path(get_4ti2_path(), 'qsolve')} {paste(opts, file.path(scratch_dir, 'system'))} > qsolve_out 2> qsolve_err"
     )
     if(shell) message(shell_code)
 
   } else if (is_win()) {
 
-    matFile <- file.path(dir2, "system")
+    matFile <- file.path(scratch_dir, "system")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
     

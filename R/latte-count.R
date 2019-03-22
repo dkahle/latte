@@ -275,20 +275,20 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## make dir to put latte files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, time_stamp()))
+  dir.create(scratch_dir <- file.path(dir, time_stamp()))
 
 
 
 
   ## write code file
-  writeLines(code, con = file.path(dir2, "count_code.latte"))
+  writeLines(code, con = file.path(scratch_dir, "count_code.latte"))
 
 
 
 
   ## switch to temporary directory
   user_working_directory <- getwd()
-  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
+  setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
 
@@ -298,14 +298,14 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   
     system2(
       file.path(get_latte_path(), "count"),
-      paste(opts, file.path(dir2, "count_code.latte")),
+      paste(opts, file.path(scratch_dir, "count_code.latte")),
       stdout = "count_out", 
       stderr = "count_err"
     )
 
   } else if (is_win()) {
 
-    matFile <- file.path(dir2, "count_code.latte")
+    matFile <- file.path(scratch_dir, "count_code.latte")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
 

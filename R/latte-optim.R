@@ -139,12 +139,12 @@ latte_optim <- function(
 
 
   ## make dir to put latte files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, time_stamp()))
+  dir.create(scratch_dir <- file.path(dir, time_stamp()))
 
 
   ## switch to temporary directory
   user_working_directory <- getwd()
-  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
+  setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
   ## convert constraints to latte hrep code and write file
@@ -174,20 +174,20 @@ latte_optim <- function(
     
     system2(
       file.path(get_latte_path(), exec),
-      paste(opts, file.path(dir2, "optim_code")),
+      paste(opts, file.path(scratch_dir, "optim_code")),
       stdout = glue("optim_out"), 
       stderr = glue("optim_err")
     )
     
     # generate shell code
     shell_code <- glue(
-      "{file.path(get_latte_path(), exec)} {paste(opts, file.path(dir2, 'optim_code'))} > {exec}_out 2> {exec}_err"
+      "{file.path(get_latte_path(), exec)} {paste(opts, file.path(scratch_dir, 'optim_code'))} > {exec}_out 2> {exec}_err"
     )
     if(shell) message(shell_code)
     
   } else if(is_win()){ # windows
     
-    matFile <- file.path(dir2, "optim_code 2> out.txt")
+    matFile <- file.path(scratch_dir, "optim_code 2> out.txt")
     matFile <- chartr("\\", "/", matFile)
     matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
     system(

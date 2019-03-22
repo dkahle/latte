@@ -49,12 +49,12 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE, shell = FALSE, ...){
   ####################################
 
   ## make dir to put 4ti2 files in (within the tempdir) timestamped
-  dir.create(dir2 <- file.path(dir, time_stamp()))
+  dir.create(scratch_dir <- file.path(dir, time_stamp()))
 
 
   ## switch to temporary directory
   user_working_directory <- getwd()
-  setwd(dir2); on.exit(setwd(user_working_directory), add = TRUE)
+  setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
   ## run 4ti2
@@ -69,7 +69,7 @@ ppi <- function(N, dir = tempdir(), quiet = TRUE, shell = FALSE, ...){
     
     # generate shell code
     shell_code <- glue(
-      "{file.path(get_4ti2_path(), 'ppi')} {paste(opts, file.path(dir2, 'system'))} > ppi_out 2> ppi_err"
+      "{file.path(get_4ti2_path(), 'ppi')} {paste(opts, file.path(scratch_dir, 'system'))} > ppi_out 2> ppi_err"
     )
     if(shell) message(shell_code)
 
