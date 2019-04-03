@@ -30,7 +30,7 @@ lines. For example, my lines look like:
 
 ``` bash
 LATTE=/Applications/latte/bin
-4TI2=/Applications/latte/bin
+FOURTITWO=/Applications/latte/bin
 ```
 
 You load **latte** like this:

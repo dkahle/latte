@@ -27,7 +27,7 @@ __latte__ is an R package that makes back-end connections to [LattE](https://www
 Note: the following assumes you have [LattE](https://www.math.ucdavis.edu/~latte/) and [4ti2](http://www.4ti2.de) installed and __latte__ recognizes their path. To help __latte__ find 4ti2 and LattE on your machine, you can use `set_4ti2_path()` and `set_latte_path()` at the beginning of the session. Better, you can save environment variables that point to where their executables are using `usethis::edit_r_environ()`; just add two lines.  For example, my lines look like:
 ```{bash, eval=FALSE}
 LATTE=/Applications/latte/bin
-4TI2=/Applications/latte/bin
+FOURTITWO=/Applications/latte/bin
 ```
 
 
