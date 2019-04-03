@@ -233,6 +233,12 @@ t(1:3) %*% ppi(3)
 Installation
 ------------
 
+-   From CRAN
+
+``` r
+install.packages("latte")
+```
+
 -   From Github (dev version):
 
 ``` r

@@ -160,6 +160,12 @@ t(1:3) %*% ppi(3)
 
 ## Installation
 
+* From CRAN
+
+```{r, eval=FALSE}
+install.packages("latte")
+```
+
 * From Github (dev version): 
 ```{r, eval=FALSE}
 if (!requireNamespace("devtools")) install.packages("devtools")
