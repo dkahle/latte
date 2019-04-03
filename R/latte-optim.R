@@ -135,7 +135,12 @@ latte_optim <- function(
 
 
   ## mpoly_list_to_mat is in file count.r
-  matFull <- mpoly_list_to_mat(c(list(objective), constraints))
+  matFull <- mpoly_list_to_mat(
+  	structure(
+  		c(list(objective), constraints),
+  		class = "mpolyList"
+  	)
+  )
 
 
   ## make dir to put latte files in (within the tempdir) timestamped
