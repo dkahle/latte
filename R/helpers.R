@@ -44,7 +44,7 @@ is.formula <- function(x) inherits(x, "formula")
 
 is_mac <- function() grepl("darwin", R.version$platform)
 is_win <- function() .Platform$OS.type == "windows"
-is_linux <- function() (.Platform$OS.type == "unix") && (is_mac() == FALSE)
+is_linux <- function() (.Platform$OS.type == "unix") && !is_mac()
 is_unix <- function() .Platform$OS.type == "unix"
 is_solaris <- function() grepl("solaris", R.version$os)
 
