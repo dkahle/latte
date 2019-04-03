@@ -1,3 +1,11 @@
+# latte 0.2.2
+
+## Changes
+
+*		The environment variable for the 4ti2 path should now be FOURTITWO instead 
+		of 4TI2 to improve portability.
+
+
 # latte 0.2.1
 
 ## Changes

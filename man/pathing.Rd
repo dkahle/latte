@@ -47,7 +47,7 @@ executables in your ~/.Renviron file. They should look something like
 
 \code{LATTE=/Applications/latte/bin}
 
-\code{4TI2=/Applications/latte/bin}
+\code{FOURTITWO=/Applications/latte/bin}
 
 You can set these permanently with \code{\link[=edit_r_environ]{edit_r_environ()}}.
 

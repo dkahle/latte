@@ -10,7 +10,7 @@
 #'
 #' \code{LATTE=/Applications/latte/bin}
 #'
-#' \code{4TI2=/Applications/latte/bin}
+#' \code{FOURTITWO=/Applications/latte/bin}
 #'
 #' You can set these permanently with [edit_r_environ()].
 #'
@@ -138,7 +138,13 @@ set_4ti2_path <- function(path){
 
 #' @rdname pathing
 #' @export
-get_4ti2_path <- function() Sys.getenv("4TI2")
+get_4ti2_path <- function() {
+	if (Sys.getenv("FOURTITWO") != "") {
+		Sys.getenv("FOURTITWO")
+	} else {
+		Sys.getenv("4TI2")
+	}
+}
 
 
 
