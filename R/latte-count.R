@@ -54,9 +54,9 @@
 #'
 #' # first terms of the ehrhart series
 #' latte_count(spec, ehrhart_taylor = 1)
-#' latte_count(spec, ehrhart_taylor = 2)
-#' latte_count(spec, ehrhart_taylor = 3)
-#' latte_count(spec, ehrhart_taylor = 4)
+#' # latte_count(spec, ehrhart_taylor = 2)
+#' # latte_count(spec, ehrhart_taylor = 3)
+#' # latte_count(spec, ehrhart_taylor = 4)
 #'
 #' # multivariate generating function
 #' latte_count(spec, multivariate_generating_function = TRUE)
@@ -117,32 +117,23 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
   ## compute other args
   opts <- as.list(match.call(expand.dots = FALSE))[["..."]]
-  if(is.null(opts)){
-    opts <- ""
-  } else {
-    opts_names <- names(opts)
-    opts_names <- str_replace_all(opts_names, "_", "-")
-    opts <- str_c("--", opts_names, "=", unlist(opts))
-    opts <- str_replace_all(opts, "=TRUE", "")
-    opts <- str_c(opts, collapse = " ")
-  }
-
+  if (is.null(opts)) opts <- list()
+  
 
   ## look at opts
-  if(str_detect(opts, "--ehrhart-series") && mpoly){
-    #stop("this option is not yet supported by algstat.", call. = FALSE)
+  if (("erhart_series" %in% names(opts)) && mpoly) {
     message("mpoly can't handle rational functions; reverting to raw output.")
     mpoly <- FALSE
   }
 
-  if(str_detect(opts, "--simplified-ehrhart-polynomial")){
+	if ("simplified_ehrhart_polynomial" %in% names(opts)) {
     stop("This option is not yet supported by latte.", call. = FALSE)
   }
 
 
 
   ## if the specification is pure code
-  if(is.character(spec) && length(spec) == 1){
+  if(is.character(spec) && length(spec) == 1L){
     specification <- "code"
     code <- spec
   }
@@ -151,7 +142,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## if the specification is A and b
-  if(is.list(spec) && length(spec) == 2){
+  if(is.list(spec) && length(spec) == 2L){
 
     bNegA <- unname(cbind(spec$b, -spec$A))
     spec  <- paste(dim(bNegA), collapse = " ")
@@ -166,13 +157,15 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## check for vertex specification
-  if(str_detect(opts, "--vrep")) specification <- "vertex"
-  if(is.list(spec) && !is.mpolyList(spec) && !str_detect(opts, "--vrep")){
+  if(("vrep" %in% names(opts)) && isTRUE(opts[["vrep"]])) specification <- "vertex"
 
+  if(
+  	is.list(spec) && !is.mpolyList(spec) && 
+  	(("vrep" %notin% names(opts)) || !isTRUE(opts[["vrep"]]))
+  ){
     specification <- "vertex"
     message("Undeclared vertex specification, setting vrep = TRUE.")
-    opts <- str_c(opts, "--vrep")
-
+    opts <- c(opts, "vrep" = TRUE)
   }
 
 
@@ -181,7 +174,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   ## if giving a character string of equations, parse
   ## each to the poly <= 0 format
   # this should transition to eq_to_mp
-  if(is.character(spec) && length(spec) > 1){
+  if (is.character(spec) && length(spec) > 1) {
 
   	parsedSpec <- as.list(rep(NA, length(spec)))
 
@@ -190,22 +183,22 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   	eeqNdcs <- which(str_detect(spec, " == "))
   	eqNdcs  <- which(str_detect(spec, " = "))
 
-    if(length(geqNdcs) > 0){
+    if (length(geqNdcs) > 0) {
       tmp <- strsplit(spec[geqNdcs], " >= ")
       parsedSpec[geqNdcs] <- lapply(tmp, function(v) mp(v[2]) - mp(v[1]))
     }
 
-    if(length(leqNdcs) > 0){
+    if (length(leqNdcs) > 0) {
       tmp <- strsplit(spec[leqNdcs], " <= ")
       parsedSpec[leqNdcs] <- lapply(tmp, function(v) mp(v[1]) - mp(v[2]))
     }
 
-    if(length(eeqNdcs) > 0){
+    if (length(eeqNdcs) > 0) {
       tmp <- strsplit(spec[eeqNdcs], " == ")
       parsedSpec[eeqNdcs] <- lapply(tmp, function(v) mp(v[1]) - mp(v[2]))
     }
 
-    if(length(eqNdcs) > 0){
+    if (length(eqNdcs) > 0) {
       tmp <- strsplit(spec[eqNdcs], " = ")
       parsedSpec[eqNdcs] <- lapply(tmp, function(v) mp(v[1]) - mp(v[2]))
     }
@@ -220,11 +213,9 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## convert the mpoly specification into a matrix, see latte manual, p. 8
-  if(is.mpolyList(spec)){
+  if (is.mpolyList(spec)) {
   	specification <- "hyperplane"
-    if(!all(is.linear(spec))){
-      stop("All polynomials must be linear.", call. = FALSE)
-    }
+    if (!all(is.linear(spec))) stop("All polynomials must be linear.", call. = FALSE)
     mat <- mpoly_list_to_mat(spec)
     mat <- cbind(-mat[,"coef",drop=FALSE], -mat[,-ncol(mat)])
 
@@ -252,10 +243,7 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
   if(specification == "vertex"){
 
   	if(any(!sapply(spec, function(v) length(v) != 1))){
-  	  stop(
-  	    "Unequal number of coordinates in vertex specification.",
-  	    call. = FALSE
-  	  )
+  	  stop("Unequal number of coordinates in vertex specification.", call. = FALSE)
   	}
 
     mat <- matrix(unlist(spec), ncol = 2, byrow = TRUE)
@@ -275,68 +263,45 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## make dir to put latte files in (within the tempdir) timestamped
-  dir.create(scratch_dir <- file.path(dir, time_stamp()))
+  dir.create(project_dir <- file.path(dir, time_stamp()))
 
 
 
 
   ## write code file
-  writeLines(code, con = file.path(scratch_dir, "count_code.latte"))
+  writeLines(code, con = file.path(project_dir, "count_code.latte"))
 
 
 
 
   ## switch to temporary directory
   user_working_directory <- getwd()
-  setwd(scratch_dir); on.exit(setwd(user_working_directory), add = TRUE)
+  setwd(project_dir); on.exit(setwd(user_working_directory), add = TRUE)
 
 
 
 
   ## run count
-  if (is_mac() || is_unix()) {
-  
-    system2(
-      file.path(get_latte_path(), "count"),
-      paste(opts, file.path(scratch_dir, "count_code.latte")),
-      stdout = "count_out", 
-      stderr = "count_err"
-    )
-
-  } else if (is_win()) {
-
-    matFile <- file.path(scratch_dir, "count_code.latte")
-    matFile <- chartr("\\", "/", matFile)
-    matFile <- str_c("/cygdrive/c", str_sub(matFile, 3))
-
-    system2(
-      "cmd.exe",
-      paste(
-        "/c env.exe",
-        file.path(get_latte_path(), "count"),
-        opts, matFile
-      ), 
-      stdout = "count_out", 
-      stderr = "count_err"
-    )
-
-  }
+  call_latte("count", "count_code.latte", project_dir, opts)
 
 
 
 
   ## print count output when quiet = FALSE
-  if(!quiet) cat(readLines("count_out"), sep = "\n")
+  if(!quiet) cat(readLines("stdout"), sep = "\n")
   # note: strangely, latte posts non-error info to stderr
-  if(!quiet) std_err <- readLines("count_err")
+  if(!quiet) std_err <- readLines("stderr")
   if(!quiet && any(std_err != "")) message(str_c(std_err, collapse = "\n"))
 
 
 
 
   ## parse ehrhart polynomial
-  if(opts == "--ehrhart-polynomial"){
-    outPrint <- readLines("count_out")
+  if (
+  	("ehrhart_polynomial" %in% names(opts)) && 
+  	isTRUE(opts[["ehrhart_polynomial"]])
+  ) {
+    outPrint <- readLines("stdout")
     rawPoly <- rev(outPrint)[2]
     if(!mpoly) return(str_trim(rawPoly))
     rawPoly <- str_replace_all(rawPoly, " \\* ", " ")
@@ -348,7 +313,10 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## parse ehrhart series
-  if(opts == "--ehrhart-series"){
+  if (
+  	("ehrhart_series" %in% names(opts)) && 
+  	isTRUE(opts[["ehrhart_series"]])
+  ) {
     outPrint <- readLines("count_code.latte.rat")
 
     # take off initial "x := " and terminating ":"
@@ -362,7 +330,10 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## parse multivariate generating function
-  if(opts == "--multivariate-generating-function"){
+  if (
+  	("multivariate_generating_function" %in% names(opts)) && 
+  	isTRUE(opts[["multivariate_generating_function"]])
+  ) {
     outPrint <- readLines("count_code.latte.rat")
 
     # collapse
@@ -383,8 +354,11 @@ count_core <- function(spec, dir = tempdir(), quiet = TRUE, mpoly = TRUE, ...){
 
 
   ## parse truncated taylor series
-  if(str_detect(opts, "--ehrhart-taylor=")){
-    outPrint <- readLines("count_out")
+  if (
+  	("ehrhart_taylor" %in% names(opts)) && 
+  	isTRUE(opts[["ehrhart_taylor"]])
+  ) {
+    outPrint <- readLines("stdout")
 
     # collapse
     outPrint <- paste(outPrint, collapse = " + ")

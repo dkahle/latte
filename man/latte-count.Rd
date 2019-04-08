@@ -76,9 +76,9 @@ latte_count(spec, ehrhart_series = TRUE)
 
 # first terms of the ehrhart series
 latte_count(spec, ehrhart_taylor = 1)
-latte_count(spec, ehrhart_taylor = 2)
-latte_count(spec, ehrhart_taylor = 3)
-latte_count(spec, ehrhart_taylor = 4)
+# latte_count(spec, ehrhart_taylor = 2)
+# latte_count(spec, ehrhart_taylor = 3)
+# latte_count(spec, ehrhart_taylor = 4)
 
 # multivariate generating function
 latte_count(spec, multivariate_generating_function = TRUE)
