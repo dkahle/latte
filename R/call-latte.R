@@ -1,10 +1,26 @@
+#' Unified interface to calling LattE
+#'
+#' Unified interface to calling LattE
+#'
+#' @param which_exe The name of LattE executable, e.g. \code{"count"}
+#' @param input_file The filename of file to be given to the executable, without
+#'   a path
+#' @param project_dir The path associated with \code{input_file}.
+#' @param opts A named list of optional command line arguments to the
+#'   executable.
+#' @param stdout,stderr Filenames to redirect standard output and standard error
+#'   to.
+#' @param shell \code{logical(1)}; should the shell command be messaged to the
+#'   user?
+#' @return \code{invisible()}
 call_latte <- function(
 	which_exe,
 	input_file,
 	project_dir,
 	opts = list(),
 	stdout = "stdout",
-	stderr = "stderr"
+	stderr = "stderr",
+	shell = FALSE
 ) {
 	
 	
@@ -18,7 +34,6 @@ call_latte <- function(
 		opts <- str_replace_all(opts, "=TRUE", "")
 		opts <- str_c(opts, collapse = " ")
 	}
-	
 	
 	
 	#  make call
@@ -45,5 +60,8 @@ call_latte <- function(
 		)
 		
 	}
+	
+	
+	invisible()
 	
 }
