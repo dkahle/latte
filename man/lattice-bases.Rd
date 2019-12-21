@@ -17,36 +17,125 @@
 \usage{
 basis(exec, memoise = TRUE)
 
-zbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+zbasis(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-markov(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+markov(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-groebner(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+groebner(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-hilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+hilbert(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-graver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+graver(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-fzbasis(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+fzbasis(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-fmarkov(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+fmarkov(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-fgroebner(A, format = c("mat", "vec", "tab"), dim = NULL,
-  all = FALSE, dir = tempdir(), quiet = TRUE, shell = FALSE,
-  dbName = NULL, ...)
+fgroebner(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-fhilbert(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+fhilbert(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 
-fgraver(A, format = c("mat", "vec", "tab"), dim = NULL, all = FALSE,
-  dir = tempdir(), quiet = TRUE, shell = FALSE, dbName = NULL, ...)
+fgraver(
+  A,
+  format = c("mat", "vec", "tab"),
+  dim = NULL,
+  all = FALSE,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  dbName = NULL,
+  ...
+)
 }
 \arguments{
 \item{exec}{don't use this parameter}

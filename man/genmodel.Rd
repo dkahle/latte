@@ -4,8 +4,7 @@
 \alias{genmodel}
 \title{Generate a configuration matrix}
 \usage{
-genmodel(varlvls, facets, dir = tempdir(), quiet = TRUE,
-  shell = FALSE, ...)
+genmodel(varlvls, facets, dir = tempdir(), quiet = TRUE, shell = FALSE, ...)
 }
 \arguments{
 \item{varlvls}{a vector containing the number of levels of each variable}

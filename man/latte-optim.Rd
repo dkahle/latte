@@ -7,15 +7,34 @@
 \alias{latte_min}
 \title{Solve an integer progam with LattE}
 \usage{
-latte_optim(objective, constraints, type = c("max", "min"),
-  method = c("lp", "cones"), dir = tempdir(), opts = "",
-  quiet = TRUE, shell = FALSE)
+latte_optim(
+  objective,
+  constraints,
+  type = c("max", "min"),
+  method = c("lp", "cones"),
+  dir = tempdir(),
+  opts = "",
+  quiet = TRUE,
+  shell = FALSE
+)
 
-latte_max(objective, constraints, method = c("lp", "cones"),
-  dir = tempdir(), opts = "", quiet = TRUE)
+latte_max(
+  objective,
+  constraints,
+  method = c("lp", "cones"),
+  dir = tempdir(),
+  opts = "",
+  quiet = TRUE
+)
 
-latte_min(objective, constraints, method = c("lp", "cones"),
-  dir = tempdir(), opts = "", quiet = TRUE)
+latte_min(
+  objective,
+  constraints,
+  method = c("lp", "cones"),
+  dir = tempdir(),
+  opts = "",
+  quiet = TRUE
+)
 }
 \arguments{
 \item{objective}{A linear polynomial to pass to \code{\link[=mp]{mp()}}, see examples}

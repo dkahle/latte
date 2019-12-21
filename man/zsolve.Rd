@@ -4,8 +4,19 @@
 \alias{zsolve}
 \title{Solve a linear system over the integers}
 \usage{
-zsolve(mat, rel, rhs, sign, lat, lb, ub, dir = tempdir(), quiet = TRUE,
-  shell = FALSE, ...)
+zsolve(
+  mat,
+  rel,
+  rhs,
+  sign,
+  lat,
+  lb,
+  ub,
+  dir = tempdir(),
+  quiet = TRUE,
+  shell = FALSE,
+  ...
+)
 }
 \arguments{
 \item{mat}{The A matrix (see the 4ti2 documentation or examples)}

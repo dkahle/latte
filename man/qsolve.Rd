@@ -4,8 +4,7 @@
 \alias{qsolve}
 \title{Solve a linear system over the rationals}
 \usage{
-qsolve(mat, rel, sign, dir = tempdir(), quiet = TRUE, shell = FALSE,
-  ...)
+qsolve(mat, rel, sign, dir = tempdir(), quiet = TRUE, shell = FALSE, ...)
 }
 \arguments{
 \item{mat}{The A matrix (see the 4ti2 documentation or examples)}

@@ -4,8 +4,15 @@
 \alias{call_latte}
 \title{Unified interface to calling LattE}
 \usage{
-call_latte(which_exe, input_file, project_dir, opts = list(),
-  stdout = "stdout", stderr = "stderr", shell = FALSE)
+call_latte(
+  which_exe,
+  input_file,
+  project_dir,
+  opts = list(),
+  stdout = "stdout",
+  stderr = "stderr",
+  shell = FALSE
+)
 }
 \arguments{
 \item{which_exe}{The name of LattE executable, e.g. \code{"count"}}
