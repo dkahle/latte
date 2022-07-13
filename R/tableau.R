@@ -27,7 +27,6 @@ tableau <- function(move, dim){
 
   if(ncol(move) == 1){
     p <- length(dim)
-
     move <- t(t(tab2vec(vec2tab(move, dim))))
     row.names(move) <- str_replace_all(row.names(move), ",", "")
 

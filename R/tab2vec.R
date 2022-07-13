@@ -13,7 +13,7 @@
 #' @seealso [vec2tab()]
 #' @examples
 #'
-#' a <- array(1:24, c(2,3,4))
+#' a <- array(1:6, c(1,2,3))
 #' tab2vec(a)
 #'
 #' data(Titanic)
@@ -40,8 +40,8 @@ tab2vec <- function(tab){
 
   # otherwise, rotate and class
   u <- aperm(tab, length(dim(tab)):1)
-  if(class(tab[1]) == "numeric") u <- as.vector(u)
-  if(class(tab[1]) == "integer") u <- as.integer(u)
+  if(inherits(tab[1], "numeric")) u <- as.vector(u)
+  if(inherits(tab[1], "integer")) u <- as.integer(u)
 
   # create cell indices
   tmpdf <- expand.grid(

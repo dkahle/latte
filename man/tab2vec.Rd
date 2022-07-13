@@ -23,7 +23,7 @@ is lexicographical and cannot be specified by the user.
 }
 \examples{
 
-a <- array(1:24, c(2,3,4))
+a <- array(1:6, c(1,2,3))
 tab2vec(a)
 
 data(Titanic)
