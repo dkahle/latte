@@ -144,7 +144,6 @@ get_4ti2_path <- function() {
 	} else {
 		Sys.getenv("4TI2")
 	}
-	NULL
 }
 
 
