@@ -110,12 +110,12 @@ set_4ti2_path <- function(path){
     if(is_win() && str_detect(`4ti2_path`,"C:/")){
       `4ti2_path` <- str_replace(`4ti2_path`, "C:/", "/cygdrive/c/")
     }
-    Sys.setenv("4TI2" = `4ti2_path`)
+    Sys.setenv("FOURTITWO" = `4ti2_path`)
     return(invisible(`4ti2_path`))
 
   } else if(!missing(path)){
 
-    Sys.setenv("4TI2" = path)
+    Sys.setenv("FOURTITWO" = path)
     return(invisible(path))
 
   } else {
@@ -144,6 +144,7 @@ get_4ti2_path <- function() {
 	} else {
 		Sys.getenv("4TI2")
 	}
+	NULL
 }
 
 
