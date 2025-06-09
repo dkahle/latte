@@ -29,8 +29,8 @@ missing_4ti2_stop()
 missing_latte_stop()
 }
 \arguments{
-\item{path}{A character string, the path to a 4ti2 function (e.g. markov) for
-setting 4ti2's path or a LattE function (e.g. count) for LattE's path}
+\item{path}{A character string, the path to a 4ti2 function (e.g. \code{markov})
+for setting 4ti2's path or a LattE function (e.g. \code{count}) for LattE's path}
 }
 \value{
 A logical(1) or character(1) containing the path.
@@ -39,17 +39,17 @@ A logical(1) or character(1) containing the path.
 These are helper functions that deal with pathing to external programs and
 asking if they are present. When latte is loaded it attempts to find LattE
 and 4ti2 executables by looking for environment variables specifying them,
-i.e. their paths as specified in your .Renviron file.
+i.e. their paths as specified in your \code{.Renviron} file.
 }
 \details{
 For easiest use, you'll want to specify the paths of LattE and 4ti2
-executables in your ~/.Renviron file. They should look something like
+executables in your \verb{~/.Renviron} file. They should look something like
 
-\code{LATTE=/Applications/latte/bin}
+\verb{LATTE=/Applications/latte/bin}
 
-\code{FOURTITWO=/Applications/latte/bin}
+\verb{FOURTITWO=/Applications/latte/bin}
 
-You can set these permanently with \code{\link[=edit_r_environ]{edit_r_environ()}}.
+You can set these permanently with \code{\link[usethis:edit]{usethis::edit_r_environ()}}.
 
 You can change these for the current session using, e.g., \code{\link[=set_latte_path]{set_latte_path()}},
 which accepts a character string or, if missing, uses \code{\link[=file.choose]{file.choose()}} to let

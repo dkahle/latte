@@ -6,7 +6,7 @@
 #' and so on; it's a wrapper of Reduce and kronecker.
 #'
 #' @param ... A listing of matrices
-#' @param FUN A function to pass to [kronecker()]
+#' @param FUN A function to pass to [base::kronecker()]
 #' @return A matrix that is the kronecker product of the specified matrices
 #'   (from left to right).
 #' @export

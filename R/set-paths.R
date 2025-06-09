@@ -3,23 +3,23 @@
 #' These are helper functions that deal with pathing to external programs and
 #' asking if they are present. When latte is loaded it attempts to find LattE
 #' and 4ti2 executables by looking for environment variables specifying them,
-#' i.e. their paths as specified in your .Renviron file.
+#' i.e. their paths as specified in your `.Renviron` file.
 #'
 #' For easiest use, you'll want to specify the paths of LattE and 4ti2
-#' executables in your ~/.Renviron file. They should look something like
+#' executables in your `~/.Renviron` file. They should look something like
 #'
-#' \code{LATTE=/Applications/latte/bin}
+#' `LATTE=/Applications/latte/bin`
 #'
-#' \code{FOURTITWO=/Applications/latte/bin}
+#' `FOURTITWO=/Applications/latte/bin`
 #'
-#' You can set these permanently with [edit_r_environ()].
+#' You can set these permanently with [usethis::edit_r_environ()].
 #'
 #' You can change these for the current session using, e.g., [set_latte_path()],
 #' which accepts a character string or, if missing, uses [file.choose()] to let
 #' you interactively; you just select an arbitrary executable.
 #'
-#' @param path A character string, the path to a 4ti2 function (e.g. markov) for
-#'   setting 4ti2's path or a LattE function (e.g. count) for LattE's path
+#' @param path A character string, the path to a 4ti2 function (e.g. `markov`)
+#'   for setting 4ti2's path or a LattE function (e.g. `count`) for LattE's path
 #' @return A logical(1) or character(1) containing the path.
 #' @name pathing
 #' @author David Kahle \email{david@@kahle.io}

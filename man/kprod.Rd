@@ -9,7 +9,7 @@ kprod(..., FUN = `*`)
 \arguments{
 \item{...}{A listing of matrices}
 
-\item{FUN}{A function to pass to \code{\link[=kronecker]{kronecker()}}}
+\item{FUN}{A function to pass to \code{\link[base:kronecker]{base::kronecker()}}}
 }
 \value{
 A matrix that is the kronecker product of the specified matrices

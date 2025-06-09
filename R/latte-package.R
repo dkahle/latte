@@ -4,7 +4,6 @@
 #' and 4ti2 (\url{http://www.4ti2.de/}) executables and front-end tools
 #' facilitating their use in the R ecosystem.
 #'
-#' @docType package
 #' @import mpoly
 #' @importFrom ggplot2 ggplot scale_x_continuous scale_y_continuous theme
 #'   element_blank theme_bw coord_equal scale_fill_gradient scale_fill_gradient2

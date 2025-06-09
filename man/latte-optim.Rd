@@ -37,7 +37,7 @@ latte_min(
 )
 }
 \arguments{
-\item{objective}{A linear polynomial to pass to \code{\link[=mp]{mp()}}, see examples}
+\item{objective}{A linear polynomial to pass to \code{\link[mpoly:mp]{mpoly::mp()}}, see examples}
 
 \item{constraints}{A collection of linear polynomial (in)equalities that
 define the feasibility region, the integers in the polytope}
@@ -46,10 +46,10 @@ define the feasibility region, the integers in the polytope}
 
 \item{method}{Method \code{"LP"} or \code{"cones"}}
 
-\item{dir}{Directory to place the files in, without an ending /}
+\item{dir}{Directory to place the files in, without an ending \code{/}}
 
 \item{opts}{Options; see the LattE manual at
-\url{http://www.math.ucdavis.edu/~latte}}
+\url{https://www.math.ucdavis.edu/~latte}}
 
 \item{quiet}{Show latte output}
 
@@ -57,15 +57,15 @@ define the feasibility region, the integers in the polytope}
 }
 \value{
 A named list with components \code{par}, a named-vector of optimizing
-arguments, and \code{value}, the value of the objective function at the
-optimial point.
+arguments, and \code{value}, the value of the objective function at the optimial
+point.
 }
 \description{
-\code{latte_max} and \code{latte_min} use LattE's \code{latte-maximize} and
+\code{\link[=latte_max]{latte_max()}} and \code{\link[=latte_min]{latte_min()}} use LattE's \code{latte-maximize} and
 \code{latte-minimize} functions to find the maximum or minimum of a linear
 objective function over the integers points in a polytope (i.e. satisfying
 linearity constraints). This makes use of the digging algorithm; see the
-LattE manual at \url{http://www.math.ucdavis.edu/~latte} for details.
+LattE manual at \url{https://www.math.ucdavis.edu/~latte} for details.
 }
 \examples{
 
