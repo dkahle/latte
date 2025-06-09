@@ -4,7 +4,7 @@
 #' `latte-minimize` functions to find the maximum or minimum of a linear
 #' objective function over the integers points in a polytope (i.e. satisfying
 #' linearity constraints). This makes use of the digging algorithm; see the
-#' LattE manual at \url{https://www.math.ucdavis.edu/~latte} for details.
+#' LattE manual at \url{https://www.math.ucdavis.edu/~latte/} for details.
 #'
 #' @param objective A linear polynomial to pass to [mpoly::mp()], see examples
 #' @param constraints A collection of linear polynomial (in)equalities that
@@ -12,7 +12,7 @@
 #' @param method Method `"LP"` or `"cones"`
 #' @param dir Directory to place the files in, without an ending `/`
 #' @param opts Options; see the LattE manual at
-#'   \url{https://www.math.ucdavis.edu/~latte}
+#'   \url{https://www.math.ucdavis.edu/~latte/}
 #' @param quiet Show latte output
 #' @param shell Messages the shell code used to do the computation
 #' @param type `"max"` or `"min"`

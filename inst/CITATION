@@ -1,27 +1,49 @@
-citHeader("To cite latte in publications, please use:")
+citHeader("To cite *latte* in publications, please use:")
 
-citEntry(entry="Manual",
-  author = "David Kahle and Luis Garcia-Puente and Ruriko Yoshida",
-  title = "latte: {LattE} and {4ti2} in {R}",
-  year = "2017",
-  note = "R package version 0.2.0",
-  url = "https://github.com/dkahle/latte",
-  textVersion = "D. Kahle, L. Garcia-Puente, and R. Yoshida. latte: LattE and 4ti2 in R. R package version 0.2.0. https://github.com/dkahle/latte"
+## 1.  The R package itself
+bibentry(
+  bibtype = "Manual",
+  title   = "latte: {LattE} and {4ti2} in {R}",
+  author  = c(
+    person("David", "Kahle",        email = "david@kahle.io", role = c("aut", "cre")),
+    person("Luis",  "Garcia-Puente",                               role = "aut"),
+    person("Ruriko","Yoshida",                                    role = "aut")
+  ),
+  year    = "2017",
+  note    = "R package version 0.2.0",
+  url     = "https://github.com/dkahle/latte",
+  textVersion =
+    "Kahle D., Garcia-Puente L., Yoshida R. (2017). *latte: LattE and 4ti2 in R* (R package version 0.2.0). <https://github.com/dkahle/latte>."
 )
 
-citEntry(entry="Manual",
-  author = "V. Baldoni and N. Berline and J.A. De Loera and B. Dutra and M. Koppe and S. Moreinis and G. Pinto and M. Vergne and J. Wu",
-  title = "A User's Guide for {L}att{E} integrale v1.7.2",
-  year = "2013",
-  url = "http://www.math.ucdavis.edu/~latte/",
-  textVersion = "V. Baldoni, N. Berline, J.A. De Loera, B. Dutra, M. Koppe, S. Moreinis, G. Pinto, M. Vergne, J. Wu, A User's Guide for LattE Integrale v1.7.2, 2013, software package LattE is available at http://www.math.ucdavis.edu/~latte/"
+## 2.  LattE Integrale software
+bibentry(
+  bibtype = "Manual",
+  title   = "A User's Guide for {L}att{E} integrale v1.7.2",
+  author  = c(
+    person("V.",   "Baldoni"),
+    person("N.",   "Berline"),
+    person("J.A.", "De Loera"),
+    person("B.",   "Dutra"),
+    person("M.",   "Köppe"),
+    person("S.",   "Moreinis"),
+    person("G.",   "Pinto"),
+    person("M.",   "Vergne"),
+    person("J.",   "Wu")
+  ),
+  year    = "2013",
+  url     = "http://www.math.ucdavis.edu/~latte/",
+  textVersion =
+    "Baldoni V. *et al.* (2013). *A User's Guide for LattE integrale v1.7.2*. <http://www.math.ucdavis.edu/~latte/>."
 )
 
-citEntry(entry="Manual",
-  author = "4ti2 Team",
-  title = "4ti2---A software package for algebraic, geometric and combinatorial problems on linear spaces",
-  year = "2013",
-  url = "http://www.4ti2.de",
-  textVersion = "4ti2 Team.  4ti2---A Software Package for Algebraic, Geometric and Combinatorial Problems on Linear Spaces. Available at www.4ti2.de"
+## 3.  4ti2 software
+bibentry(
+  bibtype = "Manual",
+  title   = "4ti2 — A software package for algebraic, geometric and combinatorial problems on linear spaces",
+  author  = person("4ti2", "Team"),
+  year    = "2013",
+  url     = "http://www.4ti2.de",
+  textVersion =
+    "4ti2 Team (2013). *4ti2 — A software package for algebraic, geometric and combinatorial problems on linear spaces*. <http://www.4ti2.de>."
 )
-

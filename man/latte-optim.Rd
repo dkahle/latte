@@ -49,7 +49,7 @@ define the feasibility region, the integers in the polytope}
 \item{dir}{Directory to place the files in, without an ending \code{/}}
 
 \item{opts}{Options; see the LattE manual at
-\url{https://www.math.ucdavis.edu/~latte}}
+\url{https://www.math.ucdavis.edu/~latte/}}
 
 \item{quiet}{Show latte output}
 
@@ -65,7 +65,7 @@ point.
 \code{latte-minimize} functions to find the maximum or minimum of a linear
 objective function over the integers points in a polytope (i.e. satisfying
 linearity constraints). This makes use of the digging algorithm; see the
-LattE manual at \url{https://www.math.ucdavis.edu/~latte} for details.
+LattE manual at \url{https://www.math.ucdavis.edu/~latte/} for details.
 }
 \examples{
 
